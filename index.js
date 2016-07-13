@@ -13,7 +13,7 @@ app.use(Express.static(path.join(__dirname + "/server/public")));
 // catch-all handles all other requests as the index page
 app.use(function(req, res, next) {
   extension = req.path.substring(req.path.lastIndexOf('.'))
-  if ([".js", ".css"].indexOf(extension) >= 0) {
+  if ([".js", ".css", ".html"].indexOf(extension) >= 0) {
     next()
   } else {
     res.sendFile(path.join(__dirname + '/server/public/index.html'));

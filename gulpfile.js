@@ -44,7 +44,7 @@ gulp.task('build-js', function() {
   return gulp.src(['lib/**/*.js', '!lib/thirdparty/**/*.js'])
     .pipe(sourcemaps.init())
     .pipe(babel({
-      presets: ['es2015', 'react']
+      presets: ['es2015']
     }))
     // .pipe(uglify())
     .pipe(sourcemaps.write({
@@ -66,6 +66,7 @@ gulp.task('copy-static', function() {
 gulp.task('watch', function() {
   gulp.watch('lib/**/*.scss', ['build-css']);
   gulp.watch('lib/**/*.js', ['build-js']);
+  gulp.watch('lib/**/*.html', ['copy-static']);
 });
 
 gulp.task('up', function() {

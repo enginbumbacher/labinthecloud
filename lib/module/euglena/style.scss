@@ -1,0 +1,52 @@
+@import "../../scss_includes/variables";
+
+.app {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.panel {
+  position: relative;
+  padding: 20px;
+  height: 100%;
+  &-left {
+    flex: 1;
+    background: $light-gray;
+    border-right: 1px solid $dark-gray;
+  } 
+  &-main {
+    flex: 4;
+  }
+}
+
+.field-textfield {
+  .field-input {
+
+  }
+  input.textfield {
+    width: 100%;
+    padding: 4px;
+    line-height: 1.8rem;
+    font-size: 1.4rem;
+  }
+}
+
+.form {
+  &__login {
+    button.button {
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+  &__help {
+    font-style: italic;
+  }
+}
+
+button.button {
+  &:hover {
+    background: $medium-gray;
+    // color: $white;
+  }
+}

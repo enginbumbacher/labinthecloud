@@ -46,6 +46,10 @@ gulp.task('build-js', function() {
     .pipe(babel({
       presets: ['es2015']
     }))
+    .on('error', function(e) {
+      console.error(e);
+      this.emit('end');
+    })
     // .pipe(uglify())
     .pipe(sourcemaps.write({
       includeContent: false,

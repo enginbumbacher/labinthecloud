@@ -1,7 +1,21 @@
-$black: #101010;
-$dark-gray: #282828;
-$medium-gray: #d9d9d9;
-$light-gray: #efefef;
-$white: #f9f9f9;
+@import url("http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700");
+@import url("https://fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic");
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
+
+$palette__black: #101010;
+$palette__gray__dark: #282828;
+$palette__gray__medium: #d9d9d9;
+$palette__gray__light: #efefef;
+$palette__white: #f9f9f9;
 
 $button-size: 40px;
+
+
+$font__size: 10px;
+$unit: 1rem;
+
+$font__default: "Open Sans", Arial, sans-serif;
+$font__default__weight: 400;
+
+$font__title: "Lora", serif;
+$font__title__weight: 700;

@@ -1,0 +1,51 @@
+@import "../../../../scss_includes/mixins";
+@import "../../../../scss_includes/variables";
+
+.light-display {
+  background: $palette__black;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+  display: inline-block;
+
+  &__content {
+    min-width: 300px;
+    min-height: 200px;
+  }
+  &__light {
+    position: absolute;
+    background: $palette__yellow;
+  }
+  &__top {
+    top: 0;
+    left: 2rem;
+    width: calc(100% - 4rem);
+    height: 2rem;
+  }
+  &__bottom {
+    bottom: 0;
+    left: 2rem;
+    width: calc(100% - 4rem);
+    height: 2rem;
+  }
+  &__left {
+    top: 2rem;
+    left: 0;
+    height: calc(100% - 4rem);
+    width: 2rem;
+  }
+  &__right {
+    top: 2rem;
+    right: 0;
+    height: calc(100% - 4rem);
+    width: 2rem;
+  }
+  &__time {
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: -2rem;
+    line-height: 2rem;
+  }
+}

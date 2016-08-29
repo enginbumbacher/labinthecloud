@@ -61,8 +61,15 @@ gulp.task('build-js', function() {
 gulp.task('copy-static', function() {
   gulp.src(['lib/index.html'])
     .pipe(gulp.dest('server/public'));
-  gulp.src(['lib/module/**/*.html', 'lib/module/**/*.jpg', 'lib/module/**/*.png', 'lib/module/**/*.gif' ])
-    .pipe(gulp.dest('server/public/cslib/module'));
+  gulp.src([
+    'lib/module/**/*.html',
+    'lib/module/**/*.jpg',
+    'lib/module/**/*.png',
+    'lib/module/**/*.gif',
+    'lib/module/**/*.json',
+    'lib/module/**/*.mp4'
+  ]).pipe(gulp.dest('server/public/cslib/module'));
+
   gulp.src(['lib/thirdparty/**/*'])
     .pipe(gulp.dest('server/public/cslib/thirdparty'));
 });

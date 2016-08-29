@@ -1,0 +1,118 @@
+@import "../../../../../scss_includes/mixins";
+@import "../../../../../scss_includes/variables";
+
+.component__light-matrix {
+  .component {
+    &__dragitem {
+      border:none;
+      background: $palette__white;
+      border-bottom: 1px solid $palette__gray__medium;
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .dragitem {
+        &__grip {
+          display: none;
+        }
+
+        &__contents {
+          padding-left: 0;
+        }
+      }
+      &:nth-child(2n) {
+        background: $palette__gray__light;
+      }
+    }
+
+    &__field {
+      border-right: 1px solid $palette__gray__medium;
+    }
+  }
+  &.component__multifield {
+    .multifield {
+      &__fields {
+        border: 1px solid $palette__gray__medium;
+        border-top: none;
+        text-align: center;
+      }
+      &__fieldwrap {
+        margin-left: 0;
+      }
+      &__field__remove {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0.5rem 0;
+
+        .button {
+          background: transparent;
+
+          &:hover {
+            background: $palette__gray__dark;
+          }
+        }
+      }
+      &__buttons {
+        position: absolute;
+        top: calc(0.25rem + 1px);
+        right: calc(0.25rem + 1px);
+      }
+    }
+  }
+
+  .light-matrix {
+    &__header {
+      display: flex;
+      padding-right: 3rem;
+      background: $palette__gray__medium;
+      border: 1px solid $palette__gray__dark;
+
+      &__item {
+        flex: 1;
+        text-align: center;
+        font-weight: 700;
+        font-size: 1.2rem;
+        padding: 0.5rem;
+        border-right: 1px solid $palette__gray__dark;
+      }
+
+      .component__button {
+        margin: 0;
+        .button {
+          padding: 0.5rem 0;
+          width: 2.5rem;
+          border:none;
+          background: transparent;
+
+          &:hover {
+            background: $palette__gray__dark;
+          }
+        }
+      }
+    }
+    &__footer {
+      padding-right: 3rem;
+      position: relative;
+      border: 1px solid transparent;
+      border-width: 0 1px;
+      &__count {
+        display: flex;
+        text-align: right;
+      }
+      &__label {
+        flex: 4;
+        font-weight: 700;
+        padding: 0.5rem 0.5rem 0.5rem 3.5rem;
+        font-size: 1.2rem;
+        border-right: 1px solid $palette__gray__medium;
+      }
+      &__value {
+        flex: 1;
+        padding: 0.5rem;
+        background: $palette__gray__medium;
+        text-align: center;
+      }
+    }
+  }
+}

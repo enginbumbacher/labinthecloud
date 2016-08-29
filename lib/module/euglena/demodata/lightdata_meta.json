@@ -1,0 +1,37 @@
+{
+    "metaData": {
+        "magnification": 10,
+        "tag": "cl json testing tag",
+        "description": "testing description",
+        "runTime": 20000,
+        "group_experimentType": "text",
+        "clientCreationDate": "2016-06-01T00:21:55.799Z",
+        "userUrl": "/account/joinlabwithdata/",
+        "numFrames": 130,
+        "saveTime": "2016-06-01T00:22:48.028Z",
+        "lightDataSoapPath": "/home/pi/bpuData/tempExpData/lightdata.json",
+        "lightDataPath": "/home/pi/bpuData/tempExpData/lightdata_meta.json",
+        "ExpFullPath": "/home/pi/bpuData/tempExpData/574e2aa30323e3ac78ca97fa.json",
+        "ExpName": "574e2aa30323e3ac78ca97fa"
+    },
+    "eventsToRun": [
+        {
+            "time": 1464740548041,
+            "topValue": 0,
+            "rightValue": 0,
+            "bottomValue": 0,
+            "leftValue": 0,
+            "askTime": 0,
+            "setTime": 22
+        },
+        {
+            "time": 1464740568016,
+            "topValue": 0,
+            "rightValue": 0,
+            "bottomValue": 0,
+            "leftValue": 100,
+            "askTime": 20000,
+            "setTime": 19997
+        }
+    ]
+}

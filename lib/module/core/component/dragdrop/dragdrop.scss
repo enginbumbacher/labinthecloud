@@ -1,0 +1,48 @@
+@import "../../../../scss_includes/variables";
+@import "../../../../scss_includes/mixins";
+
+.dragdrop__dragproxy {
+  position: absolute;
+  width: 4em;
+  height: 4em;
+  background: $palette__white;
+  border: 1px solid $palette__gray__dark;
+  border-radius: 1em;
+  opacity: 0.5;
+
+  .dragdrop__selected__count {
+    background: $palette__gray__dark;
+    width: 2em;
+    height: 2em;
+    border-radius: 1em;
+    text-align: center;
+    line-height: 2em;
+    font-weight: bold;
+    color: $palette__white;
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+  }
+}
+
+.dropsite__sort__cursor {
+  border: 1px solid $palette__gray__dark;
+}
+
+.dropsite__list .component__dragitem {
+  display: block;
+}
+.dropsite__inline {
+  .component__dragitem {
+    display: inline-block;
+  }
+  .dropsite__sort-cursor {
+    display: inline-block;
+    height: 1em;
+  }
+}
+
+.dragdrop__dragging {
+  @include user-select(none);
+  @include dragging;
+}

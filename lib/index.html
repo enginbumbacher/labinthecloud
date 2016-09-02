@@ -12,7 +12,26 @@
       window.EuglenaConfig = {
         dryRunRate: 4,
         experimentLength: 60,
-        visualizationType: ""
+        visualizationType: "",
+        circleHistogram: {
+          binCount: 36, //15° bins
+          dT: 0.5,
+          tStep: 2
+        },
+        histogram: {
+          binCount: 10,
+          // vRange: 100,
+          mode: 'total',
+          dT: 0.5,
+          tStep: 2
+        },
+        timeseries: {
+          vRange: 100,
+          mode: 'total',
+          stdBand: true,
+          dT: .5,
+          width: 600
+        }
       };
     </script>
     <script data-main="./cslib/init" src="./cslib/thirdparty/require/require.js"></script>

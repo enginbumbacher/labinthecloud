@@ -1,0 +1,18 @@
+@import "../../../../scss_includes/mixins";
+@import "../../../../scss_includes/variables";
+
+.time-series {
+  &__graph {
+    &__line {
+      fill: none;
+      stroke: $palette__gray__dark;
+      stroke-width: 2;
+    }
+    &__std {
+      fill: $palette__gray__medium;
+    }
+    &__time-band {
+      fill: $palette__gray__medium_dark;
+    }
+  }
+}

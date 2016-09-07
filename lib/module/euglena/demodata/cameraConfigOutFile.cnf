@@ -1,4 +1,4 @@
-timestamp:Wed_May_25_18:00:05_PDT_2016
+timestamp:Wed_Jun_15_17:16:51_PDT_2016
 inFPS:15
 inX:640
 inY:480
@@ -8,6 +8,6 @@ outFilePath:/home/pi/bpuData/tempExpData
 outFileMs:100
 isRaspPiCam:1
 localDataLocation:/home/pi/bpuData/tempExpData
-hostname:eug-0
+hostname:eug-2
 user:pi
 

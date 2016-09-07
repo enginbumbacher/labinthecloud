@@ -16,21 +16,26 @@
         circleHistogram: {
           binCount: 36, //15° bins
           dT: 0.5,
-          tStep: 2
+          tStep: 2,
+          width: 160,
+          height: 160
         },
         histogram: {
           binCount: 10,
-          // vRange: 100,
-          mode: 'total',
+          vRange: 50,
+          mode: 'component',
           dT: 0.5,
-          tStep: 2
+          tStep: 2,
+          width: 300,
+          height: 160
         },
         timeseries: {
-          vRange: 100,
-          mode: 'total',
+          vRange: 50,
+          mode: 'component',
           stdBand: true,
           dT: .5,
-          width: 600
+          width: 300,
+          height: 200
         }
       };
     </script>

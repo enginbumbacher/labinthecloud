@@ -16,13 +16,18 @@
           display: none;
         }
       }
+      &-label {
+        fill: $palette__gray__dark;
+        text-anchor: middle;
+        font-weight: bold;
+      }
     }
   }
   border: 1px solid $palette__gray__dark;
   text-align: center;
   padding: 0.5rem;
-  float: left;
-  margin-left: 2rem;
+  display: inline-block;
+  margin: 1rem;
 
   &__meta {
     border-top: 1px solid $palette__gray__dark;

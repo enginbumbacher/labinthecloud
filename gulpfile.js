@@ -97,5 +97,7 @@ gulp.task('up', function() {
   gulp.watch('./index.js', server.start.bind(server));
 });
 
-gulp.task('default', ['build-css', 'build-js', 'copy-static', 'watch', 'up']);
+gulp.task('build', ['build-css', 'build-js', 'copy-static']);
+
+gulp.task('default', ['build', 'watch', 'up']);
 

@@ -11,10 +11,17 @@ $light-display__bar-width: 1rem;
   display: inline-block;
 
   &__content {
-    width: 325px;
-    min-height: 240px;
+    width: 400px;
+    min-height: 300px;
     height: auto;
     line-height: 0;
+    position: relative;
+
+    .euglena-display {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
 
     video {
       width: 100%;

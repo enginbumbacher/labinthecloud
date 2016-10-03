@@ -1,0 +1,32 @@
+@import "../../../../../scss_includes/variables";
+@import "../../../../../scss_includes/mixins";
+
+.component__dragitem {
+  position: relative;
+  border: 1px solid transparent;
+
+  .dragitem__grip {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 8px;
+    background: $palette__gray__dark;
+  }
+
+  &.dragitem__trigger, .dragitem__trigger {
+    @include draggable;
+  }
+
+  .dragitem__contents {
+    padding-left: 8px;
+    @include clearfix;
+  }
+  &.dragitem__selected {
+    border: 1px solid $palette__gray__dark;
+  }
+
+  &.dragitem__dragging {
+    display:none;
+  }
+}

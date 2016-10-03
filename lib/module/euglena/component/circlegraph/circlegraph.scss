@@ -1,0 +1,20 @@
+@import "../../../../scss_includes/mixins";
+@import "../../../../scss_includes/variables";
+
+.circle-graph {
+  &__slice {
+    fill: $palette__gray__medium;
+    stroke: $palette__gray__dark;
+    stroke-width: 1;
+  }
+  border: 1px solid $palette__gray__dark;
+  text-align: center;
+  padding: 0.5rem;
+  display: inline-block;
+  margin: 1rem;
+
+  &__meta {
+    border-top: 1px solid $palette__gray__dark;
+    margin-top: 0.5rem;
+  }
+}

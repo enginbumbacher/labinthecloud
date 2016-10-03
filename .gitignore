@@ -1,0 +1,9 @@
+.DS_Store
+npm-debug.log
+Gemfile.lock
+**/.sass-cache
+**/node_modules
+server/public
+
+*.sublime-project
+*.sublime-workspace

@@ -1,0 +1,49 @@
+@import "../../../../scss_includes/variables";
+
+// .field-button {
+//   .button {
+//     display: inline-block;
+//     padding: 5px 10px;
+//     border-radius: 5px;
+//     margin: 10px;
+//     background: $palette__gray__light;
+//     border: 1px solid $palette__black;
+//     cursor: pointer;
+//   }
+// }
+
+.component__button {
+  display: inline-block;
+  margin: 0 0.5em;
+
+  .button {
+    background: $palette__white;
+    border: 1px solid $palette__gray__medium;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+
+    &:hover {
+      background: $palette__gray__medium;
+      border-color: $palette__gray__dark;
+      color: $palette__white;
+    }
+  }
+
+  &.link .button {
+    background: transparent;
+    border:none;
+    padding: inherit;
+    font-weight: normal;
+    display: inline-block;
+    color: inherit;
+
+    &:hover {
+      background: inherit;
+      border-color: transparent;
+      color: inherit;
+      text-decoration: underline;
+    }
+  }
+}

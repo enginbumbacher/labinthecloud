@@ -1,0 +1,22 @@
+@import "../../../../../scss_includes/mixins";
+@import "../../../../../scss_includes/variables";
+
+.component__experiment-row {
+  .fieldgroup__fields {
+    display: flex;
+    // border-left: 1px solid $palette__black;
+  }
+  .component__field {
+    flex: 1;
+    padding: 0.5rem;
+    // border: 1px solid $palette__black;
+    // border-width: 1px 1px 0 0;
+  }
+  .numberfield__field {
+    width: 100%;
+    text-align: center;
+  }
+  .selectfield__select {
+    width: 100%;
+  }
+}

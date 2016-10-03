@@ -1,0 +1,40 @@
+@import "../../../../scss_includes/mixins";
+@import "../../../../scss_includes/variables";
+
+.component-form {
+  margin: 20px;
+  border: 1px solid $palette__gray__medium;
+  border-radius: 5px;
+
+  .form-header {
+    font-size: 1.8em;
+    font-weight: bold;
+    padding: 10px 20px;
+  }
+
+  .form-fields {
+    padding: 10px 20px;
+  }
+  .form-errors {
+    padding: 0 20px;
+  }
+  .form-buttons {
+    padding: 10px 20px;
+    background: $palette__gray__light;
+
+    .component-button {
+      display: inline-block;
+      margin-right: 1em;
+    }
+  }
+}
+
+.component-field {
+  margin: 5px 0;
+  position: relative;
+
+  .field-label {
+    line-height: 1.8em;
+    font-weight: bold;
+  }
+}

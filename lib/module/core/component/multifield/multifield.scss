@@ -1,0 +1,47 @@
+@import "../../../../scss_includes/mixins";
+@import "../../../../scss_includes/variables";
+
+.component__multifield {
+  @include clearfix;
+  position: relative;
+  min-height: 2rem;
+  margin: 1rem 0;
+
+  .multifield__fields {
+    position: relative;
+  }
+
+  .multifield__fieldwrap {
+    @include clearfix;
+    margin-left: 2rem;
+    border-bottom: 1px solid $palette__gray__medium;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    & > .multifield__field {
+      padding-right: 3rem;
+    }
+
+    .multifield__field > .component__field {
+      padding-left: 0px;
+    }
+  }
+  .multifield__field__remove {
+    float:right;
+
+    .button {
+      border: none;
+      padding: 0.5rem;
+    }
+  }
+  .multifield__buttons {
+  }
+
+  &.field__error {
+    .field__label {
+      color: $color__error;
+    }
+  }
+}

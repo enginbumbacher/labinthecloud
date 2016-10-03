@@ -1,0 +1,30 @@
+@import "../../../../scss_includes/mixins";
+@import "../../../../scss_includes/variables";
+
+.time-series {
+  &__graph {
+    &__line {
+      fill: none;
+      stroke: $palette__gray__dark;
+      stroke-width: 1;
+    }
+    &__std {
+      fill: $palette__gray__medium;
+    }
+    &__time-band {
+      fill: $palette__gray__medium_dark;
+    }
+    &__axis {
+      &-label {
+        fill: $palette__gray__dark;
+        text-anchor: middle;
+        font-weight: bold;
+      }
+    }
+  }
+  border: 1px solid $palette__gray__dark;
+  text-align: center;
+  padding: 0.5rem;
+  display: inline-block;
+  margin: 1rem;
+}

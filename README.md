@@ -18,9 +18,9 @@ When that process is complete, compiling/buiding and server start can be accompl
 
 The project can then be found at localhost:3000. If a different port is desired, use the `--port` option:
 
-> $ gulp dev --port=3001
+> $ gulp --port=3001
 >  [OR]
-> $ gulp dev -p 3001 
+> $ gulp -p 3001 
 
 If you just wish to run the server by itself, use the following command.  
 

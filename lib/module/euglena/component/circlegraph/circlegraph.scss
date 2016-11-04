@@ -9,12 +9,31 @@
   }
   border: 1px solid $palette__gray__dark;
   text-align: center;
-  padding: 0.5rem;
+  padding: 1rem;
   display: inline-block;
+  vertical-align: top;
   margin: 1rem;
+  position: relative;
 
   &__meta {
     border-top: 1px solid $palette__gray__dark;
     margin-top: 0.5rem;
+  }
+
+  &__graph {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+
+  &__lights {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: -1rem;
+    .light-display {
+      &__content {
+        background: $palette__white;
+      }
+    }
   }
 }

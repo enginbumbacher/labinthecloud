@@ -1,0 +1,74 @@
+@import "../../../../scss_includes/mixins";
+@import "../../../../scss_includes/variables";
+
+.visual-result {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  margin: 1rem;
+
+  &__content {
+    position: relative;
+    // padding: 1rem;
+    margin: 1rem;
+  }
+
+  &__time {
+    text-align: center;
+  }
+
+  &__control {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    &__toggle {
+      transition: opacity 0.3s linear;
+      opacity: 0;
+      &.component__button {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+
+        .button {
+          position: absolute;
+          top: calc(50% - 5rem);
+          left: calc(50% - 5rem);
+          width: 10rem;
+          height: 10rem;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  &:hover {
+    .visual-result__control__toggle {
+      opacity: 1;
+    }
+  }
+
+  .light-display {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: -1rem;
+  }
+  .euglena-display {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .video-display {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+}

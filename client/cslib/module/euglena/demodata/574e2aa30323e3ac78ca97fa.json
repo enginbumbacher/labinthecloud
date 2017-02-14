@@ -1,0 +1,240 @@
+{
+    "_id": "574e2aa30323e3ac78ca97fa",
+    "group_experimentType": "text",
+    "__v": 0,
+    "stats": {
+        "scripterResponse": -1,
+        "scripterActivity": -1,
+        "scripterPopulation": -1
+    },
+    "exp_liveSocketWaitingForUserHandle": false,
+    "exp_liveSocketHandle": null,
+    "user_tarFilename": null,
+    "user_tarFilePath": null,
+    "proc_endPath": null,
+    "proc_expSchemaJsonPath": null,
+    "proc_lightDataArrayPath": null,
+    "proc_jpgFiles": [],
+    "proc_startPath": null,
+    "proc_err": null,
+    "proc_attempts": 0,
+    "proc_doNotProcess": false,
+    "exp_processingEndTime": null,
+    "exp_processingScripterStartTime": null,
+    "exp_processingStartTime": null,
+    "exp_serverClearTime": null,
+    "exp_runEndTime": 1464740568015,
+    "exp_runStartTime": 1464740548018,
+    "exp_resortTime": 1464740545909,
+    "exp_submissionTime": 1464740515839,
+    "exp_creationTime": 1464737947665,
+    "exp_status": "created",
+    "exp_eventsRan": [
+        {
+            "time": 1464740548041,
+            "topValue": 0,
+            "rightValue": 0,
+            "bottomValue": 0,
+            "leftValue": 0,
+            "askTime": 0,
+            "setTime": 22
+        },
+        {
+            "time": 1464740568016,
+            "topValue": 0,
+            "rightValue": 0,
+            "bottomValue": 0,
+            "leftValue": 100,
+            "askTime": 20000,
+            "setTime": 19997
+        }
+    ],
+    "exp_eventsToRunFinal": [],
+    "bc_timeLeft": 0,
+    "liveBpu": {
+        "socketId": null,
+        "index": -1,
+        "name": "default",
+        "id": null
+    },
+    "bc_isLiveSendingToLab": false,
+    "bc_startSendTime": null,
+    "exp_lastResort": {
+        "processingTime": 0,
+        "waitTime": 0,
+        "bpuName": "eug0",
+        "canidateBpus": [
+            {
+                "totalWaitTime": 0,
+                "bpuName": "eug0",
+                "alphaResponse": 0.7168863579812766,
+                "alphaActivity": 1,
+                "alphaPopulation": 1,
+                "alphaTime": 1,
+                "scripterResponse": 1.075329536971915,
+                "scripterPopulation": 55.519809914930306,
+                "scripterActivity": 124.47212737651938,
+                "magnification": 10,
+                "queueWaitTime": 0,
+                "finalScore": 0.9326
+            },
+            {
+                "totalWaitTime": 0,
+                "bpuName": "eug1",
+                "alphaResponse": 0.6488816447518364,
+                "alphaActivity": 1,
+                "alphaPopulation": 1,
+                "alphaTime": 1,
+                "scripterResponse": 0.9733224671277546,
+                "scripterPopulation": 52.13053394639318,
+                "scripterActivity": 142.5782458566778,
+                "magnification": 10,
+                "queueWaitTime": 0,
+                "finalScore": 0.9164
+            },
+            {
+                "totalWaitTime": 103275,
+                "bpuName": "eug2",
+                "alphaResponse": 1.57631240127508e-10,
+                "alphaActivity": 0.788682261014975,
+                "alphaPopulation": 0.14261273683735837,
+                "alphaTime": 0.3032858300788235,
+                "scripterResponse": 2.36446860191262e-10,
+                "scripterPopulation": 7.1306368418679185,
+                "scripterActivity": 78.8682261014975,
+                "magnification": 10,
+                "queueWaitTime": 103275,
+                "finalScore": 0.2159
+            }
+        ],
+        "rejectionReason": null,
+        "rejectionCounter": 0
+    },
+    "exp_statusMessages": [],
+    "exp_canceledReason": null,
+    "exp_isCanceled": false,
+    "exp_serverErrorCounter": 0,
+    "tag": {
+        "exp_lastResort": {
+            "totalWaitTime": -381,
+            "bpuName": "eug1",
+            "rejectionReason": null,
+            "rejectionCounter": 0,
+            "canidateBpus": [
+                {
+                    "totalWaitTime": 0,
+                    "bpuName": "eug0",
+                    "alphaResponse": 0.7168863579812766,
+                    "alphaActivity": 1,
+                    "alphaPopulation": 1,
+                    "alphaTime": 1,
+                    "scripterResponse": 1.075329536971915,
+                    "scripterPopulation": 55.519809914930306,
+                    "scripterActivity": 124.47212737651938,
+                    "magnification": 10,
+                    "queueWaitTime": 0,
+                    "finalScore": 0.9326
+                },
+                {
+                    "totalWaitTime": -381,
+                    "bpuName": "eug1",
+                    "alphaResponse": 0.6488816447518364,
+                    "alphaActivity": 1,
+                    "alphaPopulation": 1,
+                    "alphaTime": 1.0044111853572435,
+                    "scripterResponse": 0.9733224671277546,
+                    "scripterPopulation": 52.13053394639318,
+                    "scripterActivity": 142.5782458566778,
+                    "magnification": 10,
+                    "queueWaitTime": -381,
+                    "finalScore": 0.9185
+                },
+                {
+                    "totalWaitTime": 104340,
+                    "bpuName": "eug2",
+                    "alphaResponse": 1.57631240127508e-10,
+                    "alphaActivity": 0.788682261014975,
+                    "alphaPopulation": 0.14261273683735837,
+                    "alphaTime": 0.29957725533485463,
+                    "scripterResponse": 2.36446860191262e-10,
+                    "scripterPopulation": 7.1306368418679185,
+                    "scripterActivity": 78.8682261014975,
+                    "magnification": 10,
+                    "queueWaitTime": 104340,
+                    "finalScore": 0.2142
+                }
+            ]
+        },
+        "exp_eventsRunTime": 0,
+        "exp_submissionTime": 1464740515839,
+        "exp_status": "created",
+        "id": "574e2aa30323e3ac78ca97fa",
+        "exp_wantsBpuName": null,
+        "group_experimentType": "text",
+        "bc_startSendTime": null,
+        "bc_isLiveSendingToLab": false,
+        "session": {
+            "socketID": "ZhGAuTt0HqotkOc1AAAN",
+            "sessionID": "1h7bzbrLx3QamiBo9W5aVwyoQWABgTUp",
+            "id": "574e24db147b4b0079c170d1"
+        },
+        "user": {
+            "groups": [
+                "default"
+            ],
+            "name": "zhossain",
+            "id": "563abcaeb56301a66b39630d"
+        }
+    },
+    "exp_eventsRunTime": 0,
+    "exp_metaData": {
+        "magnification": 10,
+        "tag": "cl json testing tag",
+        "description": "testing description",
+        "runTime": 20000,
+        "group_experimentType": "text",
+        "clientCreationDate": "2016-06-01T00:21:55.799Z",
+        "userUrl": "/account/joinlabwithdata/",
+        "numFrames": 130,
+        "saveTime": "2016-06-01T00:22:48.028Z",
+        "lightDataSoapPath": "/home/pi/bpuData/tempExpData/lightdata.json",
+        "lightDataPath": "/home/pi/bpuData/tempExpData/lightdata_meta.json",
+        "ExpFullPath": "/home/pi/bpuData/tempExpData/574e2aa30323e3ac78ca97fa.json",
+        "ExpName": "574e2aa30323e3ac78ca97fa"
+    },
+    "exp_eventsToRun": [
+        {
+            "topValue": 0,
+            "rightValue": 0,
+            "bottomValue": 0,
+            "leftValue": 0,
+            "time": 0
+        },
+        {
+            "topValue": 0,
+            "rightValue": 0,
+            "bottomValue": 0,
+            "leftValue": 100,
+            "time": 20000
+        }
+    ],
+    "exp_wantsBpuName": null,
+    "session": {
+        "id": "574e24db147b4b0079c170d1",
+        "socketID": "ZhGAuTt0HqotkOc1AAAN",
+        "sessionID": "1h7bzbrLx3QamiBo9W5aVwyoQWABgTUp"
+    },
+    "user": {
+        "id": "563abcaeb56301a66b39630d",
+        "groups": [
+            "default"
+        ],
+        "name": "zhossain"
+    },
+    "bc_serverInfo": {
+        "Identifier": "b3cagcde2684ebd2cba325555ec2703b",
+        "Name": "InternalWeb1",
+        "arePassKeysOpen": true,
+        "PassKeys": []
+    }
+}

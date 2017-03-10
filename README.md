@@ -24,6 +24,6 @@ The project can then be found at localhost:3000. If a different port is desired,
 
 If you just wish to run the server by itself, use the following command.  
 
-> $ gulp up
+> $ npm start
 
 If running the above command, please make sure you have run the build for the project at least once.

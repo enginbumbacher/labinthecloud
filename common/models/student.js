@@ -15,10 +15,10 @@ module.exports = function(Student) {
           source_id: source_id,
           source: source
         }, function(err, user) {
-          cb(null, user.id)
+          cb(null, user.id, user.source_id)
         })
       } else {
-        cb(null, user.id)
+        cb(null, user.id, user.source_id)
       }
     })
   };
@@ -31,9 +31,12 @@ module.exports = function(Student) {
       arg: 'source',
       type: 'string'
     }],
-    returns: {
-      'arg': 'id',
+    returns: [{
+      'arg': 'user_id',
       'type': 'number'
-    }
+    }, {
+      'arg': 'source_id',
+      'type': 'string'
+    }]
   })
 };

@@ -81,7 +81,13 @@ gulp.task('watch', function() {
 });
 
 gulp.task('up', function() {  
-  var server = gls('./server/server.js');
+  var server = gls('./server/server.js', {
+    env: {
+      NODE_ENV: options.env,
+      host: options.host,
+      port: options.port
+    }
+  });
   server.start();
   gulp.watch(['client/**/*.css', 'client/**/*.html', 'client/**/*.js'], function(file) {
     server.notify.apply(server, [file]);

@@ -8,9 +8,9 @@
     "port": 3306,
     "url": "",
     "database": "euglena",
-    "password": "strata-nisei-medicine-castled",
     "name": "mysql",
-    "user": "eug_root",
+    "user": "MYSQL_USERNAME",
+    "password": "MYSQL_PASSWORD",
     "connector": "mysql"
   }
 }

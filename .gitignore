@@ -4,6 +4,7 @@ Gemfile.lock
 **/.sass-cache
 **/node_modules
 server/public
+client
 
 *.sublime-project
 *.sublime-workspace

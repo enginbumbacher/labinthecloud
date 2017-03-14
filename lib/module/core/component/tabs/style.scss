@@ -1,0 +1,40 @@
+@import "../../../../scss_includes/mixins";
+@import "../../../../scss_includes/variables";
+
+.component__tabs {
+  .tabs__tabs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid $palette__gray__medium;
+
+    li {
+      display: inline-block;
+      border-right: 1px solid $palette__gray__medium;
+      border-top: 1px solid $palette__gray__medium;
+      &:first-child {
+        border-left: 1px solid $palette__gray__medium;
+        border-top-left-radius: 4px;
+      }
+      &:last-child {
+        border-top-right-radius: 4px;
+      }
+    }
+  }
+  .tab__label {
+    display: inline-block;
+    padding: 0.5em;
+    cursor: pointer;
+
+    &:hover {
+      background: $palette__gray__light;
+    }
+  }
+  .tab {
+    background: $palette__gray__medium;
+  }
+  .tab__selected {
+    font-weight: bold;
+    background: $palette__gray__light;
+  }
+}

@@ -13,13 +13,13 @@
   overflow-x: hidden;
   overflow-y: auto;
   
-  &-left {
+  &__interactive {
     flex: 1;
     min-width: 365px;
     background: $palette__gray__light;
     border-right: 1px solid $palette__gray__dark;
   } 
-  &-main {
+  &__result {
     flex: 4;
   }
 }

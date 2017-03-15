@@ -8,9 +8,9 @@
     "port": 3306,
     "url": "",
     "database": "euglena",
+    "password": "MYSQL_PASSWORD",
     "name": "mysql",
     "user": "MYSQL_USERNAME",
-    "password": "MYSQL_PASSWORD",
     "connector": "mysql"
   }
 }

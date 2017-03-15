@@ -35,5 +35,13 @@
   "Student": {
     "dataSource": "mysql",
     "public": true
+  },
+  "Experiment": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "Result": {
+    "dataSource": "mysql",
+    "public": true
   }
 }

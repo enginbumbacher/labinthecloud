@@ -10,8 +10,25 @@
   <body>
     <script type="text/javascript">
       window.EuglenaConfig = {
-        dryRunRate: 4,
-        experimentLength: 60,
+        experiment: {
+          maxDuration: 60
+        },
+        visualization: {
+          aggregate: {
+            allow: false
+          },
+          visualizationTypes: [{
+            id: "circle",
+            label: "Circle",
+            settings: {
+              binCount: 24, //15° bins
+              dT: 0.5,
+              tStep: 2,
+              width: 160,
+              height: 160
+            }
+          }]
+        },
         visualizationType: ["circle"],
         dataVis: {
           circle: {

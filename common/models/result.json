@@ -6,28 +6,28 @@
     "validateUpsert": true
   },
   "properties": {
-    "experiment_id": {
-      "type": "number",
-      "required": true
-    },
     "bpu_api_id": {
       "type": "string",
-      "required": true
+      "required": false
+    },
+    "model_id": {
+      "type": "number",
+      "required": false
     },
     "date_created": {
       "type": "date",
       "required": true,
       "default": "$now"
-    },
-    "tracks": {
-      "type": [
-        "object"
-      ],
-      "required": true
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "experiment": {
+      "type": "belongsTo",
+      "model": "Experiment",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": {}
 }

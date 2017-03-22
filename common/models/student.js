@@ -7,18 +7,18 @@ module.exports = function(Student) {
         source_id: source_id,
         source: source
       }
-    }, function(err, user) {
+    }, function(err, student) {
       if (err) throw err;
 
-      if (!user) {
+      if (!student) {
         Student.create({
           source_id: source_id,
           source: source
-        }, function(err, user) {
-          cb(null, user.id, user.source_id)
+        }, function(err, student) {
+          cb(null, student.id, student.source_id)
         })
       } else {
-        cb(null, user.id, user.source_id)
+        cb(null, student.id, student.source_id)
       }
     })
   };
@@ -32,7 +32,7 @@ module.exports = function(Student) {
       type: 'string'
     }],
     returns: [{
-      'arg': 'user_id',
+      'arg': 'student_id',
       'type': 'number'
     }, {
       'arg': 'source_id',

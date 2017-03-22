@@ -8,14 +8,14 @@
 }
 .panel {
   position: relative;
-  padding: 15px;
+  padding: 1.5rem;
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
   
   &__interactive {
     flex: 1;
-    min-width: 365px;
+    min-width: 37rem;
     background: $palette__gray__light;
     border-right: 1px solid $palette__gray__dark;
   } 
@@ -56,7 +56,8 @@
   }
 }
 
-button.button {
+.component__button button.button {
+  padding: 10px;
   &:hover {
     background: $palette__gray__medium;
     // color: $white;
@@ -67,14 +68,15 @@ button.button {
   position: absolute;
   top: 100%;
   left: 0;
-  padding: 20px;
+  padding: 1.5rem 2rem;
   width: 100%;
-  font-size: 12px;
-  border-top: 1px solid $palette__gray__dark;
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+  border-top: 0.1rem solid $palette__gray__dark;
   transition: 0.5s ease top;
 
   &__open {
-    top: calc(100% - 1em - 40px);
+    top: calc(100% - 4.3rem);
   }
 
   .logout {

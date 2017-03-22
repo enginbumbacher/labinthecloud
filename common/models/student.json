@@ -16,7 +16,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "experiments": {
+      "type": "hasMany",
+      "model": "Experiment",
+      "foreignKey": "studentId"
+    }
+  },
   "acls": [],
   "methods": {}
 }

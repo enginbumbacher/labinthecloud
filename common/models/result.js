@@ -11,7 +11,7 @@ const createBpuResults = (context) => {
     .then((downloads) => {
       let report = JSON.parse(downloads[0]),
         tracks = JSON.parse(downloads[1]);
-      let fps = report.exp_metaData.numFrames / ((report.exp_runEndTime - report.exp_runStartTime) / 1000);
+      let fps = report.exp_metaData.numFrames / (report.exp_metaData.runTime / 1000);
       let parsedTracks = [];
       for (let track of tracks) {
         let ptrack = {
@@ -35,6 +35,9 @@ const createBpuResults = (context) => {
 
       const storageDir = process.cwd() + '/client/results/' + context.args.data.experimentId + '/live'
       const fileName = storageDir + '/' + context.args.data.bpu_api_id + '.json';
+
+      context.args.data.runTime = report.exp_metaData.runTime / 1000;
+      context.args.data.numFrames = report.exp_metaData.numFrames;
 
       return new Promise((resolve, reject) => {
         mkdirp(storageDir, (err) => {
@@ -63,6 +66,44 @@ const _createOneEyeResults = (context) => {
   Promise.resolve(true);
 }
 
+const loadMeta = (context) => {
+  const backFill = (context.data.bpu_api_id && !context.data.runTime
+    ? rp('http://biotic.stanford.edu/account/joinlabwithdata/downloadFile/' + context.data.bpu_api_id + '/' + context.data.bpu_api_id + '.json')
+      .then((data) => {
+        const report = JSON.parse(data);
+        context.data.runTime = report.exp_metaData.runTime / 1000;
+        context.data.numFrames = report.exp_metaData.numFrames;
+        return true;
+      })
+    : Promise.resolve(true));
+  const trackLoad = new Promise((resolve, reject) => {
+    let trackFile = [process.cwd(), 'client', 'results', context.data.experimentId]
+    if (context.data.bpu_api_id) {
+      trackFile.push('live', context.data.bpu_api_id);
+    } else {
+      trackFile.push('model', context.data.model_id);
+    }
+    trackFile = trackFile.join('/') + '.json';
+    fs.access(trackFile, (err) => {
+      if (err) {
+        resolve(true);
+      } else {
+        const trackData = fs.readFileSync(trackFile);
+        context.data.tracks = JSON.parse(trackData);
+        resolve(true);
+      }
+    })
+  })
+  return Promise.all([backFill, trackLoad]).then(() => {
+    if (context.data.bpu_api_id) {
+      context.data.video = `http://biotic.stanford.edu/account/joinlabwithdata/downloadFile/${context.data.bpu_api_id}/movie.mp4`;
+    }
+    return context;
+  }).catch((err) => {
+    console.log(err);
+  })
+}
+
 module.exports = (Result) => {
   Result.beforeRemote('create', (context, instances, next) => {
     if (context.args.data.bpu_api_id) {
@@ -76,23 +117,9 @@ module.exports = (Result) => {
     }
   });
 
-  Result.observe('loaded', (ctx, cb) => {
-    let trackFile = [process.cwd(), 'client', 'results', ctx.data.experimentId]
-    if (ctx.data.bpu_api_id) {
-      trackFile.push('live', ctx.data.bpu_api_id);
-      ctx.data.video = 'http://biotic.stanford.edu/account/joinlabwithdata/downloadFile/' + ctx.data.bpu_api_id + '/movie.mp4';
-    } else {
-      trackFile.push('model', ctx.data.model_id);
-    }
-    trackFile = trackFile.join('/') + '.json';
-    fs.access(trackFile, (err) => {
-      if (err) {
-        cb();
-      } else {
-        const trackData = fs.readFileSync(trackFile);
-        ctx.data.tracks = JSON.parse(trackData);
-        cb();
-      }
-    })
+  Result.observe('loaded', (ctx, next) => {
+    loadMeta(ctx).then(() => {
+      next();
+    });
   });
 };

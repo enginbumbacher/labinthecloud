@@ -27,36 +27,32 @@
               width: 160,
               height: 160
             }
+          }, {
+            id: "histogram",
+            label: "Histogram",
+            settings: {
+              binCount: 10,
+              vRange: null,
+              mode: 'total',
+              dT: 2,
+              tStep: 1,
+
+              width: 300,
+              height: 160
+            }
+          }, {
+            id: "timeseries",
+            label: "Time Series",
+            settings: {
+              vRange: null,
+              mode: 'total',
+              stdBand: true,
+              dT: 1,
+
+              width: 300,
+              height: 200
+            }
           }]
-        },
-        visualizationType: ["circle"],
-        dataVis: {
-          circle: {
-            binCount: 24, //15° bins
-            dT: 0.5,
-            tStep: 2,
-            width: 160,
-            height: 160
-          },
-          histogram: {
-            binCount: 10,
-            vRange: null,
-            mode: 'component',
-            dT: 2,
-            tStep: 1,
-
-            width: 300,
-            height: 160
-          },
-          timeseries: {
-            vRange: null,
-            mode: 'component',
-            stdBand: true,
-            dT: 1,
-
-            width: 300,
-            height: 200
-          }
         },
         view3d: {
           count: 30,

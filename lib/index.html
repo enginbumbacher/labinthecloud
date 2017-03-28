@@ -13,6 +13,56 @@
         experiment: {
           maxDuration: 60
         },
+        model: {
+          tabs: [{
+            modelType: "oneEye",
+            parameters: {
+              K: {
+                label: "K",
+                range: [-0.001, 0.001],
+                resolution: 0.0001,
+                initialValue: -0.0001
+              },
+              K_delta: {
+                range: [0, 1],
+                resolution: 0.01,
+                initialValue: 0.2
+              },
+              v: {
+                label: "v",
+                range: [-0.001, 0.001],
+                resolution: 0.0001,
+                initialValue: -0.0001
+              },
+              v_delta: {
+                range: [0, 1],
+                resolution: 0.01,
+                initialValue: 0.2
+              },
+              omega: {
+                label: "Ω",
+                range: [-0.001, 0.001],
+                resolution: 0.0001,
+                initialValue: -0.0001
+              },
+              omega_delta: {
+                range: [0, 1],
+                resolution: 0.01,
+                initialValue: 0.2
+              },
+              randomness: {
+                label: "Randomness",
+                range: [0, 1],
+                resolution: 0.01,
+                initialValue: 0.03
+              }
+            }
+          }],
+          euglenaCount: {
+            range: [10, 50],
+            initialValue: 30
+          }
+        },
         visualization: {
           aggregate: {
             allow: false

@@ -1,0 +1,24 @@
+@import "../../../scss_includes/variables";
+
+.form {
+  &__model {
+    &__history {
+      margin: 1.5rem 0;
+
+      .field__label {
+        margin-right: 1rem;
+        font-size: 1.2rem;
+      }
+    }
+    
+    .form__buttons {
+      margin-top: 2rem;
+    }
+    &__submit {
+      float:right;
+    }
+    &__aggregate {
+      float:right;
+    }
+  }
+}

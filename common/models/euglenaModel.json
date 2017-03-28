@@ -1,22 +1,22 @@
 {
-  "name": "Result",
+  "name": "EuglenaModel",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "bpu_api_id": {
+    "name": {
       "type": "string",
-      "required": false
+      "required": true
     },
-    "numFrames": {
-      "type": "number",
-      "required": false
+    "modelType": {
+      "type": "string",
+      "required": true
     },
-    "runTime": {
-      "type": "number",
-      "required": false
+    "configuration": {
+      "type": "object",
+      "required": true
     },
     "date_created": {
       "type": "date",
@@ -26,15 +26,15 @@
   },
   "validations": [],
   "relations": {
-    "experiment": {
+    "student": {
       "type": "belongsTo",
-      "model": "Experiment",
+      "model": "Student",
       "foreignKey": ""
     },
-    "euglenaModel": {
-      "type": "belongsTo",
-      "model": "EuglenaModel",
-      "foreignKey": ""
+    "results": {
+      "type": "hasMany",
+      "model": "Result",
+      "foreignKey": "euglenaModelId"
     }
   },
   "acls": [],

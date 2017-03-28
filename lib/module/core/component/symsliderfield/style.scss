@@ -1,0 +1,67 @@
+@import "../../../../scss_includes/variables";
+
+.component__symsliderfield {
+  .symsliderfield {
+    &__field_wrap {
+      position: relative;
+      margin: 1rem 0;
+    }
+
+    &__track {
+      width: 100%;
+      height: 0.5rem;
+      border-radius: 0.5rem;
+      background: $palette__gray__medium_dark;
+      position: relative;
+      border: 0.1rem solid $palette__white;
+    }
+
+    &__span {
+      position: absolute;
+      top: 0;
+      left: 0%;
+      width: 0%;
+      height: 100%;
+      background: rgba(0,0,0,0.25);
+
+      &:first-child,
+      &:last-child {
+        background: transparent;
+      }
+    }
+
+    &__control {
+      position: absolute;
+      top: 0;
+      left: 0%;
+      border: 0.1rem solid $palette__gray__medium_dark;
+      border-radius: 100%;
+
+      &__base {
+        width: 2.5rem;
+        height: 2.5rem;
+        background: $palette__gray__medium;
+        margin-left: -1.25rem;
+        margin-top: -1rem;
+        z-index: 2;
+      }
+      &__delta_min,
+      &__delta_max {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-left: -0.75rem;
+        margin-top: -0.5rem;
+        background: $palette__gray__light;
+        z-index: 1;
+      }
+    }
+
+    &__inputs {
+      text-align: center;
+
+      input {
+        width: 6rem;
+      }
+    }
+  }
+}

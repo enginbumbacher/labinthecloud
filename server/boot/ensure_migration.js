@@ -1,3 +1,3 @@
 module.exports = function(app) {
-  app.dataSources.mysql.autoupdate(['Student', 'Experiment', 'Result']);
+  app.dataSources.mysql.autoupdate(['Student', 'Experiment', 'Result', 'EuglenaModel']);
 }

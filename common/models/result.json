@@ -1,0 +1,33 @@
+{
+  "name": "Result",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "experiment_id": {
+      "type": "number",
+      "required": true
+    },
+    "bpu_api_id": {
+      "type": "string",
+      "required": true
+    },
+    "date_created": {
+      "type": "date",
+      "required": true,
+      "default": "$now"
+    },
+    "tracks": {
+      "type": [
+        "object"
+      ],
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

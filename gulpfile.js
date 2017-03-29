@@ -74,7 +74,7 @@ gulp.task('copy-static', function() {
     .pipe(gulp.dest('client/cslib/thirdparty'));
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', ['build-css', 'build-js', 'copy-static'], function() {
   gulp.watch('lib/**/*.scss', ['build-css']);
   gulp.watch('lib/**/*.js', ['build-js']);
   gulp.watch('lib/**/*.html', ['copy-static']);

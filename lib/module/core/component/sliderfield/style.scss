@@ -4,7 +4,7 @@
   .sliderfield {
     &__field_wrap {
       position: relative;
-      margin: 1rem 0;
+      margin: 1rem 1.5rem;
     }
 
     &__track {
@@ -41,6 +41,13 @@
       margin-left: -1.25rem;
       margin-top: -1rem;
       border: 0.1rem solid $palette__gray__medium_dark;
+    }
+
+    &__inputs {
+      input {
+        text-align: center;
+      }
+      text-align: center;
     }
   }
 }

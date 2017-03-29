@@ -1,0 +1,22 @@
+@import "../../../scss_includes/variables";
+
+.panel__interactive {
+
+  .component__tabs {
+    height: calc(100% - 14rem);
+    position: relative;
+    .tab {
+      border-bottom: 1px solid transparent;
+      margin-bottom: -1px;
+
+      &__selected {
+        border-bottom-color: $palette__gray__light;
+      }
+    }
+
+    .tabs__page {
+      height: calc(100% - 3rem);
+      overflow-y: auto;
+    }
+  }
+}

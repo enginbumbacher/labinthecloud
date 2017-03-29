@@ -1,0 +1,36 @@
+{
+  "name": "Experiment",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "configuration": {
+      "type": [
+        "object"
+      ],
+      "required": true
+    },
+    "date_created": {
+      "type": "date",
+      "required": true,
+      "default": "$now"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "student": {
+      "type": "belongsTo",
+      "model": "Student",
+      "foreignKey": ""
+    },
+    "results": {
+      "type": "hasMany",
+      "model": "Result",
+      "foreignKey": "experimentId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

@@ -1,0 +1,41 @@
+{
+  "name": "Result",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "bpu_api_id": {
+      "type": "string",
+      "required": false
+    },
+    "model_id": {
+      "type": "number",
+      "required": false
+    },
+    "numFrames": {
+      "type": "number",
+      "required": false
+    },
+    "runTime": {
+      "type": "number",
+      "required": false
+    },
+    "date_created": {
+      "type": "date",
+      "required": true,
+      "default": "$now"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "experiment": {
+      "type": "belongsTo",
+      "model": "Experiment",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

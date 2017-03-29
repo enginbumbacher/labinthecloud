@@ -1,0 +1,44 @@
+@import "../../../scss_includes/variables";
+
+.form {
+  &__experiment {
+    &__history {
+      margin: 1.5rem 0;
+
+      .field__label {
+        margin-right: 1rem;
+        font-size: 1.2rem;
+      }
+    }
+    .form__buttons {
+      margin-top: 2rem;
+    }
+    &__dry_run {
+
+    }
+    &__submit {
+      float:right;
+    }
+    &__aggregate {
+      float:right;
+    }
+  }
+}
+
+.tab__experiment {
+  .light-display {
+    display: block;
+    margin: 2rem auto 1rem;
+    width: 22rem;
+
+    &__content {
+      color: $palette__white;
+      text-align: center;
+
+      .dry_run__time {
+        line-height: 15rem;
+        text-align: center;
+      }
+    }
+  }
+}

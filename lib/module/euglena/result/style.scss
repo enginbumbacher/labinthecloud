@@ -1,0 +1,29 @@
+@import "../../../scss_includes/variables";
+
+.results {
+  &__controls {
+    padding: 1.5rem;
+    margin: -1.5rem -1.5rem 1rem;
+    background: $palette__gray__medium_dark;
+    border-bottom: 1px solid $palette__gray__dark;
+    display: flex;
+
+    & > div {
+      flex: 1;
+    }
+
+    label {
+      margin-right: 1rem;
+      font-weight: bold;
+    }
+    &__experiment {
+      text-align: left;
+    }
+    &__model {
+      text-align: center;
+    }
+    &__visualization {
+      text-align: right;
+    }
+  }
+}

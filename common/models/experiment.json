@@ -6,10 +6,6 @@
     "validateUpsert": true
   },
   "properties": {
-    "user_id": {
-      "type": "number",
-      "required": true
-    },
     "configuration": {
       "type": [
         "object"
@@ -23,7 +19,18 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "student": {
+      "type": "belongsTo",
+      "model": "Student",
+      "foreignKey": ""
+    },
+    "results": {
+      "type": "hasMany",
+      "model": "Result",
+      "foreignKey": "experimentId"
+    }
+  },
   "acls": [],
   "methods": {}
 }

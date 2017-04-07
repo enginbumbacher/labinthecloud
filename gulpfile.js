@@ -44,7 +44,7 @@ gulp.task('build-js', function() {
   return gulp.src(['lib/**/*.js', '!lib/thirdparty/**/*.js'])
     .pipe(sourcemaps.init())
     .pipe(babel({
-      presets: ['es2015']
+      presets: [['env']]
     }))
     .on('error', function(e) {
       console.error(e);

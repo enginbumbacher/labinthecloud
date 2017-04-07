@@ -35,7 +35,7 @@ module.exports = {
       }
 
       let intensity_theta = Math.acos(EuglenaUtils.dot(v_eye, v_light));
-      let intensity_light = Math.cos(intensity_theta) * config.lights[k];
+      let intensity_light = Math.cos(intensity_theta) * config.lights[k] / 100;
       if (Math.cos(intensity_theta) >= 0 && intensity_light > 0) {
         let parity = Math.sign(v_head.x * v_light.y - v_head.y * v_light.x);
         intensity += intensity_light;
@@ -47,7 +47,7 @@ module.exports = {
     const dT = 1 / config.result.fps;
     const out = {
       time: config.frame * dT,
-      angle: config.last.angle + config.track.oneEye.k * intensity + (Math.random() * 2 - 1) * config.model.configuration.randomness,
+      angle: config.last.angle + (config.track.oneEye.k * intensity + (Math.random() * 2 - 1) * config.model.configuration.randomness * Math.PI) * dT,
       roll: config.last.roll + config.track.oneEye.omega * dT
     }
     out.x = config.last.x + Math.cos(out.angle) * config.track.oneEye.v * dT

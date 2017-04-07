@@ -28,17 +28,23 @@ const createBpuResults = (app, context) => {
         }
         let lastPos = null;
         let lastSample = null;
-        for (let sample of track.samples) {
+        track.samples.forEach((sample, ind) => {
           let psample = {
             time: sample.frame / fps,
             x: sample.rect[0],
             y: sample.rect[1],
-            angle: sample.rect[4]
+            angle: sample.rect[4] * Math.PI / 180
           }
-          if (psample.angle < 0) psample.angle += 360;
+          if (psample.angle < 0) psample.angle += 2 * Math.PI;
+          if (lastSample) {
+            //validate angle by velocity
+            if ((psample.x - lastSample.x < 0 && Math.cos(psample.angle) > 0) || (psample.x - lastSample.x > 0 && Math.cos(psample.angle) < 0)) {
+              psample.angle = (psample.angle + Math.PI) % (2 * Math.PI);
+            }
+          }
           lastSample = psample;
           ptrack.samples.push(psample);
-        }
+        })
         parsedTracks.push(ptrack);
       }
 

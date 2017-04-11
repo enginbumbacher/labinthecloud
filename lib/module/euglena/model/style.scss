@@ -61,5 +61,12 @@
     &__aggregate {
       float:right;
     }
+
+    &__name {
+      padding: 1rem;
+      &__submit {
+        float:right;
+      }
+    }
   }
 }

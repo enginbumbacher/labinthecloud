@@ -75,13 +75,15 @@ const createBpuResults = (app, context) => {
 
 const createModelResults = (app, context) => {
   return new Promise((resolve, reject) => {
-    app.models.EuglenaModel.findById(context.args.data.modelId), (err, eugModel) => {
+    app.models.EuglenaModel.findById(context.args.data.euglenaModelId, (err, eugModel) => {
       if (err) {
+        console.log(err);
         reject(err);
       } else {
-        resolve(eugModel);        
+        console.log(eugModel);
+        resolve(eugModel);
       }
-    }
+    })
   }).then((eugModel) => {
     return _createModelResults(app, context.args.data, eugModel);
   })
@@ -207,7 +209,7 @@ module.exports = (Result) => {
         console.error(err.stack);
         next();
       })
-    } else if (context.args.data.modelId) {
+    } else if (context.args.data.euglenaModelId) {
       createModelResults(Result.app, context).then(() => {
         next();
       }).catch((err) => {

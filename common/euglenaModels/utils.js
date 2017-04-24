@@ -17,7 +17,7 @@ function _transform_rotate_y(theta, vector) {
 function _transform_rotate_z(theta, vector) {
   return {
     x: Math.cos(theta) * vector.x - Math.sin(theta) * vector.y,
-    y: Math.sin(theta) * vector.x + Math.sin(theta) * vector.y,
+    y: Math.sin(theta) * vector.x + Math.cos(theta) * vector.y,
     z: vector.z
   }
 }

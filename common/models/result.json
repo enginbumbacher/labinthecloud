@@ -26,6 +26,10 @@
     "trackFile": {
       "type": "string",
       "required": false
+    },
+    "magnification": {
+      "type": "number",
+      "required": false
     }
   },
   "validations": [],

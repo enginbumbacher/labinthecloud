@@ -2,7 +2,9 @@
 var rp = require('request-promise'),
   fs = require('fs'),
   mkdirp = require('mkdirp'),
-  uuidV4 = require('uuid/v4');
+  uuidV4 = require('uuid/v4'),
+  ffprobe = require('ffprobe'),
+  ffprobeStatic = require('ffprobe-static');
 
 const EuglenaUtils = require('../euglenaModels/utils.js');
 
@@ -10,16 +12,23 @@ const euglenaModels = {
   oneEye: require('../euglenaModels/oneEye.js')
 }
 
+const downloadBasePath = 'http://biotic.stanford.edu/account/joinlabwithdata/downloadFile';
+
 const createBpuResults = (app, context) => {
   return Promise.all([
-      rp('http://biotic.stanford.edu/account/joinlabwithdata/downloadFile/' + context.args.data.bpu_api_id + '/' + context.args.data.bpu_api_id + '.json'),
-      rp('http://biotic.stanford.edu/account/joinlabwithdata/downloadFile/' + context.args.data.bpu_api_id + '/tracks.json')
+      rp(`${downloadBasePath}/${context.args.data.bpu_api_id}/${context.args.data.bpu_api_id}.json`),
+      rp(`${downloadBasePath}/${context.args.data.bpu_api_id}/tracks.json`),
+      ffprobe(`${downloadBasePath}/${context.args.data.bpu_api_id}/movie.mp4`, { path: ffprobeStatic.path })
     ])
     .then((downloads) => {
       let report = JSON.parse(downloads[0]),
-        tracks = JSON.parse(downloads[1]);
+        tracks = JSON.parse(downloads[1]),
+        exif = downloads[2];
+      exif = exif.streams.filter((a) => a.codec_type == "video")[0];
       let fps = report.exp_metaData.numFrames / (report.exp_metaData.runTime / 1000);
+      let magnification = report.exp_metaData.magnification;
       let parsedTracks = [];
+      let maxWidth = 0;
       for (let track of tracks) {
         let ptrack = {
           startTime: track.startFrame / fps,
@@ -33,16 +42,38 @@ const createBpuResults = (app, context) => {
             time: sample.frame / fps,
             x: sample.rect[0],
             y: sample.rect[1],
-            angle: sample.rect[4] * Math.PI / 180
+            yaw: sample.rect[4]
           }
-          if (psample.angle < 0) psample.angle += 2 * Math.PI;
+          maxWidth = Math.max(sample.rect[2] / magnification, sample.rect[3] / magnification, maxWidth);
+
+          // place (0,0) at center, rather than top left of video
+          psample.x = psample.x - exif.width / 2;
+          psample.y = psample.y - exif.height / 2;
+
+          // adjust position for magnification level
+          psample.x = psample.x / magnification;
+          psample.y = psample.y / magnification;
+
+          // convert degrees to radians
+          psample.yaw = psample.yaw * Math.PI / 180;
+
+          //invert y axis, which also requires inverting yaw
+          psample.y = -psample.y;
+          psample.yaw = -psample.yaw;
+
+          // ensure positive yaw
+          while (psample.yaw < 0) {
+            psample.yaw += 2 * Math.PI;
+          }
+
+          //validate yaw by velocity
           if (lastSample) {
-            //validate angle by velocity
-            if ((psample.x - lastSample.x < 0 && Math.cos(psample.angle) > 0) || (psample.x - lastSample.x > 0 && Math.cos(psample.angle) < 0)) {
-              psample.angle = (psample.angle + Math.PI) % (2 * Math.PI);
+            if ((psample.x - lastSample.x < 0 && Math.cos(psample.yaw) > 0) || (psample.x - lastSample.x > 0 && Math.cos(psample.yaw) < 0)) {
+              psample.yaw = (psample.yaw + Math.PI) % (2 * Math.PI);
             }
           }
           lastSample = psample;
+
           ptrack.samples.push(psample);
         })
         parsedTracks.push(ptrack);
@@ -54,7 +85,9 @@ const createBpuResults = (app, context) => {
       context.args.data.trackFile = fileName;
       context.args.data.runTime = report.exp_metaData.runTime / 1000;
       context.args.data.numFrames = report.exp_metaData.numFrames;
-      // context.args.data.tracks = parsedTracks;
+      context.args.data.magnification = report.exp_metaData.magnification;
+
+      console.log(`Maximum length: ${maxWidth}`);
 
       return new Promise((resolve, reject) => {
         mkdirp(`${process.cwd()}/client${storageDir}`, (err) => {
@@ -77,10 +110,8 @@ const createModelResults = (app, context) => {
   return new Promise((resolve, reject) => {
     app.models.EuglenaModel.findById(context.args.data.euglenaModelId, (err, eugModel) => {
       if (err) {
-        console.log(err);
         reject(err);
       } else {
-        console.log(eugModel);
         resolve(eugModel);
       }
     })
@@ -101,6 +132,25 @@ const _createModelResults = (app, result, model) => {
       resolve(experiment);
     })
   }).then((experiment) => {
+    return new Promise((resolve, reject) => {
+      app.models.Result.find({
+        where: {
+          experimentId: experiment.id,
+          bpu_api_id: {
+            neq: null
+          }
+        }
+      }, (err, result) => {
+        if (err) { reject(err); return; }
+        resolve({
+          experiment: experiment,
+          liveResult: result[0]
+        })
+      })
+    })
+  }).then((meta) => {
+    const experiment = meta.experiment;
+    const liveResult = meta.liveResult;
     const duration = experiment.configuration.reduce((acc, conf) => {
       return acc + conf.duration
     }, 0);
@@ -108,21 +158,33 @@ const _createModelResults = (app, result, model) => {
     result.numFrames = duration * result.fps;
     const tracks = [];
     for (let euglenaId = 0; euglenaId < model.configuration.count; euglenaId++) {
+      let initialization = {
+        x: (Math.random() * 2 - 1) * 640 / (2 * liveResult.magnification),
+        y: (Math.random() * 2 - 1) * 480 / (2 * liveResult.magnification),
+        z: 0,
+        yaw: Math.random() * 2 * Math.PI,
+        roll: Math.random() * 2 * Math.PI,
+        pitch: 0,
+      };
+      if (result.initialization && result.initialization.length > euglenaId) {
+        initialization = result.initialization[euglenaId]
+      }
       let track = {
         startTime: 0,
         lastTime: duration,
         samples: [{
           time: 0,
-          x: 0,
-          y: 0,
-          angle: Math.random() * 2 * Math.PI,
-          roll: Math.random() * 2 * Math.PI
+          x: initialization.x,
+          y: initialization.y,
+          z: initialization.z,
+          yaw: initialization.yaw,
+          roll: initialization.roll,
+          pitch: initialization.pitch,
         }]
       };
       euglenaModels[model.modelType].initialize({ track: track, model: model, result: result })
       tracks.push(track);
     }
-    // console.log(tracks, model, result, duration * result.fps);
     for (let frame = 1; frame <= duration * result.fps; frame++) {
       let lights = EuglenaUtils.lightsFromTime(experiment, frame / result.fps);
 
@@ -141,7 +203,7 @@ const _createModelResults = (app, result, model) => {
     const storageDir = `/results/${result.experimentId}/simulation`;
     const fileName = `${storageDir}/${uuidV4()}.json`;
     result.trackFile = fileName;
-    // result.tracks = tracks;
+    result.magnification = liveResult.magnification;
     delete result.model;
     delete result.fps;
 
@@ -162,7 +224,7 @@ const _createModelResults = (app, result, model) => {
 
 const loadMeta = (context) => {
   const backFill = (context.data.bpu_api_id && !context.data.runTime
-    ? rp('http://biotic.stanford.edu/account/joinlabwithdata/downloadFile/' + context.data.bpu_api_id + '/' + context.data.bpu_api_id + '.json')
+    ? rp(`${downloadBasePath}/${context.data.bpu_api_id}/${context.data.bpu_api_id}.json`)
       .then((data) => {
         const report = JSON.parse(data);
         context.data.runTime = report.exp_metaData.runTime / 1000;
@@ -191,7 +253,7 @@ const loadMeta = (context) => {
   })
   return Promise.all([backFill, trackLoad]).then(() => {
     if (context.data.bpu_api_id) {
-      context.data.video = `http://biotic.stanford.edu/account/joinlabwithdata/downloadFile/${context.data.bpu_api_id}/movie.mp4`;
+      context.data.video = `${downloadBasePath}/${context.data.bpu_api_id}/movie.mp4`;
     }
     return context;
   }).catch((err) => {

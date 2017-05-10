@@ -38,7 +38,16 @@
     text-align: center;
   }
 
+  &__display {
+    display: flex;
+  }
+  &__graphs {
+    flex: 2;
+  }
+
   &__legend {
+    flex: 1;
+
     &__experiment {
       &__list {
         border-collapse: collapse;

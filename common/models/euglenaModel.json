@@ -1,0 +1,42 @@
+{
+  "name": "EuglenaModel",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "modelType": {
+      "type": "string",
+      "required": true
+    },
+    "configuration": {
+      "type": "object",
+      "required": true
+    },
+    "date_created": {
+      "type": "date",
+      "required": true,
+      "default": "$now"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "student": {
+      "type": "belongsTo",
+      "model": "Student",
+      "foreignKey": ""
+    },
+    "results": {
+      "type": "hasMany",
+      "model": "Result",
+      "foreignKey": "euglenaModelId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

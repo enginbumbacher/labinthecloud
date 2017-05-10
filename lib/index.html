@@ -13,6 +13,53 @@
         experiment: {
           maxDuration: 60
         },
+        model: {
+          tabs: [{
+            modelType: "oneEye",
+            parameters: {
+              K: {
+                label: "K",
+                range: [-2, 2],
+                resolution: 0.01,
+                initialValue: {
+                  base: -1,
+                  delta: 0.2
+                }
+              },
+              v: {
+                label: "v",
+                range: [-20, 20],
+                resolution: 0.1,
+                initialValue: {
+                  base: 10,
+                  delta: 2
+                }
+              },
+              omega: {
+                label: "Ω",
+                range: [-2, 2],
+                resolution: 0.01,
+                initialValue: {
+                  base: 1,
+                  delta: 0.2
+                }
+              },
+              randomness: {
+                label: "Randomness",
+                range: [0, 1],
+                resolution: 0.01,
+                initialValue: 0.15
+              }
+            }
+          }, {
+            modelType: "twoEye"
+          }],
+          euglenaCount: {
+            range: [10, 50],
+            initialValue: 30
+          },
+          simulationFps: 12
+        },
         visualization: {
           aggregate: {
             allow: false
@@ -22,8 +69,8 @@
             label: "Circle",
             settings: {
               binCount: 24, //15° bins
-              dT: 0.5,
-              tStep: 2,
+              dT: 2,
+              tStep: 0.5,
               width: 160,
               height: 160
             }
@@ -55,7 +102,6 @@
           }]
         },
         view3d: {
-          count: 30,
           bounds: {
             width: 400,
             height: 300

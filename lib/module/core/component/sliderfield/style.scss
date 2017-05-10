@@ -1,0 +1,53 @@
+@import "../../../../scss_includes/variables";
+
+.component__sliderfield {
+  .sliderfield {
+    &__field_wrap {
+      position: relative;
+      margin: 1rem 1.5rem;
+    }
+
+    &__track {
+      width: 100%;
+      height: 0.5rem;
+      border-radius: 0.5rem;
+      background: $palette__gray__medium_dark;
+      position: relative;
+      border: 0.1rem solid $palette__white;
+    }
+
+    &__span {
+      position: absolute;
+      top: 0;
+      left: 0%;
+      width: 0%;
+      height: 100%;
+      background: rgba(0,0,0,0.25);
+
+      &:first-child,
+      &:last-child {
+        background: transparent;
+      }
+    }
+
+    &__control {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 100%;
+      background: $palette__gray__medium;
+      position: absolute;
+      top: 0;
+      left: 0%;
+      margin-left: -1.25rem;
+      margin-top: -1rem;
+      border: 0.1rem solid $palette__gray__medium_dark;
+    }
+
+    &__inputs {
+      input {
+        text-align: center;
+      }
+      text-align: center;
+    }
+  }
+}

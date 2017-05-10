@@ -263,6 +263,10 @@ const loadMeta = (context) => {
 
 module.exports = (Result) => {
   Result.beforeRemote('create', (context, instances, next) => {
+    if (context.args.data.demo) {
+      return next();
+    }
+    
     if (context.args.data.bpu_api_id) {
       createBpuResults(Result.app, context).then(() => {
         next();

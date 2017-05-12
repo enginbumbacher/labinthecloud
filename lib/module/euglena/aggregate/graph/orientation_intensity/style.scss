@@ -3,6 +3,11 @@
 .oringraph {
   .orin {
     &__axis {
+      &-x {
+        .domain {
+          display: none;
+        }
+      }
       &-label {
         fill: $palette__gray__dark;
         text-anchor: middle;

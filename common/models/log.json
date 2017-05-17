@@ -1,0 +1,35 @@
+{
+  "name": "Log",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "date_created": {
+      "type": "date",
+      "required": true,
+      "default": "$now"
+    },
+    "type": {
+      "type": "string",
+      "required": true
+    },
+    "category": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "student": {
+      "type": "belongsTo",
+      "model": "Student",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

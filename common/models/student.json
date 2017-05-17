@@ -21,6 +21,16 @@
       "type": "hasMany",
       "model": "Experiment",
       "foreignKey": "studentId"
+    },
+    "models": {
+      "type": "hasMany",
+      "model": "EuglenaModel",
+      "foreignKey": "studentId"
+    },
+    "logs": {
+      "type": "hasMany",
+      "model": "Log",
+      "foreignKey": "studentId"
     }
   },
   "acls": [],

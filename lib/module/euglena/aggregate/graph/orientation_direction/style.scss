@@ -1,0 +1,13 @@
+@import "../../../../../scss_includes/variables";
+
+.ordirgraph {
+  .ordir {
+    &__axis {
+      &-label {
+        fill: $palette__gray__dark;
+        text-anchor: middle;
+        font-weight: bold;
+      }
+    }
+  }
+}

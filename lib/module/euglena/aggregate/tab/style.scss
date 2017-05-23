@@ -49,6 +49,12 @@
     flex: 1;
 
     &__experiment {
+      margin-bottom: 1rem;
+      
+      &__label {
+        font-style: italic;
+      }
+
       &__list {
         border-collapse: collapse;
         th, td {
@@ -77,6 +83,10 @@
       width: 2rem;
       height: 1.5rem;
       margin: auto;
+    }
+
+    &__name {
+      text-align: left;
     }
   }
 }

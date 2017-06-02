@@ -64,11 +64,12 @@ module.exports = {
     intensity *= net_yaw > 0 ? 1 : -1;
 
     const dT = 1 / config.result.fps;
-    const yaw_min = 0; //config.params.k / 20.0; // restrict the minimum possible yaw rotation to 0.01 instead of 0
 
-    const delta_yaw = Math.sign((config.params.k * intensity) * dT) * Math.max(Math.abs((config.params.k * intensity) * dT), yaw_min);
-    delta_yaw += (Math.random() * 2 - 1) * config.model.configuration.randomness * Math.PI) * dT; // Randomize
+    var delta_yaw = (config.params.k * intensity) * dT + (Math.random() * 2 - 1) * config.model.configuration.randomness * Math.PI) * dT; // Randomize
     const delta_roll = config.params.omega * dT;
+
+    const yaw_min = 0.005; //config.params.k / 20.0; // restrict the minimum possible yaw rotation to 0.01 instead of 0
+    if (delta_yaw==0) {delta_yaw = yaw_min;}
 
     // Translate forward in head direction *** REMINDER: local z axis is pointing "forward", i.e. in getWorldDirection()
     tmp_euglena.translateZ(config.params.v * dT);
@@ -85,7 +86,7 @@ module.exports = {
     //euglena.updateMatrix();
     tmp_euglena.updateMatrixWorld();
 
-    const tmp_Euler = new THREE.Euler();
+    var tmp_Euler = new THREE.Euler();
     tmp_Euler.setFromQuaternion(tmp_euglena.quaternion,'XYZ');
 
     const out = {

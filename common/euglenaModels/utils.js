@@ -1,5 +1,7 @@
 'use strict';
 
+var THREE = process.cwd() + "/lib/thirdparty/three/three.min.js";
+
 function _transform_rotate_x(theta, vector) {
   return {
     x: vector.x,
@@ -50,5 +52,10 @@ module.exports = {
       blockTime += block.duration;
     }
     return light;
+  },
+  setDirection: (newDir, euglena) => {
+    let headDir = new THREE.Vector3();
+    headDir.addVectors(newDir, euglena.position);
+    euglena.lookAt(headDir);
   }
 }

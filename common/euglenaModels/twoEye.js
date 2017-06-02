@@ -32,11 +32,14 @@ module.exports = {
     }
 
     tmp_euglena.updateMatrixWorld();
-    var v_eye = tmp_euglena.localToWorld(new THREE.Vector3(0,1,0));
-    v_eye.subVectors(v_eye,tmp_euglena.position);
+    var v_right = tmp_euglena.localToWorld(new THREE.Vector3(0,1,0));
+    var v_left = tmp_euglena.localToWorld(new THREE.Vector3(0,-1,0));
 
-    let intensity = 0;
-    let net_yaw = 0;
+    v_right.subVectors(v_right,tmp_euglena.position);
+    v_left.subVectors(v_left,tmp_euglena.position);
+
+    let intensity = {'right':0, 'left':0};
+    let net_yaw = {'right':0, 'left':0};
     for (let k in config.lights) {
       let v_light = new THREE.Vector3(0,0,0);
       switch (k) {
@@ -54,19 +57,29 @@ module.exports = {
           break;
       }
 
-      let intensity_theta = Math.acos(v_light.dot(v_eye));
+      //right eye
+      let intensity_theta = Math.acos(v_light.dot(v_right));
       let intensity_light = Math.cos(intensity_theta) * config.lights[k] / 100;
       if (Math.cos(intensity_theta) >= 0 && intensity_light > 0) {
-        intensity += intensity_light;
-        net_yaw += intensity_light;
+        intensity['right'] += intensity_light;
+        net_yaw['right'] += intensity_light;
+      }
+
+      //left eye
+      intensity_theta = Math.acos(v_light.dot(v_left));
+      intensity_light = Math.cos(intensity_theta) * config.lights[k] / 100;
+      if (Math.cos(intensity_theta) >= 0 && intensity_light > 0) {
+        intensity['left'] += intensity_light;
+        net_yaw['left'] += intensity_light;
       }
     }
-    intensity *= net_yaw > 0 ? 1 : -1;
+    intensity['right'] *= net_yaw['right'] > 0 ? 1 : -1;
+    intensity['left'] *= net_yaw['left'] > 0 ? 1 : -1;
 
     const dT = 1 / config.result.fps;
     const yaw_min = 0; //config.params.k / 20.0; // restrict the minimum possible yaw rotation to 0.01 instead of 0
 
-    const delta_yaw = Math.sign((config.params.k * intensity) * dT) * Math.max(Math.abs((config.params.k * intensity) * dT), yaw_min);
+    const delta_yaw = Math.sign(config.params.k * (intensity['right'] - intensity['left']) * dT) * Math.max(Math.abs(config.params.k * (intensity['right'] - intensity['left']) * dT), yaw_min);
     delta_yaw += (Math.random() * 2 - 1) * config.model.configuration.randomness * Math.PI) * dT; // Randomize
     const delta_roll = config.params.omega * dT;
 

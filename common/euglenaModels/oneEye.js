@@ -18,6 +18,8 @@ module.exports = {
     let tmp_euglena = new THREE.Object3D();
 
     // position Euglena in xy plane in first frame
+    // Local z - axis = forward direction
+    // Local y - axis = eye
     if (config.frame == 1) {
       let v_head = new THREE.Vector3(1,0,0);
       v_head.applyAxisAngle(new THREE.Vector3(0,0,1), config.last.yaw);
@@ -65,17 +67,14 @@ module.exports = {
 
     const dT = 1 / config.result.fps;
 
-    console.log('test');
-    console.log(config);
-
-    var delta_yaw = (config.params.k * intensity) * dT + (Math.random() * 2 - 1) * config.model.configuration.randomness * Math.PI * dT; // Randomize
-    const delta_roll = config.params.omega * dT;
+    var delta_yaw = (config.track.oneEye.k * intensity) * dT + (Math.random() * 2 - 1) * config.model.configuration.randomness * Math.PI * dT; // Randomize
+    const delta_roll = config.track.oneEye.omega * dT;
 
     const yaw_min = 0.005; //config.params.k / 20.0; // restrict the minimum possible yaw rotation to 0.01 instead of 0
     if (delta_yaw==0) {delta_yaw = yaw_min;}
 
     // Translate forward in head direction *** REMINDER: local z axis is pointing "forward", i.e. in getWorldDirection()
-    tmp_euglena.translateZ(config.params.v * dT);
+    tmp_euglena.translateZ(config.track.oneEye.v * dT);
 
     // Roll around the local z-axis (i.e. head)
     tmp_euglena.rotateZ(delta_roll);
@@ -101,8 +100,6 @@ module.exports = {
       y: tmp_euglena.position.y,
       z: tmp_euglena.position.z
     }
-
-    console.log(out);
 
     return out;
   }

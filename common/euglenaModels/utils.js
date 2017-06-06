@@ -1,6 +1,6 @@
 'use strict';
 
-var THREE = process.cwd() + "/lib/thirdparty/three/three.min.js";
+var THREE = require('./three.min.js');
 
 function _transform_rotate_x(theta, vector) {
   return {

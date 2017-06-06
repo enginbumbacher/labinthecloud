@@ -1,7 +1,7 @@
 'use strict';
 
 var EuglenaUtils = require('./utils.js');
-var THREE = process.cwd() + "/lib/thirdparty/three/three.min.js";
+var THREE = require('./three.min.js');
 
 
 module.exports = {

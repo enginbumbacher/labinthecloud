@@ -78,7 +78,7 @@ module.exports = {
 
     const dT = 1 / config.result.fps;
 
-    var delta_yaw = config.track.oneEye.k * (intensity['right'] - intensity['left']) * dT + (Math.random() * 2 - 1) * config.model.configuration.randomness * Math.PI) * dT; // Randomize
+    var delta_yaw = config.track.oneEye.k * (intensity['right'] - intensity['left']) * dT + (Math.random() * 2 - 1) * config.model.configuration.randomness * Math.PI * dT; // Randomize
     const delta_roll = config.track.oneEye.omega * dT;
 
     const yaw_min = 0.05; //config.params.k / 20.0; // restrict the minimum possible yaw rotation to 0.01 instead of 0

@@ -62,9 +62,6 @@
           simulationFps: 12
         },
         visualization: {
-          aggregate: {
-            allow: false
-          },
           visualizationTypes: [{
             id: "circle",
             label: "Circle",
@@ -102,17 +99,8 @@
             }
           }]
         },
-        view3d: {},
-        managers: {
-          component: {
-            K: -0.0001,
-            K_delta: 0.00002,
-            v: 10,
-            v_delta: 2,
-            omega: 1,
-            omega_delta: 0.2,
-            randomness: 0.03
-          }
+        aggregate: {
+          timeWindow: 2
         }
       };
     </script>

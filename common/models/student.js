@@ -13,11 +13,13 @@ module.exports = function(Student) {
       if (!student) {
         Student.create({
           source_id: source_id,
-          source: source
+          source: source,
+          last_login: (new Date())
         }, function(err, student) {
           cb(null, student.id, student.source_id)
         })
       } else {
+        student.updateAttribute('last_login', new Date());
         cb(null, student.id, student.source_id)
       }
     })

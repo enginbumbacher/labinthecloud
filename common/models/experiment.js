@@ -30,4 +30,57 @@ module.exports = function(Experiment) {
     }
     cb();
   });
+
+  Experiment.studentHistory = (studentId, cb) => {
+    Experiment.find({
+      where: {
+        and: [
+          { studentId: studentId },
+          { demo: false }
+        ]
+      },
+      include: {
+        relation: "results"
+      }
+    }).then((exps) => {
+      return Promise.all(exps.map((exp) => {
+        let hasLiveResult = false;
+        return exp.results({}).then((results) => {
+          results.forEach((result) => {
+            if (result.bpu_api_id != null) hasLiveResult = true;
+          })
+        }).then(() => {
+          if (hasLiveResult) return exp;
+          return null
+        })
+      }))
+    }).then((withLive) => {
+      let out = withLive.filter((a) => a != null).map((exp) => {
+        return {
+          configuration: exp.configuration,
+          date_created: exp.date_created,
+          demo: exp.demo,
+          id: exp.id,
+          studentId: exp.studentId
+        }
+      })
+      cb(null, out);
+    })
+  }
+
+  Experiment.remoteMethod('studentHistory', {
+    http: {
+      path: '/studentHistory',
+      verb: 'get'
+    },
+    accepts: [{
+      arg: 'studentId',
+      type: 'number'
+    }],
+    returns: [{
+      arg: 'experiments',
+      root: true,
+      type: 'array'
+    }]
+  })
 };

@@ -13,6 +13,9 @@
     "source_id": {
       "type": "string",
       "required": true
+    },
+    "last_login": {
+      "type": "date"
     }
   },
   "validations": [],

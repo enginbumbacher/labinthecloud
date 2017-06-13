@@ -17,19 +17,23 @@ module.exports = {
 
     let tmp_euglena = new THREE.Object3D();
 
-    // position Euglena in xy plane in first frame
+    // Set orientation of Euglena
+    // Local z - axis = forward direction
+    // Local y - axis = eye
     if (config.frame == 1) {
+      // In first frame, orientation is in XY plane
       let v_head = new THREE.Vector3(1,0,0);
       v_head.applyAxisAngle(new THREE.Vector3(0,0,1), config.last.yaw);
       EuglenaUtils.setDirection(v_head,tmp_euglena);
       tmp_euglena.rotateZ(config.last.roll);
-
+      tmp_euglena.position.set(config.x, config.y, config.z);
     } else {
 
       let prev_Euler = new THREE.Euler(config.last.roll,config.last.pitch,config.last.yaw,'XYZ');
       tmp_euglena.setRotationFromEuler(prev_Euler);
-      tmp_euglena.position.set(config.last.x, config.last.y, config.last.z);
     }
+
+    tmp_euglena.position.set(config.last.x, config.last.y, config.last.z);    // Set position of Euglena
 
     tmp_euglena.updateMatrixWorld();
     var v_right = tmp_euglena.localToWorld(new THREE.Vector3(0,1,0));

@@ -1,8 +1,8 @@
 'use strict';
 
 var EuglenaUtils = require('./utils.js');
-//var THREE = process.cwd() + "/lib/thirdparty/three/three.min.js";
 var THREE = require('./three.min.js');
+
 
 module.exports = {
   initialize: (config) => {
@@ -14,6 +14,7 @@ module.exports = {
   },
 
   update: (config) => {
+
     let tmp_euglena = new THREE.Object3D();
 
     // Set orientation of Euglena
@@ -25,20 +26,24 @@ module.exports = {
       v_head.applyAxisAngle(new THREE.Vector3(0,0,1), config.last.yaw);
       EuglenaUtils.setDirection(v_head,tmp_euglena);
       tmp_euglena.rotateZ(config.last.roll);
-      tmp_euglena.position.set(config.track.x, config.track.y, config.track.z);
+      tmp_euglena.position.set(config.x, config.y, config.z);
     } else {
+
       let prev_Euler = new THREE.Euler(config.last.roll,config.last.pitch,config.last.yaw,'XYZ');
       tmp_euglena.setRotationFromEuler(prev_Euler);
     }
 
     tmp_euglena.position.set(config.last.x, config.last.y, config.last.z);    // Set position of Euglena
-    
-    tmp_euglena.updateMatrixWorld();
-    var v_eye = tmp_euglena.localToWorld(new THREE.Vector3(0,1,0));
-    v_eye.subVectors(v_eye,tmp_euglena.position);
 
-    let intensity = 0;
-    let net_yaw = 0;
+    tmp_euglena.updateMatrixWorld();
+    var v_right = tmp_euglena.localToWorld(new THREE.Vector3(0,1,0));
+    var v_left = tmp_euglena.localToWorld(new THREE.Vector3(0,-1,0));
+
+    v_right.subVectors(v_right,tmp_euglena.position);
+    v_left.subVectors(v_left,tmp_euglena.position);
+
+    let intensity = {'right':0, 'left':0};
+    let net_yaw = {'right':0, 'left':0};
     for (let k in config.lights) {
       let v_light = new THREE.Vector3(0,0,0);
       switch (k) {
@@ -56,25 +61,33 @@ module.exports = {
           break;
       }
 
-      let intensity_theta = Math.acos(v_light.dot(v_eye));
+      //right eye
+      let intensity_theta = Math.acos(v_light.dot(v_right));
       let intensity_light = Math.cos(intensity_theta) * config.lights[k] / 100;
       if (Math.cos(intensity_theta) >= 0 && intensity_light > 0) {
-        intensity += intensity_light;
-        net_yaw += intensity_light;
+        intensity['right'] += intensity_light;
+        net_yaw['right'] += intensity_light;
+      }
+
+      //left eye
+      intensity_theta = Math.acos(v_light.dot(v_left));
+      intensity_light = Math.cos(intensity_theta) * config.lights[k] / 100;
+      if (Math.cos(intensity_theta) >= 0 && intensity_light > 0) {
+        intensity['left'] += intensity_light;
+        net_yaw['left'] += intensity_light;
       }
     }
-    intensity *= net_yaw > 0 ? 1 : -1;
+    intensity['right'] *= net_yaw['right'] > 0 ? 1 : -1;
+    intensity['left'] *= net_yaw['left'] > 0 ? 1 : -1;
 
     const dT = 1 / config.result.fps;
 
-    var delta_yaw = (config.track.oneEye.k * intensity) * dT + (Math.random() * 2 - 1) * config.model.configuration.randomness * Math.PI * dT; // Randomize
+    var delta_yaw = config.track.oneEye.k * (intensity['right'] - intensity['left']) * dT + (Math.random() * 2 - 1) * config.model.configuration.randomness * Math.PI * dT; // Randomize
     const delta_roll = config.track.oneEye.omega * dT;
 
     const yaw_min = 0.05; //config.params.k / 20.0; // restrict the minimum possible yaw rotation to 0.01 instead of 0
     if (Math.abs(delta_yaw)<0.1) {delta_yaw = yaw_min;}
-
     // Translate forward in head direction *** REMINDER: local z axis is pointing "forward", i.e. in getWorldDirection()
-    //tmp_euglena.translateZ(config.track.oneEye.v * dT);
     tmp_euglena.translateZ(config.track.oneEye.v * dT);
 
     // Roll around the local z-axis (i.e. head)

@@ -9,7 +9,8 @@ var rp = require('request-promise'),
 const EuglenaUtils = require('../euglenaModels/utils.js');
 
 const euglenaModels = {
-  oneEye: require('../euglenaModels/oneEye.js')
+  oneEye: require('../euglenaModels/oneEye.js'),
+  twoEye: require('../euglenaModels/twoEye.js')
 }
 
 const downloadBasePath = 'http://biotic.stanford.edu/account/joinlabwithdata/downloadFile';
@@ -267,7 +268,7 @@ module.exports = (Result) => {
     if (context.args.data.demo) {
       return next();
     }
-    
+
     if (context.args.data.bpu_api_id) {
       createBpuResults(Result.app, context).then(() => {
         next();

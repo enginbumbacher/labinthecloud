@@ -22,6 +22,10 @@
       "type": "date",
       "required": true,
       "default": "$now"
+    },
+    "lab": {
+      "type": "string",
+      "required": false
     }
   },
   "validations": [],

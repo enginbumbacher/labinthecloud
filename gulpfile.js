@@ -61,6 +61,8 @@ gulp.task('build-js', function() {
 gulp.task('copy-static', function() {
   gulp.src(['lib/index.html'])
     .pipe(gulp.dest('client'));
+  gulp.src(['lib/labs/**/*'])
+    .pipe(gulp.dest('client/labs'));
   gulp.src([
     'lib/module/**/*.html',
     'lib/module/**/*.jpg',

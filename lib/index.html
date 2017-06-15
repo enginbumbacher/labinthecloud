@@ -53,7 +53,42 @@
               }
             }
           }, {
-            modelType: "twoEye"
+            modelType: "twoEye",
+            parameters: {
+              K: {
+                label: "K",
+                range: [-2, 2],
+                resolution: 0.01,
+                initialValue: {
+                  base: -1,
+                  delta: 0.2
+                }
+              },
+              v: {
+                label: "v",
+                range: [-20, 20],
+                resolution: 0.1,
+                initialValue: {
+                  base: 10,
+                  delta: 2
+                }
+              },
+              omega: {
+                label: "Ω",
+                range: [-2, 2],
+                resolution: 0.01,
+                initialValue: {
+                  base: 1,
+                  delta: 0.2
+                }
+              },
+              randomness: {
+                label: "Randomness",
+                range: [0, 1],
+                resolution: 0.01,
+                initialValue: 0.15
+              }
+            }
           }],
           euglenaCount: {
             range: [10, 50],

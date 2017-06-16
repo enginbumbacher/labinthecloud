@@ -32,7 +32,7 @@ module.exports = {
     }
 
     tmp_euglena.position.set(config.last.x, config.last.y, config.last.z);    // Set position of Euglena
-    
+
     tmp_euglena.updateMatrixWorld();
     var v_eye = tmp_euglena.localToWorld(new THREE.Vector3(0,1,0));
     v_eye.subVectors(v_eye,tmp_euglena.position);
@@ -70,8 +70,18 @@ module.exports = {
     var delta_yaw = (config.track.oneEye.k * intensity) * dT + (Math.random() * 2 - 1) * config.model.configuration.randomness * Math.PI * dT; // Randomize
     const delta_roll = config.track.oneEye.omega * dT;
 
-    const yaw_min = 0.05; //config.params.k / 20.0; // restrict the minimum possible yaw rotation to 0.01 instead of 0
-    if (Math.abs(delta_yaw)<0.1) {delta_yaw = yaw_min;}
+
+    const yaw_min = 0.1; //config.params.k / 20.0; // restrict the minimum possible yaw rotation to 0.01 instead of 0
+    if (Math.abs(delta_yaw)<yaw_min) {
+      if (delta_yaw == 0) {
+        var parity = [-1,1];
+        parity = parity[(Math.random()*parity.length)|0];
+      } else {
+        var parity = Math.sign(delta_yaw);
+      }
+      delta_yaw = parity * yaw_min;
+    }
+
 
     // Translate forward in head direction *** REMINDER: local z axis is pointing "forward", i.e. in getWorldDirection()
     //tmp_euglena.translateZ(config.track.oneEye.v * dT);

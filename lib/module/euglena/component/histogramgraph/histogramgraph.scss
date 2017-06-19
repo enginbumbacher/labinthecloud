@@ -6,14 +6,13 @@
     stroke-width: 1;
     shape-rendering: crispEdges;
     opacity: 0.5;
-    &__live {
-      fill: $palette__gray__medium;
-      stroke: $palette__gray__dark;
-    }
-    &__model {
-      fill: $palette__blue__euglena;
-      stroke: #0000dd;
-    }
+    fill: $palette__gray__medium;
+    stroke: $palette__gray__dark;
+    
+    // &__model {
+    //   fill: $palette__blue__euglena;
+    //   stroke: #0000dd;
+    // }
   }
 
   &__graph {

@@ -6,18 +6,13 @@
     &__line {
       fill: none;
       stroke-width: 1;
-      opacity: 0.5;
-      &__live {
-        stroke: $palette__gray__dark;
-      }
-      &__model {
-        stroke: #0000dd;
-      }
+      opacity: 0.75;
+      stroke: $palette__gray__medium_dark;
     }
     &__std {
       opacity: 0.5;
       &__live {
-        fill: $palette__gray__dark;
+        fill: $palette__gray__medium_dark;
       }
       &__model {
         fill: $palette__blue__euglena;

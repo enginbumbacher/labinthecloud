@@ -16,6 +16,10 @@
     },
     "last_login": {
       "type": "date"
+    },
+    "last_login_lab": {
+      "type": "string",
+      "required": false
     }
   },
   "validations": [],

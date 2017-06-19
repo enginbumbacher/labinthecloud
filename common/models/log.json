@@ -20,6 +20,10 @@
     },
     "data": {
       "type": "object"
+    },
+    "lab": {
+      "type": "string",
+      "required": false
     }
   },
   "validations": [],

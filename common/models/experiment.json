@@ -21,6 +21,10 @@
       "type": "boolean",
       "required": true,
       "default": false
+    },
+    "lab": {
+      "type": "string",
+      "required": false
     }
   },
   "validations": [],

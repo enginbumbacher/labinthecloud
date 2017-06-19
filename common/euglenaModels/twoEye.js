@@ -85,8 +85,16 @@ module.exports = {
     var delta_yaw = config.track.oneEye.k * (intensity['right'] - intensity['left']) * dT + (Math.random() * 2 - 1) * config.model.configuration.randomness * Math.PI * dT; // Randomize
     const delta_roll = config.track.oneEye.omega * dT;
 
-    const yaw_min = 0.05; //config.params.k / 20.0; // restrict the minimum possible yaw rotation to 0.01 instead of 0
-    if (Math.abs(delta_yaw)<0.1) {delta_yaw = yaw_min;}
+    const yaw_min = 0.02; //config.params.k / 20.0; // restrict the minimum possible yaw rotation to 0.01 instead of 0
+    if (Math.abs(delta_yaw)<yaw_min) {
+      if (delta_yaw == 0) {
+        var parity = [-1,1];
+        parity = parity[(Math.random()*parity.length)|0];
+      } else {
+        var parity = Math.sign(delta_yaw);
+      }
+      delta_yaw = parity * yaw_min;
+    }
     // Translate forward in head direction *** REMINDER: local z axis is pointing "forward", i.e. in getWorldDirection()
     tmp_euglena.translateZ(config.track.oneEye.v * dT);
 

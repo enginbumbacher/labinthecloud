@@ -31,12 +31,13 @@ module.exports = function(Experiment) {
     cb();
   });
 
-  Experiment.studentHistory = (studentId, cb) => {
+  Experiment.studentHistory = (studentId, lab, cb) => {
     Experiment.find({
       where: {
         and: [
           { studentId: studentId },
-          { demo: false }
+          { demo: false },
+          { lab: lab }
         ]
       },
       include: {
@@ -76,6 +77,9 @@ module.exports = function(Experiment) {
     accepts: [{
       arg: 'studentId',
       type: 'number'
+    }, {
+      arg: 'lab',
+      type: 'string'
     }],
     returns: [{
       arg: 'experiments',

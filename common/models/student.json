@@ -13,6 +13,13 @@
     "source_id": {
       "type": "string",
       "required": true
+    },
+    "last_login": {
+      "type": "date"
+    },
+    "last_login_lab": {
+      "type": "string",
+      "required": false
     }
   },
   "validations": [],
@@ -20,6 +27,16 @@
     "experiments": {
       "type": "hasMany",
       "model": "Experiment",
+      "foreignKey": "studentId"
+    },
+    "models": {
+      "type": "hasMany",
+      "model": "EuglenaModel",
+      "foreignKey": "studentId"
+    },
+    "logs": {
+      "type": "hasMany",
+      "model": "Log",
       "foreignKey": "studentId"
     }
   },

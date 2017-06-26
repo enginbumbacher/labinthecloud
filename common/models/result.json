@@ -10,10 +10,6 @@
       "type": "string",
       "required": false
     },
-    "model_id": {
-      "type": "number",
-      "required": false
-    },
     "numFrames": {
       "type": "number",
       "required": false
@@ -26,6 +22,18 @@
       "type": "date",
       "required": true,
       "default": "$now"
+    },
+    "trackFile": {
+      "type": "string",
+      "required": false
+    },
+    "magnification": {
+      "type": "number",
+      "required": false
+    },
+    "video": {
+      "type": "string",
+      "required": false
     }
   },
   "validations": [],
@@ -33,6 +41,11 @@
     "experiment": {
       "type": "belongsTo",
       "model": "Experiment",
+      "foreignKey": ""
+    },
+    "euglenaModel": {
+      "type": "belongsTo",
+      "model": "EuglenaModel",
       "foreignKey": ""
     }
   },

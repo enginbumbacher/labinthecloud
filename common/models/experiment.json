@@ -16,6 +16,15 @@
       "type": "date",
       "required": true,
       "default": "$now"
+    },
+    "demo": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "lab": {
+      "type": "string",
+      "required": false
     }
   },
   "validations": [],

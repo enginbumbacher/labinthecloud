@@ -44,7 +44,7 @@ gulp.task('build-js', function() {
   return gulp.src(['lib/**/*.js', '!lib/thirdparty/**/*.js'])
     .pipe(sourcemaps.init())
     .pipe(babel({
-      presets: ['es2015']
+      presets: [['env']]
     }))
     .on('error', function(e) {
       console.error(e);
@@ -61,6 +61,8 @@ gulp.task('build-js', function() {
 gulp.task('copy-static', function() {
   gulp.src(['lib/index.html'])
     .pipe(gulp.dest('client'));
+  gulp.src(['lib/labs/**/*'])
+    .pipe(gulp.dest('client/labs'));
   gulp.src([
     'lib/module/**/*.html',
     'lib/module/**/*.jpg',
@@ -76,8 +78,8 @@ gulp.task('copy-static', function() {
 
 gulp.task('watch', ['build-css', 'build-js', 'copy-static'], function() {
   gulp.watch('lib/**/*.scss', ['build-css']);
-  gulp.watch('lib/**/*.js', ['build-js']);
-  gulp.watch('lib/**/*.html', ['copy-static']);
+  gulp.watch(['lib/**/*.js', '!lib/thirdparty/**/*.js'], ['build-js']);
+  gulp.watch(['lib/**/*.html', 'lib/thirdparty/**/*'], ['copy-static']);
 });
 
 gulp.task('up', function() {  

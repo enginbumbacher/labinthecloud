@@ -1,0 +1,72 @@
+@import "../../../scss_includes/variables";
+
+.form {
+  &__model {
+    border-top: 1px solid $palette__black;
+
+    &__history {
+      margin: 1.5rem 0;
+
+      .field__label {
+        margin-right: 1rem;
+        font-size: 1.2rem;
+      }
+    }
+    .field__label {
+      font-size: 1.2rem;
+    }
+    .component {
+      &__field {
+        margin: 1rem 0;
+      }
+      &__sliderfield,
+      &__symsliderfield {
+        display: flex;
+
+        .field__label {
+          flex: 2;
+          text-align: right;
+        }
+        .symsliderfield__content,
+        .sliderfield__content {
+          flex: 5
+        }
+
+        .symsliderfield__inputs,
+        .sliderfield__inputs {
+          margin: 1.5rem 0;
+          input {
+            width: 8rem;
+          }
+        }
+      }
+
+      &__symsliderfield {
+        .symsliderfield__span {
+          background: $palette__gray__dark;
+          &:first-child,
+          &:last-child {
+            background: transparent;
+          }
+        }
+      }
+    }
+
+    .form__buttons {
+      margin-top: 2rem;
+    }
+    &__submit {
+      float:right;
+    }
+    &__aggregate {
+      float:right;
+    }
+
+    &__name {
+      padding: 1rem;
+      &__submit {
+        float:right;
+      }
+    }
+  }
+}

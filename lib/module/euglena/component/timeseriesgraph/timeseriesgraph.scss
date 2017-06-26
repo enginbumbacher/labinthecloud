@@ -5,11 +5,18 @@
   &__graph {
     &__line {
       fill: none;
-      stroke: $palette__gray__dark;
       stroke-width: 1;
+      opacity: 0.75;
+      stroke: $palette__gray__medium_dark;
     }
     &__std {
-      fill: $palette__gray__medium;
+      opacity: 0.5;
+      &__live {
+        fill: $palette__gray__medium_dark;
+      }
+      &__model {
+        fill: $palette__blue__euglena;
+      }
     }
     &__time-band {
       fill: $palette__gray__medium_dark;

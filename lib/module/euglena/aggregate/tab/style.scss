@@ -1,0 +1,92 @@
+@import "../../../../scss_includes/variables";
+
+.aggregate {
+  position: absolute;
+  z-index: 100;
+  right: -100%;
+  width: 100%;
+  height: 98%;
+  top: 1%;
+  border: 1px solid $palette__gray__dark;
+  background: $palette__white;
+  padding-right: 4rem;
+  transition: 0.5s ease right;
+
+  &.aggregate__open {
+    right: -4rem;
+    z-index: 110;
+  }
+
+  &__content {
+    padding: 2rem;
+    overflow: auto;
+  }
+
+  &__tab {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    border: 1px solid $palette__gray__dark;
+    background: $palette__white;
+    position: absolute;
+    top: calc(50% - 7rem);
+    left: calc(-11.2rem - 2px);
+    border-bottom: none;
+    padding: 0.5rem 1rem;
+    transform: rotate(-90deg);
+    cursor: pointer;
+    width: 20rem;
+    text-align: center;
+  }
+
+  &__display {
+    display: flex;
+  }
+  &__graphs {
+    flex: 2;
+  }
+
+  &__legend {
+    flex: 1;
+
+    &__experiment {
+      margin-bottom: 1rem;
+      
+      &__label {
+        font-style: italic;
+      }
+
+      &__list {
+        border-collapse: collapse;
+        th, td {
+          padding: 0.25rem 0.5rem;
+          text-align: center;
+        }
+
+        thead {
+          background: $palette__gray__medium_dark;
+        }
+        tbody tr {
+          background: $palette__gray__light;
+          &:nth-child(2n) {
+            background: $palette__white;
+          }
+        }
+      }
+    }
+
+    &__show {
+      display: block;
+      margin: auto;
+    }
+
+    &__color {
+      width: 2rem;
+      height: 1.5rem;
+      margin: auto;
+    }
+
+    &__name {
+      text-align: left;
+    }
+  }
+}

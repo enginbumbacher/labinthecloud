@@ -11,19 +11,101 @@
     <script type="text/javascript">
       window.EuglenaConfig = {
         experiment: {
-          maxDuration: 60
+          maxDuration: 60,
+          bpuId: "eug3"
+        },
+        model: {
+          tabs: [{
+            modelType: "oneEye",
+            color: 0x2222ff,
+            parameters: {
+              K: {
+                label: "K",
+                range: [-2, 2],
+                resolution: 0.01,
+                initialValue: {
+                  base: -1,
+                  delta: 0.2
+                }
+              },
+              v: {
+                label: "v",
+                range: [-20, 20],
+                resolution: 0.1,
+                initialValue: {
+                  base: 10,
+                  delta: 2
+                }
+              },
+              omega: {
+                label: "Ω",
+                range: [-2, 2],
+                resolution: 0.01,
+                initialValue: {
+                  base: 1,
+                  delta: 0.2
+                }
+              },
+              randomness: {
+                label: "Randomness",
+                range: [0, 1],
+                resolution: 0.01,
+                initialValue: 0.15
+              }
+            }
+          }, {
+            modelType: "twoEye",
+            color: 0xdd0000,
+            parameters: {
+              K: {
+                label: "K",
+                range: [-2, 2],
+                resolution: 0.01,
+                initialValue: {
+                  base: -1,
+                  delta: 0.2
+                }
+              },
+              v: {
+                label: "v",
+                range: [-20, 20],
+                resolution: 0.1,
+                initialValue: {
+                  base: 10,
+                  delta: 2
+                }
+              },
+              omega: {
+                label: "Ω",
+                range: [-2, 2],
+                resolution: 0.01,
+                initialValue: {
+                  base: 1,
+                  delta: 0.2
+                }
+              },
+              randomness: {
+                label: "Randomness",
+                range: [0, 1],
+                resolution: 0.01,
+                initialValue: 0.15
+              }
+            }
+          }],
+          euglenaCount: {
+            range: [10, 50],
+            initialValue: 30
+          },
+          simulationFps: 12
         },
         visualization: {
-          aggregate: {
-            allow: false
-          },
           visualizationTypes: [{
             id: "circle",
             label: "Circle",
             settings: {
               binCount: 24, //15° bins
-              dT: 0.5,
-              tStep: 2,
+              dT: 2,
+              tStep: 0.5,
               width: 160,
               height: 160
             }
@@ -54,23 +136,8 @@
             }
           }]
         },
-        view3d: {
-          count: 30,
-          bounds: {
-            width: 400,
-            height: 300
-          }
-        },
-        managers: {
-          component: {
-            K: -0.0001,
-            K_delta: 0.00002,
-            v: 10,
-            v_delta: 2,
-            omega: 1,
-            omega_delta: 0.2,
-            randomness: 0.03
-          }
+        aggregate: {
+          timeWindow: 2
         }
       };
     </script>

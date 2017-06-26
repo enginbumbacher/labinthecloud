@@ -3,10 +3,16 @@
 
 .histogram {
   &__bar {
-    fill: $palette__gray__medium;
-    stroke: $palette__gray__dark;
     stroke-width: 1;
     shape-rendering: crispEdges;
+    opacity: 0.5;
+    fill: $palette__gray__medium;
+    stroke: $palette__gray__dark;
+    
+    // &__model {
+    //   fill: $palette__blue__euglena;
+    //   stroke: #0000dd;
+    // }
   }
 
   &__graph {
@@ -32,5 +38,17 @@
   &__meta {
     border-top: 1px solid $palette__gray__dark;
     margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    span {
+      display: inline-block;
+      padding: 0 1rem;
+      border-left: 1px solid $palette__gray__dark;
+      &:first-child {
+        border-left: none;
+      }
+    }
+    &__model {
+      color: $palette__blue__euglena;
+    }
   }
 }

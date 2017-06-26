@@ -43,5 +43,13 @@
   "Result": {
     "dataSource": "mysql",
     "public": true
+  },
+  "EuglenaModel": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "Log": {
+    "dataSource": "mysql",
+    "public": true
   }
 }

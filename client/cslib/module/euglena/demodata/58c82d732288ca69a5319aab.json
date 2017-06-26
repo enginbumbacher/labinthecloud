@@ -1,0 +1,235 @@
+{
+    "_id": "58c82d732288ca69a5319aab",
+    "group_experimentType": "text",
+    "__v": 0,
+    "stats": {
+        "scripterResponse": -1,
+        "scripterActivity": -1,
+        "scripterPopulation": -1
+    },
+    "exp_liveSocketWaitingForUserHandle": false,
+    "exp_liveSocketHandle": null,
+    "user_tarFilename": null,
+    "user_tarFilePath": null,
+    "proc_endPath": null,
+    "proc_expSchemaJsonPath": null,
+    "proc_lightDataArrayPath": null,
+    "proc_jpgFiles": [],
+    "proc_startPath": null,
+    "proc_err": null,
+    "proc_attempts": 0,
+    "proc_doNotProcess": false,
+    "exp_processingEndTime": null,
+    "exp_processingScripterStartTime": null,
+    "exp_processingStartTime": null,
+    "exp_serverClearTime": null,
+    "exp_runEndTime": 1489513912371,
+    "exp_runStartTime": 1489513852370,
+    "exp_resortTime": 1489513843783,
+    "exp_submissionTime": 1489513843246,
+    "exp_creationTime": 1489440104693,
+    "exp_status": "created",
+    "exp_eventsRan": [
+        {
+            "time": 1489513852394,
+            "topValue": 0,
+            "rightValue": 0,
+            "bottomValue": 0,
+            "leftValue": 100,
+            "askTime": 0,
+            "setTime": 23
+        },
+        {
+            "time": 1489513867379,
+            "topValue": 100,
+            "rightValue": 0,
+            "bottomValue": 0,
+            "leftValue": 0,
+            "askTime": 15000,
+            "setTime": 15008
+        },
+        {
+            "time": 1489513882370,
+            "topValue": 0,
+            "rightValue": 0,
+            "bottomValue": 100,
+            "leftValue": 0,
+            "askTime": 30000,
+            "setTime": 29998
+        },
+        {
+            "time": 1489513897379,
+            "topValue": 0,
+            "rightValue": 100,
+            "bottomValue": 0,
+            "leftValue": 0,
+            "askTime": 45000,
+            "setTime": 45009
+        },
+        {
+            "time": 1489513912373,
+            "topValue": 0,
+            "rightValue": 0,
+            "bottomValue": 0,
+            "leftValue": 0,
+            "askTime": 60000,
+            "setTime": 60001
+        }
+    ],
+    "exp_eventsToRunFinal": [],
+    "bc_timeLeft": 0,
+    "liveBpu": {
+        "socketId": null,
+        "index": -1,
+        "name": "default",
+        "id": null
+    },
+    "bc_isLiveSendingToLab": false,
+    "bc_startSendTime": null,
+    "exp_lastResort": {
+        "processingTime": 0,
+        "waitTime": 0,
+        "bpuName": "eug3",
+        "canidateBpus": [
+            {
+                "totalWaitTime": 0,
+                "bpuName": "eug3",
+                "alphaResponse": 0.8219948562118072,
+                "alphaActivity": 1,
+                "alphaPopulation": 0.5772872071523542,
+                "alphaTime": 1,
+                "scripterResponse": 1.2329922843177108,
+                "scripterPopulation": 180.40225223511064,
+                "scripterActivity": 269.31730605096146,
+                "magnification": 4,
+                "queueWaitTime": 0,
+                "finalScore": 0.857
+            },
+            {
+                "totalWaitTime": 0,
+                "bpuName": "eug1",
+                "alphaResponse": 0.7896523799503212,
+                "alphaActivity": 1,
+                "alphaPopulation": 0.013594746665711786,
+                "alphaTime": 1,
+                "scripterResponse": 1.1844785699254818,
+                "scripterPopulation": 0.6797373332855893,
+                "scripterActivity": 167.5405509517567,
+                "magnification": 10,
+                "queueWaitTime": 0,
+                "finalScore": 0.7151
+            }
+        ],
+        "rejectionReason": null,
+        "rejectionCounter": 0
+    },
+    "exp_statusMessages": [],
+    "exp_canceledReason": null,
+    "exp_isCanceled": false,
+    "exp_serverErrorCounter": 0,
+    "tag": {
+        "exp_lastResort": {
+            "totalWaitTime": null,
+            "bpuProcessingTime": null,
+            "runTime": null,
+            "bpuName": null,
+            "rejectionReason": null,
+            "rejectionCounter": 0,
+            "canidateBpus": []
+        },
+        "exp_eventsRunTime": null,
+        "exp_submissionTime": null,
+        "exp_status": "created",
+        "exp_sessionID": null,
+        "id": "58c82d732288ca69a5319aab",
+        "exp_wantsBpuName": null,
+        "group_experimentType": "text",
+        "bc_startSendTime": null,
+        "bc_isLiveSendingToLab": false,
+        "session": {
+            "socketID": "",
+            "sessionID": "R-OpYLbT6Kk-GXyEmX1SOOOHDw157mJc",
+            "id": "58bf571cc89b99092553fa65"
+        },
+        "user": {
+            "groups": [
+                "default"
+            ],
+            "name": "radiantllama",
+            "id": "574885898bf18b9508193e2a"
+        }
+    },
+    "exp_eventsRunTime": 0,
+    "exp_metaData": {
+        "magnification": 4,
+        "clientCreationDate": "2017-03-14T17:50:49.700Z",
+        "group_experimentType": "text",
+        "runTime": 60000,
+        "tag": "radiantllama",
+        "userUrl": "/account/joinlabwithdata",
+        "numFrames": 466,
+        "saveTime": "2017-03-14T17:51:52.392Z",
+        "lightDataSoapPath": "/home/pi/bpuData/tempExpData/lightdata.json",
+        "lightDataPath": "/home/pi/bpuData/tempExpData/lightdata_meta.json",
+        "ExpFullPath": "/home/pi/bpuData/tempExpData/58c82d732288ca69a5319aab.json",
+        "ExpName": "58c82d732288ca69a5319aab"
+    },
+    "exp_eventsToRun": [
+        {
+            "topValue": 0,
+            "rightValue": 0,
+            "bottomValue": 0,
+            "leftValue": 100,
+            "time": 0
+        },
+        {
+            "topValue": 100,
+            "rightValue": 0,
+            "bottomValue": 0,
+            "leftValue": 0,
+            "time": 15000
+        },
+        {
+            "topValue": 0,
+            "rightValue": 0,
+            "bottomValue": 100,
+            "leftValue": 0,
+            "time": 30000
+        },
+        {
+            "topValue": 0,
+            "rightValue": 100,
+            "bottomValue": 0,
+            "leftValue": 0,
+            "time": 45000
+        },
+        {
+            "topValue": 0,
+            "rightValue": 0,
+            "bottomValue": 0,
+            "leftValue": 0,
+            "time": 60000
+        }
+    ],
+    "exp_wantsBpuName": null,
+    "session": {
+        "id": "58bf571cc89b99092553fa65",
+        "socketID": "",
+        "sessionID": "R-OpYLbT6Kk-GXyEmX1SOOOHDw157mJc"
+    },
+    "user": {
+        "id": "574885898bf18b9508193e2a",
+        "groups": [
+            "default"
+        ],
+        "name": "radiantllama"
+    },
+    "bc_serverInfo": {
+        "Identifier": "C422691AA38F9A86EC02CB7B55D5F542",
+        "Name": "radiantllama",
+        "arePassKeysOpen": false,
+        "PassKeys": [
+            "R-OpYLbT6Kk-GXyEmX1SOOOHDw157mJc"
+        ]
+    }
+}

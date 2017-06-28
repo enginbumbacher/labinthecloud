@@ -41,17 +41,20 @@ module.exports = function(Experiment) {
         ]
       },
       include: {
-        relation: "results"
+        relation: "results",
+        scope: {
+          fields: ['id', 'bpu_api_id'],
+          where: {
+            bpu_api_id: {
+              neq: null
+            }
+          }
+        }
       }
     }).then((exps) => {
       return Promise.all(exps.map((exp) => {
-        let hasLiveResult = false;
-        return exp.results({}).then((results) => {
-          results.forEach((result) => {
-            if (result.bpu_api_id != null) hasLiveResult = true;
-          })
-        }).then(() => {
-          if (hasLiveResult) return exp;
+        return exp.results.count().then((count) => {
+          if (count) return exp;
           return null
         })
       }))

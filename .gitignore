@@ -5,6 +5,8 @@ Gemfile.lock
 **/node_modules
 server/public
 server/datasources.local.*
+client/results/*
+client/video/*
 
 *.sublime-project
 *.sublime-workspace

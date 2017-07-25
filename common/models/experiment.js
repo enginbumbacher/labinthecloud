@@ -30,4 +30,64 @@ module.exports = function(Experiment) {
     }
     cb();
   });
+
+  Experiment.studentHistory = (studentId, lab, cb) => {
+    Experiment.find({
+      where: {
+        and: [
+          { studentId: studentId },
+          { demo: false },
+          { lab: lab }
+        ]
+      },
+      include: {
+        relation: "results",
+        scope: {
+          fields: ['id', 'bpu_api_id'],
+          where: {
+            bpu_api_id: {
+              neq: null
+            }
+          }
+        }
+      }
+    }).then((exps) => {
+      return Promise.all(exps.map((exp) => {
+        return exp.results.count().then((count) => {
+          if (count) return exp;
+          return null
+        })
+      }))
+    }).then((withLive) => {
+      let out = withLive.filter((a) => a != null).map((exp) => {
+        return {
+          configuration: exp.configuration,
+          date_created: exp.date_created,
+          demo: exp.demo,
+          id: exp.id,
+          studentId: exp.studentId
+        }
+      })
+      cb(null, out);
+    })
+  }
+
+  Experiment.remoteMethod('studentHistory', {
+    http: {
+      path: '/studentHistory',
+      verb: 'get'
+    },
+    accepts: [{
+      arg: 'studentId',
+      type: 'number'
+    }, {
+      arg: 'lab',
+      type: 'string'
+    }],
+    returns: [{
+      arg: 'experiments',
+      root: true,
+      type: 'array'
+    }]
+  })
 };

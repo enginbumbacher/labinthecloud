@@ -9,7 +9,8 @@ var rp = require('request-promise'),
 const EuglenaUtils = require('../euglenaModels/utils.js');
 
 const euglenaModels = {
-  oneEye: require('../euglenaModels/oneEye.js')
+  oneEye: require('../euglenaModels/oneEye.js'),
+  twoEye: require('../euglenaModels/twoEye.js')
 }
 
 const downloadBasePath = 'http://biotic.stanford.edu/account/joinlabwithdata/downloadFile';
@@ -86,6 +87,7 @@ const createBpuResults = (app, context) => {
       context.args.data.runTime = report.exp_metaData.runTime / 1000;
       context.args.data.numFrames = report.exp_metaData.numFrames;
       context.args.data.magnification = report.exp_metaData.magnification;
+      context.args.data.video = `${downloadBasePath}/${context.args.data.bpu_api_id}/movie.mp4`
 
       console.log(`Maximum length: ${maxWidth}`);
 
@@ -252,7 +254,7 @@ const loadMeta = (context) => {
     })
   })
   return Promise.all([backFill, trackLoad]).then(() => {
-    if (context.data.bpu_api_id) {
+    if (context.data.bpu_api_id && !context.data.video) {
       context.data.video = `${downloadBasePath}/${context.data.bpu_api_id}/movie.mp4`;
     }
     return context;
@@ -266,7 +268,7 @@ module.exports = (Result) => {
     if (context.args.data.demo) {
       return next();
     }
-    
+
     if (context.args.data.bpu_api_id) {
       createBpuResults(Result.app, context).then(() => {
         next();

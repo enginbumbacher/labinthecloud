@@ -4,8 +4,9 @@ Gemfile.lock
 **/.sass-cache
 **/node_modules
 server/public
-client
 server/datasources.local.*
+client/results/*
+client/video/*
 
 *.sublime-project
 *.sublime-workspace

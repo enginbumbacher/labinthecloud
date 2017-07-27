@@ -13,7 +13,7 @@ const euglenaModels = {
   twoEye: require('../euglenaModels/twoEye.js')
 }
 
-const downloadBasePath = 'http://biotic.stanford.edu/account/joinlabwithdata/downloadFile';
+const downloadBasePath = 'http://euglena.stanford.edu/account/joinlabwithdata/downloadFile';
 
 const createBpuResults = (app, context) => {
   return Promise.all([

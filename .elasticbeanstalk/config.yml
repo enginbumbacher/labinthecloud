@@ -2,7 +2,9 @@ branch-defaults:
   bpuProd:
     environment: euglena-dev
   cronConfig:
-    environment: euglena-prod
+    environment: euglena-dev
+  develop:
+    environment: euglena-dev
   master:
     environment: euglena-prod
 global:

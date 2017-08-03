@@ -1,5 +1,5 @@
 branch-defaults:
-  bpuProd:
+  develop:
     environment: euglena-dev
   master:
     environment: euglena-prod

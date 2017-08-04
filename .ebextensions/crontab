@@ -1,1 +1,1 @@
-0 2 * * * /usr/bin/wget -O /dev/null http://localhost/api/v1/cron
+*/5 * * * * /usr/bin/wget -O /dev/null http://localhost/api/v1/cron

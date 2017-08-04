@@ -25,7 +25,7 @@ module.exports = (app) => {
     })
 
     let d = new Date();
-    d.setMonth(d.getMonth() - 1);
+    d.setDate(d.getDate() - 30);
     const clearSimulations = app.models.Result.find({
       where: {
         and: [

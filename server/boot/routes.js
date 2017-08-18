@@ -23,11 +23,15 @@ module.exports = (app) => {
         })
       }))
     })
+
+    let d = new Date();
+    d.setDate(d.getDate() - 30);
     const clearSimulations = app.models.Result.find({
       where: {
         and: [
           { bpu_api_id: null },
-          { euglenaModelId: null }
+          { euglenaModelId: null },
+          { date_created: { lt: d } }
         ]
       }
     }).then((sims) => {

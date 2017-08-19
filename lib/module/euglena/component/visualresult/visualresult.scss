@@ -18,45 +18,37 @@
   }
 
   &__control {
-    position: absolute;
-    top: 0;
+    position: relative;
     left: 0;
     width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.3s linear;
+    height: 5rem;
+    margin-top: 1.5rem;
 
     &__toggle,
     &__reset {
       &.component__button {
         margin: 0;
         padding: 0;
-
         position: absolute;
-        top: calc(50% - 5rem);
-        left: calc(50% - 5rem);
+        bottom: calc(0);
         .button {
-          width: 10rem;
-          height: 10rem;
+          width: 5rem;
+          height: 5rem;
           border-radius: 50%;
+          border: 1px solid $palette__gray__dark;
+          background: $palette__white;
         }
       }
     }
     &__reset {
       &.component__button {
-        left: calc(50% - 5rem - 6rem);
+        left: calc(1%);
       }
     }
     &__toggle {
       &.component__button {
-        left: calc(50% - 5rem + 6rem);
+        left: calc(1% + 5.5rem);
       }
-    }
-  }
-
-  &:hover {
-    .visual-result__control {
-      opacity: 1;
     }
   }
 

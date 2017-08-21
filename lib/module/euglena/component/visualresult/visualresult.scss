@@ -14,6 +14,9 @@
   }
 
   &__time {
+    position: absolute;
+    bottom: 0;
+    left: 60%;
     text-align: center;
   }
 
@@ -37,6 +40,8 @@
           border-radius: 50%;
           border: 1px solid $palette__gray__dark;
           background: $palette__white;
+          outline: none;
+          text-align: center;
         }
       }
     }
@@ -48,6 +53,35 @@
     &__toggle {
       &.component__button {
         left: calc(1% + 5.5rem);
+      }
+    }
+  }
+
+  .component__field {
+    position: absolute;
+    left: calc(30%);
+    width: 70%;
+    .sliderfield {
+      &__field_wrap {
+        position: relative;
+        margin: 1rem 1.5rem;
+      }
+
+      &__track {
+        width: 100%;
+        height: 0.5rem;
+        border-radius: 0.5rem;
+        background: $palette__gray__medium_dark;
+        position: relative;
+        border: 0.1rem solid $palette__white;
+      }
+      &__inputs {
+        display: none;
+        input {
+          text-align: center;
+          width: 5rem;
+        }
+        text-align: center;
       }
     }
   }

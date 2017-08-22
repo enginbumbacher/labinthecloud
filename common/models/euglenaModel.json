@@ -26,6 +26,11 @@
     "lab": {
       "type": "string",
       "required": false
+    },
+    "simulated": {
+      "type": "boolean",
+      "required": true,
+      "default": false
     }
   },
   "validations": [],

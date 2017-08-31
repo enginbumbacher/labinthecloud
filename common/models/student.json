@@ -22,7 +22,7 @@
       "required": false
     },
     "disabled_login": {
-      "type": "boolean",
+      "type": "string",
       "required": false
     }
   },

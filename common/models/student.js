@@ -18,12 +18,12 @@ module.exports = function(Student) {
           last_login_lab: lab,
           disabled_login: false
         }, function(err, student) {
-          cb(null, student.id, student.source_id, student.disabled_login)
+          cb(null, student.id, student.source_id, student.last_login, student.disabled_login)
         })
       } else {
         student.updateAttribute('last_login', new Date());
         student.updateAttribute('last_login_lab', lab || null);
-        cb(null, student.id, student.source_id, student.disabled_login)
+        cb(null, student.id, student.source_id, student.last_login, student.disabled_login)
       }
     })
   };
@@ -46,8 +46,11 @@ module.exports = function(Student) {
       'arg': 'source_id',
       'type': 'string'
     }, {
+      'arg': 'last_login',
+      'type': 'date'
+    },{
       'arg': 'disabled_login',
-      'type': 'boolean'
+      'type': 'string'
     }]
   });
 
@@ -61,11 +64,11 @@ module.exports = function(Student) {
     }, function(err, student) {
       if (err) throw err;
 
-      if (!student) {
-        console.log('we have a problem');
-      } else {
-        console.log(student);
-        student.updateAttribute('disabled_login', disabled_login);
+      if (student) {
+
+        if (student.disabled_login ? (disabled_login == 'false' ? 0 : 1) : 1) {
+          student.updateAttribute('disabled_login', disabled_login);
+        }
         cb(null, student.id, student.source_id, student.disabled_login)
       }
     })
@@ -90,7 +93,7 @@ module.exports = function(Student) {
       'type': 'string'
     }, {
       'arg': 'disabled_login',
-      'type': 'boolean'
+      'type': 'string'
     }]
   })
 };

@@ -15,6 +15,7 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/radiantllama/tltl-euglena#readme",
   "dependencies": {
+    "aws-sdk": "^2.102.0",
     "compression": "^1.0.3",
     "cors": "^2.5.2",
     "ffprobe": "^1.1.0",

@@ -4,7 +4,8 @@ var rp = require('request-promise'),
   mkdirp = require('mkdirp'),
   uuidV4 = require('uuid/v4'),
   ffprobe = require('ffprobe'),
-  ffprobeStatic = require('ffprobe-static');
+  ffprobeStatic = require('ffprobe-static'),
+  AWS = require('aws-sdk');
 
 const EuglenaUtils = require('../euglenaModels/utils.js');
 
@@ -80,29 +81,43 @@ const createBpuResults = (app, context) => {
         parsedTracks.push(ptrack);
       }
 
-      const storageDir = '/results/' + context.args.data.experimentId + '/live'
-      const fileName = storageDir + '/' + context.args.data.bpu_api_id + '.json';
+      const storageDir = `results/${context.args.data.experimentId}/live`
+      const fileName = `${storageDir}/${context.args.data.bpu_api_id}.json`
 
-      context.args.data.trackFile = fileName;
       context.args.data.runTime = report.exp_metaData.runTime / 1000;
       context.args.data.numFrames = report.exp_metaData.numFrames;
       context.args.data.magnification = report.exp_metaData.magnification;
       context.args.data.video = `${downloadBasePath}/${context.args.data.bpu_api_id}/movie.mp4`
 
-      console.log(`Maximum length: ${maxWidth}`);
-
-      return new Promise((resolve, reject) => {
-        mkdirp(`${process.cwd()}/client${storageDir}`, (err) => {
-          if (err) {
-            reject(err)
-          } else {
-            fs.writeFile(`${process.cwd()}/client${fileName}`, JSON.stringify(parsedTracks), (err) => {
-              if (err) reject(err)
-              else resolve(true);
-            })
-          }
+      if (process.env.S3_BUCKET) {
+        const s3 = new AWS.S3()
+        context.args.data.trackFile = `https://s3-us-east-2.amazonaws.com/${process.env.S3_BUCKET}/${fileName}`
+        return new Promise((resolve, reject) => {
+          s3.putObject({
+            Bucket: process.env.S3_BUCKET,
+            Key: fileName,
+            Body: JSON.stringify(parsedTracks),
+            ACL: 'public-read'
+          }, (err, data) => {
+            if (err) reject(err);
+            else resolve(true);
+          })
+        })
+      } else {
+        context.args.data.trackFile = `/${fileName}`
+        return new Promise((resolve, reject) => {
+          mkdirp(`${process.cwd()}/client/${storageDir}`, (err) => {
+            if (err) {
+              reject(err)
+            } else {
+              fs.writeFile(`${process.cwd()}/client/${fileName}`, JSON.stringify(parsedTracks), (err) => {
+                if (err) reject(err)
+                else resolve(true);
+              })
+            }
+          });
         });
-      });
+      }
     }).catch((err) => {
       console.log(err);
     });
@@ -202,25 +217,44 @@ const _createModelResults = (app, result, model) => {
       }
     }
 
-    const storageDir = `/results/${result.experimentId}/simulation`;
+    const storageDir = `results/${result.experimentId}/simulation`;
     const fileName = `${storageDir}/${uuidV4()}.json`;
-    result.trackFile = fileName;
     result.magnification = liveResult.magnification;
     delete result.model;
     delete result.fps;
 
-    return new Promise((resolve, reject) => {
-      mkdirp(`${process.cwd()}/client${storageDir}`, (err) => {
-        if (err) {
-          reject(err)
-        } else {
-          fs.writeFile(`${process.cwd()}/client${fileName}`, JSON.stringify(tracks), (err) => {
-            if (err) reject(err)
-            else resolve(true);
-          })
-        }
+    if (process.env.S3_BUCKET) {
+      const s3 = new AWS.S3()
+      result.trackFile = `https://s3-us-east-2.amazonaws.com/${process.env.S3_BUCKET}/${fileName}`
+      return new Promise((resolve, reject) => {
+        s3.putObject({
+          Bucket: process.env.S3_BUCKET,
+          Key: fileName,
+          Body: JSON.stringify(tracks),
+          ACL: 'public-read'
+        }, (err, data) => {
+          if (err) {
+            console.log(err); reject(err);
+          } else {
+            resolve(true);
+          }
+        })
+      })
+    } else {
+      result.trackFile = `/${fileName}`
+      return new Promise((resolve, reject) => {
+        mkdirp(`${process.cwd()}/client/${storageDir}`, (err) => {
+          if (err) {
+            reject(err)
+          } else {
+            fs.writeFile(`${process.cwd()}/client/${fileName}`, JSON.stringify(tracks), (err) => {
+              if (err) reject(err)
+              else resolve(true);
+            })
+          }
+        });
       });
-    });
+    }
   })
 }
 
@@ -234,25 +268,35 @@ const loadMeta = (context) => {
         return true;
       })
     : Promise.resolve(true));
-  const trackLoad = new Promise((resolve, reject) => {
-    let trackFile;
-    if (context.data.trackFile) {
-      trackFile = `${process.cwd()}/client${context.data.trackFile}`;
-    } else {
-      trackFile = [process.cwd(), 'client', 'results', context.data.experimentId, 'live', context.data.bpu_api_id]
-      trackFile = trackFile.join('/') + '.json';
-    }
-    fs.access(trackFile, (err) => {
-      if (err) {
-        console.error(err);
-        resolve(true);
+  let trackLoad;
+  if (!context.data.trackFile) {
+    trackLoad = Promise.resolve(true);
+  } else if (context.data.trackFile && context.data.trackFile.match(/^http/)) {
+    trackLoad = rp(context.data.trackFile).then((fileData) => {
+      context.data.tracks = JSON.parse(fileData);
+      return true;
+    });
+  } else {
+    trackLoad = new Promise((resolve, reject) => {
+      let trackFile;
+      if (context.data.trackFile) {
+        trackFile = `${process.cwd()}/client${context.data.trackFile}`;
       } else {
-        const trackData = fs.readFileSync(trackFile);
-        context.data.tracks = JSON.parse(trackData);
-        resolve(true);
+        trackFile = [process.cwd(), 'client', 'results', context.data.experimentId, 'live', context.data.bpu_api_id]
+        trackFile = trackFile.join('/') + '.json';
       }
+      fs.access(trackFile, (err) => {
+        if (err) {
+          console.error(err);
+          resolve(true);
+        } else {
+          const trackData = fs.readFileSync(trackFile);
+          context.data.tracks = JSON.parse(trackData);
+          resolve(true);
+        }
+      })
     })
-  })
+  }
   return Promise.all([backFill, trackLoad]).then(() => {
     if (context.data.bpu_api_id && !context.data.video) {
       context.data.video = `${downloadBasePath}/${context.data.bpu_api_id}/movie.mp4`;

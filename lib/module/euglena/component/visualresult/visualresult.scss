@@ -33,10 +33,11 @@
         margin: 0;
         padding: 0;
         position: absolute;
-        bottom: calc(0);
+        bottom: 0%;
         .button {
           width: 5rem;
           height: 5rem;
+          padding: 0;
           border-radius: 50%;
           border: 1px solid $palette__gray__dark;
           background: $palette__white;
@@ -47,7 +48,7 @@
     }
     &__reset {
       &.component__button {
-        left: calc(1%);
+        left: 1%;
       }
     }
     &__toggle {
@@ -59,7 +60,7 @@
 
   .component__field {
     position: absolute;
-    left: calc(30%);
+    left: 30%;
     width: 70%;
     .sliderfield {
       &__field_wrap {

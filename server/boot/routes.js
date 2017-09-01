@@ -102,6 +102,13 @@ module.exports = (app) => {
 
     Promise.all([clearFaultyExps]).then(() => {
       res.send('{}')
-    })
+    }, (err) => {
+      console.log('error');
+      console.log(err);
+      ressend(JSON.stringify(
+        {error: err}
+      ))
+    }
+  )
   })
 };

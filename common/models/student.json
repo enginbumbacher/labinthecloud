@@ -20,6 +20,10 @@
     "last_login_lab": {
       "type": "string",
       "required": false
+    },
+    "disabled_login": {
+      "type": "string",
+      "required": false
     }
   },
   "validations": [],

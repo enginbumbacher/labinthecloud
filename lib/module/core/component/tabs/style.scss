@@ -37,4 +37,7 @@
     font-weight: bold;
     background: $palette__gray__light;
   }
+  .tab__disabled {
+    opacity: 0.5;
+  }
 }

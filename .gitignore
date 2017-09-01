@@ -5,6 +5,7 @@ Gemfile.lock
 **/node_modules
 server/public
 server/datasources.local.*
+server/config.local.*
 client/results/*
 client/video/*
 

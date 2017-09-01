@@ -14,49 +14,76 @@
   }
 
   &__time {
+    position: absolute;
+    bottom: 0;
+    left: 60%;
     text-align: center;
   }
 
   &__control {
-    position: absolute;
-    top: 0;
+    position: relative;
     left: 0;
     width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.3s linear;
+    height: 5rem;
+    margin-top: 1.5rem;
 
     &__toggle,
     &__reset {
       &.component__button {
         margin: 0;
         padding: 0;
-
         position: absolute;
-        top: calc(50% - 5rem);
-        left: calc(50% - 5rem);
+        bottom: 0%;
         .button {
-          width: 10rem;
-          height: 10rem;
+          width: 5rem;
+          height: 5rem;
+          padding: 0;
           border-radius: 50%;
+          border: 1px solid $palette__gray__dark;
+          background: $palette__white;
+          outline: none;
+          text-align: center;
         }
       }
     }
     &__reset {
       &.component__button {
-        left: calc(50% - 5rem - 6rem);
+        left: 1%;
       }
     }
     &__toggle {
       &.component__button {
-        left: calc(50% - 5rem + 6rem);
+        left: calc(1% + 5.5rem);
       }
     }
   }
 
-  &:hover {
-    .visual-result__control {
-      opacity: 1;
+  .component__field {
+    position: absolute;
+    left: 30%;
+    width: 70%;
+    .sliderfield {
+      &__field_wrap {
+        position: relative;
+        margin: 1rem 1.5rem;
+      }
+
+      &__track {
+        width: 100%;
+        height: 0.5rem;
+        border-radius: 0.5rem;
+        background: $palette__gray__medium_dark;
+        position: relative;
+        border: 0.1rem solid $palette__white;
+      }
+      &__inputs {
+        display: none;
+        input {
+          text-align: center;
+          width: 5rem;
+        }
+        text-align: center;
+      }
     }
   }
 

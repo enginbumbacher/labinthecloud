@@ -26,17 +26,37 @@ module.exports = (app) => {
 
     let d = new Date();
     d.setDate(d.getDate() - 30);
-    const clearSimulations = app.models.Result.find({
+    app.models.EuglenaModel.find({
       where: {
-        and: [
-          { bpu_api_id: null },
-          { euglenaModelId: null },
-          { date_created: { lt: d } }
-        ]
+        and: {
+          simulated: true,
+          date_created: { lt: d }
+        }
       }
-    }).then((sims) => {
-      return Promise.all(sims.map((sim) => sim.destroy()));
+    }).then((simModels) => {
+      let simIds = simModels.map((sim) => sim.id)
+      app.models.Result.find({
+        where: {
+          euglenaModelId: {
+            inq: simIds
+          }
+        }
+      }).then((simResults) => {
+        return Promise.all(simResults.map((simRes) => simRes.destroy()));
+      })
+      return Promise.all(simModels.map((sim) => sim.destroy()))
     })
+    // const clearSimulations = app.models.Result.find({
+    //   where: {
+    //     and: [
+    //       { bpu_api_id: null },
+    //       { euglenaModelId: null },
+    //       { date_created: { lt: d } }
+    //     ]
+    //   }
+    // }).then((sims) => {
+    //   return Promise.all(sims.map((sim) => sim.destroy()));
+    // })
 
     Promise.all([clearFaultyExps]).then(() => {
       res.send('{}')

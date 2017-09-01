@@ -33,10 +33,7 @@ gulp.task('build-css', function() {
       browsers: ['last 2 versions', 'ie 10']
     }))
     .pipe(cleanCSS())
-    .pipe(sourcemaps.write({
-      includeContent: false,
-      sourceRoot: 'build/sass'
-    }))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('client/cslib'))
 });
 
@@ -51,10 +48,7 @@ gulp.task('build-js', function() {
       this.emit('end');
     })
     // .pipe(uglify())
-    .pipe(sourcemaps.write({
-      includeContent: false,
-      sourceRoot: 'build/js'
-    }))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('client/cslib'))
 });
 

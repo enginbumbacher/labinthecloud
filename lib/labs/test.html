@@ -21,9 +21,10 @@
         model: {
           tabs: [{
             modelType: "oneEye",
+            color: 0x2222ff,
             parameters: {
               K: {
-                label: "K",
+                label: "Coupling",
                 range: [-2, 2],
                 resolution: 0.01,
                 initialValue: {
@@ -32,17 +33,55 @@
                 }
               },
               v: {
-                label: "v",
-                range: [-20, 20],
+                label: "Forward Speed",
+                range: [0, 10],
                 resolution: 0.1,
                 initialValue: {
-                  base: 10,
+                  base: 5,
                   delta: 2
                 }
               },
               omega: {
-                label: "Ω",
+                label: "Roll Speed",
+                range: [-5, 5],
+                resolution: 0.01,
+                initialValue: {
+                  base: 1,
+                  delta: 0.2
+                }
+              },
+              randomness: {
+                label: "Randomness",
+                range: [0, 1],
+                resolution: 0.01,
+                initialValue: 0.15
+              }
+            }
+          }, {
+            modelType: "twoEye",
+            color: 0xdd0000,
+            parameters: {
+              K: {
+                label: "Coupling",
                 range: [-2, 2],
+                resolution: 0.01,
+                initialValue: {
+                  base: -1,
+                  delta: 0.2
+                }
+              },
+              v: {
+                label: "Forward Speed",
+                range: [0, 10],
+                resolution: 0.1,
+                initialValue: {
+                  base: 5,
+                  delta: 2
+                }
+              },
+              omega: {
+                label: "Roll Speed",
+                range: [-5, 5],
                 resolution: 0.01,
                 initialValue: {
                   base: 1,
@@ -73,6 +112,31 @@
               tStep: 0.5,
               width: 160,
               height: 160
+            }
+          }, {
+            id: "histogram",
+            label: "Histogram",
+            settings: {
+              binCount: 10,
+              vRange: null,
+              mode: 'component',
+              dT: 2,
+              tStep: 1,
+
+              width: 300,
+              height: 160
+            }
+          }, {
+            id: "timeseries",
+            label: "Time Series",
+            settings: {
+              vRange: null,
+              mode: 'component',
+              stdBand: true,
+              dT: 1,
+
+              width: 300,
+              height: 200
             }
           }]
         },

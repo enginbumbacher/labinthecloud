@@ -1,12 +1,14 @@
 @import "../../../scss_includes/variables";
 
 .results {
+
   &__controls {
     padding: 1.5rem;
     margin: -1.5rem -1.5rem 1rem;
     background: $palette__gray__medium_dark;
     border-bottom: 1px solid $palette__gray__dark;
     display: flex;
+
 
     & > div {
       flex: 1;
@@ -25,5 +27,28 @@
     &__visualization {
       text-align: right;
     }
+  }
+
+  &__visuals {
+    display:flex;
+    align-items: top;
+    justify-content: space-between;
+    overflow-x: auto;
+    flex-grow: 2;
+
+  }
+
+  &__visualization{
+        min-width: 400px;
+        min-height: 500px;
+        margin-left: 10px;
+        margin-right: 10px;
+        flex-grow: 1;
+        text-align: center;
+  }
+
+  &__euglena{
+        min-width: 500px;
+        text-align: center;
   }
 }

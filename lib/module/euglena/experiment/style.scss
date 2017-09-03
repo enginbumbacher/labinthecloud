@@ -1,5 +1,8 @@
 @import "../../../scss_includes/variables";
 
+
+$bulb-display__bar-width: 3rem;
+
 .form {
   &__experiment {
     &__history {
@@ -26,18 +29,61 @@
 }
 
 .tab__experiment {
-  .light-display {
-    display: block;
-    margin: 2rem auto 1rem;
-    width: 22rem;
 
-    &__content {
-      color: $palette__white;
-      text-align: center;
+  .dry_run {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    min-height: 200px;
+    margin-top: 3rem;
 
-      .dry_run__time {
-        line-height: 15rem;
+    .light-display {
+      position: absolute;
+      margin: 1rem 2rem 0 0;
+      width: 22rem;
+
+
+      &__content {
+        color: $palette__white;
         text-align: center;
+
+        .dry_run__time {
+          line-height: 15rem;
+          text-align: center;
+          margin-right: 2rem;
+        }
+      }
+    }
+    .bulb-display {
+      position: absolute;
+      margin: 0 0 0 0rem ;
+      width: 24rem;
+
+      padding: $bulb-display__bar-width;
+
+      &__top {
+        height: $bulb-display__bar-width;
+      }
+      &__top__fix {
+        height: $bulb-display__bar-width;
+      }
+      &__bottom {
+        height: $bulb-display__bar-width;
+      }
+      &__bottom__fix {
+        height: $bulb-display__bar-width;
+      }
+      &__left {
+        width: $bulb-display__bar-width;
+      }
+      &__left__fix {
+        width: $bulb-display__bar-width;
+      }
+      &__right {
+        width: $bulb-display__bar-width;
+      }
+      &__right__fix {
+        width: $bulb-display__bar-width;
       }
     }
   }

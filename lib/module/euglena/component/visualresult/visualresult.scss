@@ -4,8 +4,9 @@
 .visual-result {
   position: relative;
   display: inline-block;
-  vertical-align: top;
-  margin: 1rem;
+  vertical-align: middle;
+  margin: 3rem;
+  margin-top: 4rem;
 
   &__content {
     position: relative;
@@ -25,7 +26,7 @@
     left: 0;
     width: 100%;
     height: 5rem;
-    margin-top: 1.5rem;
+    margin-top: 5rem;
 
     &__toggle,
     &__reset {
@@ -91,7 +92,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    margin: -1rem;
+    margin: -2rem;
   }
   .euglena-display {
     position: absolute;
@@ -102,6 +103,12 @@
     position: absolute;
     top: 0;
     left: 0;
+  }
+  .bulb-display {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: -4rem;
   }
 
 }

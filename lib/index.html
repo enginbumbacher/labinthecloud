@@ -164,48 +164,48 @@
         },
         visualization: {
            visualizationTypes: [
-          //{
-          //   id: "circle",
-          //   label: "Circle",
-          //   settings: {
-          //     binCount: 24, //15° bins
-          //     dT: 2,
-          //     tStep: 0.5,
-          //     width: 160,
-          //     height: 160
-          //   }
-          // }, {
-          //   id: "histogram",
-          //   label: "Histogram",
-          //   settings: {
-          //     binCount: 10,
-          //     vRange: null,
-          //     mode: 'component',
-          //     dT: 2,
-          //     tStep: 1,
-          //
-          //     width: 300,
-          //     height: 160
-          //   }
-          // }, {
-          //   id: "timeseries",
-          //   label: "Time Series",
-          //   settings: {
-          //     vRange: null,
-          //     mode: 'component',
-          //     stdBand: true,
-          //     dT: 1,
-          //
-          //     width: 300,
-          //     height: 200
-          //   }
-          // }
+          {
+            id: "circle",
+            label: "Circle",
+            settings: {
+              binCount: 24, //15° bins
+              dT: 2,
+              tStep: 0.5,
+              width: 160,
+              height: 160
+            }
+          }, {
+            id: "histogram",
+            label: "Histogram",
+            settings: {
+              binCount: 10,
+              vRange: null,
+              mode: 'component',
+              dT: 2,
+              tStep: 1,
+
+              width: 300,
+              height: 160
+            }
+          }, {
+            id: "timeseries",
+            label: "Time Series",
+            settings: {
+              vRange: null,
+              mode: 'component',
+              stdBand: true,
+              dT: 1,
+
+              width: 300,
+              height: 200
+            }
+          }
         ]
         }
-        //,
-        //aggregate: {
-        //  timeWindow: 2
-        //}
+        ,
+        aggregate: {
+         timeWindow: 2
+        }
       };
     </script>
     <script data-main="./cslib/init" src="./cslib/thirdparty/require/require.js"></script>

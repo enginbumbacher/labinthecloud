@@ -72,11 +72,14 @@
     <script type="text/javascript">
       window.EuglenaConfig = {
         system: {
-          maxLoginTime: 0
+          maxLoginTime: 0,
+          experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
+          modelModality: 'create', // 'observe','explore','create'
         },
         experiment: {
           maxDuration: 60,
           bpuId: "eug3"
+          //,experimentHistory
         },
         model: {
           tabs: [{

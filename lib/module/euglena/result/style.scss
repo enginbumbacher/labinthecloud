@@ -1,6 +1,7 @@
 @import "../../../scss_includes/variables";
 
 .results {
+  height: 100%;
 
   &__controls {
     padding: 1.5rem;
@@ -32,10 +33,10 @@
   &__visuals {
     display:flex;
     align-items: top;
-    justify-content: space-between;
-    overflow-x: auto;
-    flex-grow: 2;
-
+    justify-content: flex-start;
+    overflow: auto;
+    height: 90%;
+    width: 100%;
 
   }
 
@@ -50,6 +51,14 @@
 
   &__euglena{
         min-width: 500px;
+        min-height: 500px;
+        text-align: center;
+  }
+
+  &__euglena_2{
+        min-width: 500px;
+        min-height: 500px;
+        flex-grow: 1;
         text-align: center;
   }
 }

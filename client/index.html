@@ -72,11 +72,16 @@
     <script type="text/javascript">
       window.EuglenaConfig = {
         system: {
-          maxLoginTime: 0
+          maxLoginTime: 0,
+          experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
+          modelModality: 'create', // 'observe','explore','create'
+          expModelModality: 'simultaneous', //'simultaneous','sequential' - for seeing model and live not together
+          enableDirectComparison: true // false: cannot do direct comparison between models
         },
         experiment: {
           maxDuration: 60,
           bpuId: "eug3"
+          //,experimentHistory
         },
         model: {
           tabs: [{
@@ -163,7 +168,8 @@
           simulationFps: 12
         },
         visualization: {
-          visualizationTypes: [{
+           visualizationTypes: [
+          {
             id: "circle",
             label: "Circle",
             settings: {
@@ -198,10 +204,12 @@
               width: 300,
               height: 200
             }
-          }]
-        },
+          }
+        ]
+        }
+        ,
         aggregate: {
-          timeWindow: 2
+         timeWindow: 2
         }
       };
     </script>

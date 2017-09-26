@@ -12,11 +12,16 @@
       window.EuglenaConfig = {
         lab: "test",
         system: {
-          maxLoginTime: 10
+          maxLoginTime: 0,
+          experimentModality: 'observe', // 'observe','explore','create', 'createAndHistory'
+          modelModality: 'observe', // 'observe','explore','create'
+          expModelModality: 'simultaneous', //'simultaneous','sequential' - for seeing model and live not together
+          enableDirectComparison: true
         },
         experiment: {
           maxDuration: 60,
-          bpuId: "eug3"
+          bpuId: "eug3",
+          experimentHistory: [9]
         },
         model: {
           tabs: [{

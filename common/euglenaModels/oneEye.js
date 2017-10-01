@@ -67,30 +67,27 @@ module.exports = {
 
     const dT = 1 / config.result.fps;
 
-    var delta_yaw = (config.track.oneEye.k * intensity) * dT + (Math.random() * 2 - 1) * config.model.configuration.randomness * Math.PI * dT; // Randomize
+    var delta_yaw = (config.track.oneEye.k * intensity) * dT;
     const delta_roll = config.track.oneEye.omega * dT;
-
-
-    const yaw_min = 0.1; //config.params.k / 20.0; // restrict the minimum possible yaw rotation to 0.01 instead of 0
-    if (Math.abs(delta_yaw)<yaw_min) {
-      if (delta_yaw == 0) {
-        var parity = [-1,1];
-        parity = parity[(Math.random()*parity.length)|0];
-      } else {
-        var parity = Math.sign(delta_yaw);
-      }
-      delta_yaw = parity * yaw_min;
-    }
-
 
     // Translate forward in head direction *** REMINDER: local z axis is pointing "forward", i.e. in getWorldDirection()
     //tmp_euglena.translateZ(config.track.oneEye.v * dT);
     tmp_euglena.translateZ(config.track.oneEye.v * dT);
 
-    // Roll around the local z-axis (i.e. head)
-    tmp_euglena.rotateZ(delta_roll);
+    const yaw_min = 0.2 * dT; //config.params.k / 20.0; // restrict the minimum possible yaw rotation to 0.01 instead of 0
+    if (Math.abs(delta_yaw)<yaw_min) {
+      // Create wiggle by rotation on a cone
+      var rot_axis = new THREE.Vector3(Math.sin(0.35),0,Math.cos(0.35));
+      tmp_euglena.rotateOnAxis(rot_axis, delta_roll);
+
+    } else {
+
+      // Roll around the local z-axis (i.e. head)
+      tmp_euglena.rotateZ(delta_roll);
+    }
 
     // Yaw around the local x-axis, which is orthogonal to the head-eye plane (spanned by the local z and y axes).
+    delta_yaw += config.resetRandom * dT;
     tmp_euglena.rotateX(-delta_yaw);
 
     // Restrict Euglena z position to 0

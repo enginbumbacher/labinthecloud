@@ -1,9 +1,21 @@
 <div class="modeling">
   <div class="modeling__tab">Modeling</div>
   <div class="modeling__content">
-    <h2 class="modeling__title">Modeling</h2>
+    <h2 class="modeling__title">Model of the Euglena</h2>
     <div class="modeling__display">
-
+      <div class="modeling__display__input"> 1. Calculate the amount of light in each photoreceptor </div>
+      <svg class="modeling__display__arrow">
+        <defs>
+          <marker id="arrow" markerWidth="13" markerHeight="13" refx="2" refy="6" orient="auto">
+              <path d="M2,1 L2,10 L10,6 L2,2" style="fill:$palette__gray__dark;" />
+          </marker>
+        </defs>
+        <path d="M50,0 L50,25"
+              style="stroke:black; stroke-width: 2.5px; fill: $palette__gray__dark;
+              marker-end: url(#arrow);"
+        />
+      </svg>
+      <div class="modeling__display__blockly"> 2. Process the light and act as defined</div>
     </div>
   </div>
 </div>

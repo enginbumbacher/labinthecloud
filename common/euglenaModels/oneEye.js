@@ -74,11 +74,15 @@ module.exports = {
     //tmp_euglena.translateZ(config.track.oneEye.v * dT);
     tmp_euglena.translateZ(config.track.oneEye.v * dT);
 
+
+
     const yaw_min = 0.2 * dT; //config.params.k / 20.0; // restrict the minimum possible yaw rotation to 0.01 instead of 0
     if (Math.abs(delta_yaw)<yaw_min) {
       // Create wiggle by rotation on a cone
-      var rot_axis = new THREE.Vector3(Math.sin(0.35),0,Math.cos(0.35));
+      var rot_axis = new THREE.Vector3(0, Math.sin(config.wiggleRandom), Math.cos(config.wiggleRandom));
       tmp_euglena.rotateOnAxis(rot_axis, delta_roll);
+
+      //tmp_euglena.rotateZ(delta_roll);
 
     } else {
 

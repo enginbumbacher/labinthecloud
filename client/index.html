@@ -76,7 +76,7 @@
           experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
           modelModality: 'create', // 'observe','explore','create'
           expModelModality: 'simultaneous', //'simultaneous','sequential' - for seeing model and live not together
-          enableDirectComparison: false // false: cannot do direct comparison between models
+          enableDirectComparison: true // false: cannot do direct comparison between models
         },
         experiment: {
           maxDuration: 60,
@@ -86,11 +86,11 @@
         model: {
           tabs: [{
             modelType: "oneEye",
-            color: 0x2222ff,
+            color: 0xdd0000,//0x193A58,//0x834F00,
             parameters: {
               K: {
                 label: "Coupling",
-                range: [-2, 2],
+                range: [-5, 5],
                 resolution: 0.01,
                 initialValue: {
                   base: -1,
@@ -108,7 +108,7 @@
               },
               omega: {
                 label: "Roll Speed",
-                range: [-5, 5],
+                range: [0, 10],
                 resolution: 0.01,
                 initialValue: {
                   base: 1,
@@ -128,7 +128,7 @@
             parameters: {
               K: {
                 label: "Coupling",
-                range: [-2, 2],
+                range: [-5, 5],
                 resolution: 0.01,
                 initialValue: {
                   base: -1,
@@ -146,7 +146,7 @@
               },
               omega: {
                 label: "Roll Speed",
-                range: [-5, 5],
+                range: [0, 10],
                 resolution: 0.01,
                 initialValue: {
                   base: 1,
@@ -210,7 +210,7 @@
         ,
         aggregate: {
          timeWindow: 2
-        }
+       }
       };
     </script>
     <script data-main="./cslib/init" src="./cslib/thirdparty/require/require.js"></script>

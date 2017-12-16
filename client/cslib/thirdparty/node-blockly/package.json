@@ -1,0 +1,104 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "node-blockly",
+        "scope": null,
+        "escapedName": "node-blockly",
+        "name": "node-blockly",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/Users/Engin/Dropbox/Akademia/Projects/BioLab/LabInTheCloud"
+    ]
+  ],
+  "_from": "node-blockly@latest",
+  "_id": "node-blockly@1.0.29",
+  "_inCache": true,
+  "_location": "/node-blockly",
+  "_nodeVersion": "8.7.0",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/node-blockly-1.0.29.tgz_1508322986146_0.44138333364389837"
+  },
+  "_npmUser": {
+    "name": "mo4islona",
+    "email": "mo4islona@gmail.com"
+  },
+  "_npmVersion": "5.4.2",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "node-blockly",
+    "scope": null,
+    "escapedName": "node-blockly",
+    "name": "node-blockly",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/node-blockly/-/node-blockly-1.0.29.tgz",
+  "_shasum": "4107b588398d94001b87484dc66ecc8bae532b46",
+  "_shrinkwrap": null,
+  "_spec": "node-blockly",
+  "_where": "/Users/Engin/Dropbox/Akademia/Projects/BioLab/LabInTheCloud",
+  "author": {
+    "name": "Eugene Formanenko",
+    "email": "mo4islona@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/mo4islona/node-blockly/issues"
+  },
+  "dependencies": {
+    "jsdom": "^11.3.0",
+    "xmlshim": "^0.2.1"
+  },
+  "description": "Blockly for Node.js and Browser as CommonJS module",
+  "devDependencies": {
+    "chai": "^3.0.0",
+    "gulp": "^3.8.11",
+    "gulp-insert": "^0.4.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.3",
+    "mocha": "^2.2.5"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dist": {
+    "integrity": "sha512-VQoRdgueR8JhyRaZJ5NHPIeTSbqYVl2tT6eQ++eCA0uCzNH3mZpOQfjLhNzdHNwVuhSYLIWXLBJ76wH4eLPdJw==",
+    "shasum": "4107b588398d94001b87484dc66ecc8bae532b46",
+    "tarball": "https://registry.npmjs.org/node-blockly/-/node-blockly-1.0.29.tgz"
+  },
+  "gitHead": "51469c78e1887e62470df72ed1ce372f3eb43da7",
+  "homepage": "https://github.com/mo4islona/node-blockly",
+  "keywords": [
+    "blockly",
+    "commonjs"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "mo4islona",
+      "email": "mo4islona@gmail.com"
+    }
+  ],
+  "name": "node-blockly",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mo4islona/node-blockly.git"
+  },
+  "scripts": {
+    "blockly:upgrade": "git submodule init && git submodule update --recursive --remote",
+    "prepublish": "rm -rf lib && mkdir lib && gulp build",
+    "test": "mocha test/*_test.js"
+  },
+  "version": "1.0.29"
+}

@@ -76,7 +76,7 @@ module.exports = {
 
 
 
-    const yaw_min = 0.2 * dT; //config.params.k / 20.0; // restrict the minimum possible yaw rotation to 0.01 instead of 0
+    const yaw_min = 0.3 * dT; //config.params.k / 20.0; // restrict the minimum possible yaw rotation to 0.01 instead of 0
     if (Math.abs(delta_yaw)<yaw_min) {
       // Create wiggle by rotation on a cone
       var rot_axis = new THREE.Vector3(0, Math.sin(config.wiggleRandom), Math.cos(config.wiggleRandom));

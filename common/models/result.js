@@ -253,7 +253,7 @@ const _createModelResults = (app, result, model) => {
           result: result,
           frame: frame,
           resetRandom: resetRandomNow,
-          wiggleRandom: 0.35
+          wiggleRandom: 0.4
         }))
       }
     }

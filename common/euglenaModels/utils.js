@@ -57,5 +57,17 @@ module.exports = {
     let headDir = new THREE.Vector3();
     headDir.addVectors(newDir, euglena.position);
     euglena.lookAt(headDir);
+  },
+  setRandomAngleMatrix: function(numrows, numcols, angleMax, angleMin, randomness) {
+    var arr = [];
+    for (var i = 0; i < numrows; ++i) {
+        var columns = [];
+        var initial = [-1,1][Math.random()*2|0] * (angleMax* Math.random() - angleMin) * randomness * Math.PI;
+        for (var j = 0; j < numcols; ++j) {
+            columns[j] = initial / numcols;
+        }
+        arr[i] = columns;
+    }
+    return arr;
   }
 }

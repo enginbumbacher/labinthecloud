@@ -203,17 +203,58 @@ const _createModelResults = (app, result, model) => {
       euglenaModels[model.modelType].initialize({ track: track, model: model, result: result })
       tracks.push(track);
     }
+
+    var smoothFrames = 5.0; // number of frames over which to distribute the change
+
+    var resetMin = smoothFrames; //Math.floor(0.25 * result.fps);
+    var resetMax = Math.ceil(1.5 * result.fps);
+    var resetRandom = Array.from({length: model.configuration.count}, () => resetMin + Math.floor(Math.random() * resetMax));
+
+    var resetAngleMin = 2;
+    var resetAngleMax = 10;
+    var resetRandomAngle = EuglenaUtils.setRandomAngleMatrix(model.configuration.count, smoothFrames, resetAngleMax, resetAngleMin, model.configuration.randomness);
+
     for (let frame = 1; frame <= duration * result.fps; frame++) {
-      let lights = EuglenaUtils.lightsFromTime(experiment, frame / result.fps);
 
       for (let euglenaId = 0; euglenaId < model.configuration.count; euglenaId++) {
+        // Calculate the a randomized delta_t for each Euglena after each update.
+        // For every Euglena, every time resetRandom equals zero, update the randomization angle..
+        var resetRandomNow = 0;
+        if (!resetRandom[euglenaId]) {
+          //create new duration of a random angle
+          resetRandom[euglenaId] = resetMin + Math.floor(Math.random() * resetMax);
+
+          // recalculate new random angle if all zero
+          if (resetRandomAngle[euglenaId].every( a => a == 0)) {
+            var newAngle = [-1,1][Math.random()*2|0]* (resetAngleMax * Math.random() - resetAngleMin) * model.configuration.randomness * Math.PI;
+            resetRandomAngle[euglenaId] = resetRandomAngle[euglenaId].map( function(a) {
+              return newAngle / smoothFrames;
+            });
+          }
+        } else { // decrease countdown by one
+          resetRandom[euglenaId] -= 1;
+        }
+
+        //Get the next angle to be passed on
+        var resetAngleInd = resetRandomAngle[euglenaId].findIndex((v) => { return v != 0})
+        if (resetAngleInd != -1) {
+          resetRandomNow = resetRandomAngle[euglenaId][resetAngleInd];
+          resetRandomAngle[euglenaId][resetAngleInd] = 0;
+        }
+
+        // Get the lights
+        let lights = EuglenaUtils.lightsFromTime(experiment, frame / result.fps);
+
+        // Calculate the tracks.
         tracks[euglenaId].samples.push(euglenaModels[model.modelType].update({
           lights: lights,
           track: tracks[euglenaId],
           last: tracks[euglenaId].samples[frame - 1],
           model: model,
           result: result,
-          frame: frame
+          frame: frame,
+          resetRandom: resetRandomNow,
+          wiggleRandom: 0.4
         }))
       }
     }

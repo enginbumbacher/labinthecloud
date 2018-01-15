@@ -18,6 +18,14 @@
       "type": "object",
       "required": true
     },
+    "blocklyXml":{
+      "type": "string",
+      "required": false
+    },
+    "jsCode": {
+      "type": "string",
+      "required": false
+    },
     "date_created": {
       "type": "date",
       "required": true,

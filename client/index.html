@@ -68,10 +68,102 @@
     </style>
   </head>
   <body>
+    <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
+      <category name="Behaving" colour="#a55b5b">
+        <block type="forward_speed">
+          <field name="SPEED">2.1</field>
+        </block>
+        <block type="action_by">
+          <field name="NAME">LIGHT_AWAY</field>
+        </block>
+        <block type="action">
+          <field name="NAME">LIGHT_AWAY</field>
+        </block>
+        <block type="either_way"></block>
+      </category>
+      <category name="Sensing" colour="#80a55b">
+        <block type="calc_light"></block>
+        <block type="question_adapt"></block>
+        <block type="see_light"></block>
+        <block type="logic_compare">
+          <field name="OP">EQ</field>
+        </block>
+        <block type="logic_negate"></block>
+        <block type="logic_boolean">
+          <field name="BOOL">TRUE</field>
+        </block>
+      </category>
+      <category name="Quantities" colour="#5ba5a5">
+        <block type="qual_absolute">
+          <field name="NAME">LOW</field>
+        </block>
+        <block type="qual_relative">
+          <field name="NAME">LESS</field>
+        </block>
+        <block type="modifier_rand"></block>
+        <block type="modifier_prob">
+          <field name="Factor">diff_light_CP</field>
+        </block>
+        <block type="math_number">
+          <field name="NUM">0</field>
+        </block>
+        <block type="math_trig">
+          <field name="OP">SIN</field>
+          <value name="NUM">
+            <shadow type="math_number">
+              <field name="NUM">45</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="math_random_int">
+          <value name="FROM">
+            <shadow type="math_number">
+              <field name="NUM">1</field>
+            </shadow>
+          </value>
+          <value name="TO">
+            <shadow type="math_number">
+              <field name="NUM">100</field>
+            </shadow>
+          </value>
+        </block>
+      </category>
+      <category name="Processing" colour="#805ba5">
+        <block type="question_restore"></block>
+        <block type="question_reference">
+          <field name="compare">BRIGHTER</field>
+          <field name="compare_out">reference_light</field>
+        </block>
+        <block type="compare_leftright">
+          <field name="compare">left_more</field>
+        </block>
+        <block type="compare_nowprevious">
+          <field name="compare">left_more</field>
+        </block>
+        <block type="question_shock_simple"></block>
+        <block type="question_shock"></block>
+        <block type="question_reference_simple"></block>
+      </category>
+      <category name="Programming" colour="#5b6da5">
+        <block type="text">
+          <field name="TEXT"></field>
+        </block>
+        <block type="colour_picker">
+          <field name="COLOUR">#ff0000</field>
+        </block>
+        <block type="controls_if"></block>
+      </category>
+    </xml>
+    <xml xmlns="http://www.w3.org/1999/xhtml" id="defaultWorkspaceBlocks" style="display:none">
+      <variables></variables>
+      <block type="every_time" id="XN3[kHW+k6_69-gU$#lo" x="63" y="63"></block>
+    </xml>
     <div class="loader">Loading..</div>
     <script src="/cslib/thirdparty/blockly/blockly_compressed.js"></script>
     <script src="/cslib/thirdparty/blockly/blocks_compressed.js"></script>
+    <script src="/cslib/thirdparty/blockly/javascript_compressed.js"></script>
     <script src="/cslib/thirdparty/blockly/msg/js/en.js"></script>
+    <script src="/cslib/module/euglena/model_blockly/modeling_blocks.js"></script>
 
     <script type="text/javascript">
       window.EuglenaConfig = {
@@ -84,11 +176,50 @@
         },
         experiment: {
           maxDuration: 60,
-          bpuId: "eug3"
+          bpuId: "eug3",
+          euglenaServerMode:"demo"
           //,experimentHistory
         },
         model: {
           tabs: [{
+            modelType: "blockly",
+            color: 0x2222ff,
+            parameters: {
+              K: {
+                label: "Coupling",
+                range: [-2, 2],
+                resolution: 0.01,
+                initialValue: {
+                  base: -1,
+                  delta: 0.2
+                }
+              },
+              v: {
+                label: "Forward Speed",
+                range: [0, 10],
+                resolution: 0.1,
+                initialValue: {
+                  base: 5,
+                  delta: 2
+                }
+              },
+              omega: {
+                label: "Roll Speed",
+                range: [-5, 5],
+                resolution: 0.01,
+                initialValue: {
+                  base: 1,
+                  delta: 0.2
+                }
+              },
+              randomness: {
+                label: "Randomness",
+                range: [0, 1],
+                resolution: 0.01,
+                initialValue: 0.15
+              }
+            }
+          }, {
             modelType: "oneEye",
             color: 0x2222ff,
             parameters: {

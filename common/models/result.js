@@ -11,7 +11,8 @@ const EuglenaUtils = require('../euglenaModels/utils.js');
 
 const euglenaModels = {
   oneEye: require('../euglenaModels/oneEye.js'),
-  twoEye: require('../euglenaModels/twoEye.js')
+  twoEye: require('../euglenaModels/twoEye.js'),
+  blockly: require('../euglenaModels/blockly.js')
 }
 
 const downloadBasePath = 'http://euglena.stanford.edu/account/joinlabwithdata/downloadFile';
@@ -181,7 +182,7 @@ const _createModelResults = (app, result, model) => {
         z: 0,
         yaw: Math.random() * 2 * Math.PI,
         roll: Math.random() * 2 * Math.PI,
-        pitch: 0,
+        pitch: Math.random() * 2 * Math.PI
       };
       if (result.initialization && result.initialization.length > euglenaId) {
         initialization = result.initialization[euglenaId]

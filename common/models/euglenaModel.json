@@ -19,11 +19,11 @@
       "required": true
     },
     "blocklyXml":{
-      "type": "string",
+      "type": "text",
       "required": false
     },
     "jsCode": {
-      "type": "string",
+      "type": "text",
       "required": false
     },
     "date_created": {

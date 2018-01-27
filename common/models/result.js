@@ -15,6 +15,12 @@ const euglenaModels = {
   blockly: require('../euglenaModels/blockly.js')
 }
 
+const basicParameters = {
+  randomSmoothWindow: 5.0, // number of frames over which to distribute the change
+  randomnessFactor: 1.0
+}
+
+
 const downloadBasePath = 'http://euglena.stanford.edu/account/joinlabwithdata/downloadFile';
 
 const createBpuResults = (app, context) => {
@@ -204,18 +210,19 @@ const _createModelResults = (app, result, model) => {
       tracks.push(track);
     }
 
-    var smoothFrames = 5.0; // number of frames over which to distribute the change
+    // Parameters for "memory" i.e. for values of light detected and of parameter changes
 
-    var resetMin = smoothFrames; //Math.floor(0.25 * result.fps);
+    // Parameters for smooth randomization
+    var resetMin = basicParameters.randomSmoothWindow; //Math.floor(0.25 * result.fps);
     var resetMax = Math.ceil(1.5 * result.fps);
     var resetRandom = Array.from({length: model.configuration.count}, () => resetMin + Math.floor(Math.random() * resetMax));
 
     var resetAngleMin = 2;
     var resetAngleMax = 10;
-    var resetRandomAngle = EuglenaUtils.setRandomAngleMatrix(model.configuration.count, smoothFrames, resetAngleMax, resetAngleMin, model.configuration.randomness);
+    var randomnessFactor = model.modelType == 'blockly' ? basicParameters.randomnessFactor : model.configuration.randomness;
+    var resetRandomAngle = EuglenaUtils.setRandomAngleMatrix(model.configuration.count, basicParameters.randomSmoothWindow, resetAngleMax, resetAngleMin, randomnessFactor);
 
     for (let frame = 1; frame <= duration * result.fps; frame++) {
-
       for (let euglenaId = 0; euglenaId < model.configuration.count; euglenaId++) {
         // Calculate the a randomized delta_t for each Euglena after each update.
         // For every Euglena, every time resetRandom equals zero, update the randomization angle..
@@ -226,9 +233,9 @@ const _createModelResults = (app, result, model) => {
 
           // recalculate new random angle if all zero
           if (resetRandomAngle[euglenaId].every( a => a == 0)) {
-            var newAngle = [-1,1][Math.random()*2|0]* (resetAngleMax * Math.random() - resetAngleMin) * model.configuration.randomness * Math.PI;
+            var newAngle = [-1,1][Math.random()*2|0]* (resetAngleMax * Math.random() - resetAngleMin) * randomnessFactor * Math.PI;
             resetRandomAngle[euglenaId] = resetRandomAngle[euglenaId].map( function(a) {
-              return newAngle / smoothFrames;
+              return newAngle / basicParameters.randomSmoothWindow;
             });
           }
         } else { // decrease countdown by one
@@ -257,6 +264,11 @@ const _createModelResults = (app, result, model) => {
           wiggleRandom: 0.4
         }))
       }
+    }
+
+    // REMOVE BLOCKLY OBJECT BUT ADD THE VARIABLES
+    if (model.modelType=='blockly') {
+      tracks.forEach((euglena,ind) => { euglena.blockly.euglenaBody.removeBody()});
     }
 
     const storageDir = `results/${result.experimentId}/simulation`;

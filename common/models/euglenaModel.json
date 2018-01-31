@@ -26,6 +26,10 @@
       "type": "text",
       "required": false
     },
+    "bodyConfigJSON": {
+      "type": "text",
+      "required": false
+    },
     "date_created": {
       "type": "date",
       "required": true,

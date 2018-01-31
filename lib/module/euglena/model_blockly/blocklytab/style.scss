@@ -58,11 +58,19 @@
 
     &__arrow {
       height: 50px;
+      text-align: center;
+      min-width: 500px;
+      margin: 0.5rem;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    &__arrow img {
+      height: 50px;
     }
 
     &__blockly {
       height: 480px;
-      width: 600px;
       //height: 80%;
       min-width: 500px;
       min-height: 400px;

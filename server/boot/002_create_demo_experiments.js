@@ -17,6 +17,23 @@ const demoExperiments = [{
   source: {
     trackFile: "/demodata/0/tracks.json",
     video: "/demodata/0/movie.mp4"
+  },
+  configuration: [
+    {"left":0,    "top":0,    "bottom":0,   "right":0,  "duration":2},
+    {"left":100,  "top":100,  "bottom":100, "right":100,  "duration":16},
+    {"left":0,    "top":0,    "bottom":0,   "right":0,  "duration":10},
+    {"left":0,    "top":100,  "bottom":0,   "right":100,  "duration":16},
+    {"left":100,  "top":0,    "bottom":100, "right":0,    "duration":16}
+  ],
+  result: {
+    numFrames: 465,
+    runTime: 60,
+    magnification: 4,
+    bpu_api_id: '58f7bfeeadbbed76b6ed31dd'
+  },
+  source: {
+    trackFile: "/demodata/1/tracks.json",
+    video: "/demodata/1/movie.mp4"
   }
 }];
 
@@ -45,7 +62,7 @@ module.exports = (app) => {
 
         // copy track file
         fse.copySync(`${process.cwd()}${exp.source.trackFile}`, `${process.cwd()}/client${exp.result.trackFile}`)
-        
+
         // copy video file
         fse.copySync(`${process.cwd()}${exp.source.video}`, `${process.cwd()}/client${exp.result.video}`)
 

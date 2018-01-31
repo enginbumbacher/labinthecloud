@@ -21,51 +21,6 @@ const defaults = {
   }
 ;
 
-/*
-Explanation of possible body configurations:
-Body is such that the longest part of the body is along the x-axis.
-The local axis of the body are centered in the body itself. Keep that in mind when creating the eye position and orientation.
-The y axis is pointing down, the x axis is pointing right.
-1. sensorPosition is defined as an index of a 2-dimensional matrix of possible positions. Each of these positions get translated to a set of coordinates in space.
-The position is defined with respect to the body. (-1,-1) is the top most left point. (1,-1) is the top most right point. (1,1) is the bottom most right point.
-2. sensorOrientation is the orientation of the sensor in the body. 0 corresponds to (0,1,0), Math.PI/2 to (1,0,0), Math.PI to (0,-1,0), etc.
-3. sensorField is the visual field of the sensor. Math.PI corresponds to a 180 deg visual field, around the sensor orientation  Currently, there will be only two values: Math.PI and 2*Math.PI
-4. spotPositions is defined the same way as sensorPosition, but as an array of all spots.
-
-A spot influences the sensorField of an sensor. It either halves it if the sensorField is 2*Math.PI, or it basically sets it to zero, if it is positioned in direction of the sensor orientation.
-An empty array within a configuration definition means that that corresponding object does not exist.
-*/
-const bodyConfigurations = { /////////////// EXTEND THIS OBJECT TO CONTAIN ALL POSSIBLE CONFIGURATIONS
-  configuration_1: {
-    sensor_1: {
-      sensorPosition: {z:1, y:-1},
-      sensorOrientation: Math.PI,
-      sensorField: Math.PI
-    },
-    sensor_2: {
-      sensorPosition: {z:1, y:1},
-      sensorOrientation: 0,
-      sensorField: Math.PI
-    },
-    spotPositions: [],
-    motorConnection: true
-  },
-  configuration_2: {
-    sensor_1: {
-      sensorPosition: {z:-1, y:-1},
-      sensorOrientation: Math.PI,
-      sensorField: Math.PI
-    },
-    sensor_2: {
-      sensorPosition: {z:-1, y:1},
-      sensorOrientation: 0,
-      sensorField: Math.PI
-    },
-    spotPositions: [],
-    motorConnection: true
-  }
-}
-
 class LightSensor {
   constructor(config, defaults) {
 
@@ -145,7 +100,7 @@ class LightSensor {
 }
 
 class EuglenaBody {
-  constructor(config){
+  constructor(config,bodyConfig){
     this.defaults = defaults;
 
     /*
@@ -153,14 +108,15 @@ class EuglenaBody {
     this.spin_speed = config.spin_speed ? config.spin_speed : 2;
     this.reaction_strength = config.reaction_strength ? config.reaction_strength : 4;
     */
-    // Also account for random numbers
-    this.fw_speed = config.v;
-    this.roll_speed = config.omega;
-    this.reaction_strength = config.k;
-    this.body_opacity = config.body_opacity ? config.body_opacity : 0.3;
+    this.bodyConfiguration = bodyConfig;
 
+    // Also account for random numbers
+    this.fw_speed = config.v + (Math.random() * 2 - 1) * config.v_delta;
+    this.roll_speed = config.omega + (Math.random() * 2 - 1) * config.omega_delta;
+    this.reaction_strength = this.bodyConfiguration.motorConnection? config.k + (Math.random() * 2 - 1) * config.k_delta : 0;
+    this.body_opacity = config.opacity ? config.opacity + (Math.random() * 2 - 1) * config.opacity_delta : 0.0;
+    
     // for each sensor in the bodyConfiguration, create the corresponding Euglenasensor instantiation.
-    this.bodyConfiguration = bodyConfigurations[config.body_configuration];
     this.lightSensors = [];
     Object.keys(this.bodyConfiguration).map((sensor,ind) => {
       if (sensor.match('sensor_')) {
@@ -187,7 +143,6 @@ class EuglenaBody {
         })
       });
     }
-    console.log(this.lightSensors)
     }
 
   constructBody() {

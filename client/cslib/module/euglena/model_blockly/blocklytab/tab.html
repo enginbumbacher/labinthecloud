@@ -3,18 +3,13 @@
   <div class="modeling__content">
     <h2 class="modeling__title">Model of the Euglena</h2>
     <div class="modeling__display">
-      <div class="modeling__display__input"> 1. Calculate the amount of light in each photoreceptor </div>
-      <svg class="modeling__display__arrow">
-        <defs>
-          <marker id="arrow" markerWidth="13" markerHeight="13" refx="2" refy="6" orient="auto">
-              <path d="M2,1 L2,10 L10,6 L2,2" style="fill:$palette__gray__dark;" />
-          </marker>
-        </defs>
-        <path d="M50,0 L50,25"
-              style="stroke:black; stroke-width: 2.5px; fill: $palette__gray__dark;
-              marker-end: url(#arrow);"
-        />
-      </svg>
+      <div class="modeling__display__input"> Calculate the amount of light perceived by each sensor. </div>
+      <div class="modeling__display__arrow">
+        <img src="cslib/module/euglena/model_blockly/blocklytab/arrow.png">
+        <img src="cslib/module/euglena/model_blockly/blocklytab/arrow.png">
+        <img src="cslib/module/euglena/model_blockly/blocklytab/arrow.png">
+      </div>
+      <div class="modeling__display__input"> Process and act on the light perceived by each sensor: </div>
       <div class="modeling__display__blockly" id='BlocklyDiv'> </div>
     </div>
   </div>

@@ -2,7 +2,8 @@
 
 var EuglenaUtils = require('./utils.js');
 var THREE = process.cwd() + "/lib/thirdparty/three/three.min.js";
-
+// wrap blockly code into a amd module. better than running strings as interpreted code. use js interpreter on the string
+// Is js interpreter written as an AMD module?
 
 module.exports = {
   initialize: (config) => {

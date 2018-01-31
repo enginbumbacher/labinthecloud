@@ -1,0 +1,37 @@
+@import "../../../../../scss_includes/variables";
+@import "../../../../../scss_includes/mixins";
+
+.component__multilayerimage {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 140px;
+
+  #labels .multilayerimage__configuration,
+  #bodybckgrnd .multilayerimage__configuration,
+  .multilayerimage__configuration {
+    position: absolute;
+    top: 0;
+    left: 10%;
+    z-index: 1;
+    visibility: hidden;
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .multilayerimage__configuration img {
+    width:100%;
+  }
+
+  #labels {
+    z-index: 2;
+    visibility: visible;
+    width: 90%;
+    left: 5%
+  }
+  #bodybckgrnd {
+    z-index: 0;
+    visibility: visible;
+    opacity: 1;
+  }
+}

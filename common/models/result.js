@@ -11,8 +11,15 @@ const EuglenaUtils = require('../euglenaModels/utils.js');
 
 const euglenaModels = {
   oneEye: require('../euglenaModels/oneEye.js'),
-  twoEye: require('../euglenaModels/twoEye.js')
+  twoEye: require('../euglenaModels/twoEye.js'),
+  blockly: require('../euglenaModels/blockly.js')
 }
+
+const basicParameters = {
+  randomSmoothWindow: 5.0, // number of frames over which to distribute the change
+  randomnessFactor: 1.0
+}
+
 
 const downloadBasePath = 'http://euglena.stanford.edu/account/joinlabwithdata/downloadFile';
 
@@ -181,7 +188,7 @@ const _createModelResults = (app, result, model) => {
         z: 0,
         yaw: Math.random() * 2 * Math.PI,
         roll: Math.random() * 2 * Math.PI,
-        pitch: 0,
+        pitch: Math.random() * 2 * Math.PI
       };
       if (result.initialization && result.initialization.length > euglenaId) {
         initialization = result.initialization[euglenaId]
@@ -202,19 +209,66 @@ const _createModelResults = (app, result, model) => {
       euglenaModels[model.modelType].initialize({ track: track, model: model, result: result })
       tracks.push(track);
     }
-    for (let frame = 1; frame <= duration * result.fps; frame++) {
-      let lights = EuglenaUtils.lightsFromTime(experiment, frame / result.fps);
 
+    // Parameters for "memory" i.e. for values of light detected and of parameter changes
+
+    // Parameters for smooth randomization
+    var resetMin = basicParameters.randomSmoothWindow; //Math.floor(0.25 * result.fps);
+    var resetMax = Math.ceil(1.5 * result.fps);
+    var resetRandom = Array.from({length: model.configuration.count}, () => resetMin + Math.floor(Math.random() * resetMax));
+
+    var resetAngleMin = 2;
+    var resetAngleMax = 10;
+    var randomnessFactor = model.modelType == 'blockly' ? basicParameters.randomnessFactor : model.configuration.randomness;
+    var resetRandomAngle = EuglenaUtils.setRandomAngleMatrix(model.configuration.count, basicParameters.randomSmoothWindow, resetAngleMax, resetAngleMin, randomnessFactor);
+
+    for (let frame = 1; frame <= duration * result.fps; frame++) {
       for (let euglenaId = 0; euglenaId < model.configuration.count; euglenaId++) {
+        // Calculate the a randomized delta_t for each Euglena after each update.
+        // For every Euglena, every time resetRandom equals zero, update the randomization angle..
+        var resetRandomNow = 0;
+        if (!resetRandom[euglenaId]) {
+          //create new duration of a random angle
+          resetRandom[euglenaId] = resetMin + Math.floor(Math.random() * resetMax);
+
+          // recalculate new random angle if all zero
+          if (resetRandomAngle[euglenaId].every( a => a == 0)) {
+            var newAngle = [-1,1][Math.random()*2|0]* (resetAngleMax * Math.random() - resetAngleMin) * randomnessFactor * Math.PI;
+            resetRandomAngle[euglenaId] = resetRandomAngle[euglenaId].map( function(a) {
+              return newAngle / basicParameters.randomSmoothWindow;
+            });
+          }
+        } else { // decrease countdown by one
+          resetRandom[euglenaId] -= 1;
+        }
+
+        //Get the next angle to be passed on
+        var resetAngleInd = resetRandomAngle[euglenaId].findIndex((v) => { return v != 0})
+        if (resetAngleInd != -1) {
+          resetRandomNow = resetRandomAngle[euglenaId][resetAngleInd];
+          resetRandomAngle[euglenaId][resetAngleInd] = 0;
+        }
+
+        // Get the lights
+        let lights = EuglenaUtils.lightsFromTime(experiment, frame / result.fps);
+
+        // Calculate the tracks.
         tracks[euglenaId].samples.push(euglenaModels[model.modelType].update({
           lights: lights,
           track: tracks[euglenaId],
           last: tracks[euglenaId].samples[frame - 1],
           model: model,
           result: result,
-          frame: frame
+          frame: frame,
+          resetRandom: resetRandomNow,
+          wiggleRandom: 0.4
         }))
       }
+    }
+
+    // REMOVE BLOCKLY OBJECT BUT ADD THE VARIABLES
+    if (model.modelType=='blockly') {
+      tracks.forEach((euglena,ind) => { euglena.blockly.euglenaBody.removeBody()});
     }
 
     const storageDir = `results/${result.experimentId}/simulation`;

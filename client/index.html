@@ -153,129 +153,44 @@
           tabs: [{
             modelType: "blockly",
             color: 0x2222ff,
+            modelModality: 'mechanistic',
             parameters: {
               bodyConfiguration: {
-                label: "Body Configuration",
-                initialValue: "configuration_1"
+                label: "  Photoreceptor configuration",
+                initialValue: "configuration_3",
               },
               opacity: {
-                label: "Body Opacity",
+                label: "  Body Opacity",
                 color: '#759364',
-                range: [0,1],
-                resolution: 0.01,
-                initialValue: {
-                  base:0.3,
-                  delta: 0.1
-                }
+                initialValue: 'opacity_40',
+                options: {'opacity_0': '0 percent', 'opacity_20': '20 percent', 'opacity_40': '40 percent', 'opacity_60': '60 percent', 'opacity_80': '80 percent', 'opacity_100': '100 percent'}
               },
               K: {
-                label: "Reaction Strength",
-                color: '#C55A11',
-                range: [0, 10],
-                resolution: 0.01,
-                initialValue: {
-                  base: 1,
-                  delta: 0.2
-                }
+                label: "  Reaction Strength", // If mechanistic: "Reaction Strength", if functional: "Reaction Speed"
+                color: '#2F5597',
+                initialValue: 'reaction_25',
+                options: {'reaction_25': 'weak', 'reaction_50': 'medium', 'reaction_75': 'strong', 'reaction_100': 'very strong'}
+                // If mechanistic: {'reaction_25': 'weak', 'reaction_50': 'medium', 'reaction_75': 'strong', 'reaction_100': 'very strong'}
+                // If functional: {'reaction_25': 'slow', 'reaction_50': 'medium', 'reaction_75': 'fast', 'reaction_100': 'very fast'}
               },
               v: {
-                label: "Forward Speed",
+                label: "  Motor Strength", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
+                color: '#C00000',
+                initialValue: 'forward_25',
+                options: {'forward_25': 'weak', 'forward_50': 'medium', 'forward_75': 'strong', 'forward_100': 'very strong'}
+                // If mechanistic: {'forward_25': 'weak', 'forward_50': 'medium', 'forward_75': 'strong', 'forward_100': 'very strong'}
+                // If functional: {'forward_25': 'slow', 'forward_50': 'medium', 'forward_75': 'fast', 'forward_100': 'very fast'}
+              },
+              omega: {
+                label: "  Roll Strength", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
                 color: '#C55A11',
-                range: [0, 10],
-                resolution: 0.1,
-                initialValue: {
-                  base: 5,
-                  delta: 2
-                }
-              },
-              omega: {
-                label: "Roll Speed",
-                color: '#C55A11',
-                range: [0, 5],
-                resolution: 0.01,
-                initialValue: {
-                  base: 1,
-                  delta: 0.2
-                }
+                options: {'roll_25': 'weak', 'roll_50': 'medium', 'roll_75': 'strong', 'roll_100': 'very strong'}
+                // If mechanistic: {'roll_25': 'weak', 'roll_50': 'medium', 'roll_75': 'strong', 'roll_100': 'very strong'}
+                // If functional: {'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast', 'roll_100': 'very fast'}
               }
             }
-          }, {
-            modelType: "oneEye",
-            color: 0xdd0000,//0x193A58,//0x834F00,
-            parameters: {
-              K: {
-                label: "Reaction Strength",
-                range: [-5, 5],
-                resolution: 0.01,
-                initialValue: {
-                  base: -1,
-                  delta: 0.2
-                }
-              },
-              v: {
-                label: "Forward Speed",
-                range: [0, 10],
-                resolution: 0.1,
-                initialValue: {
-                  base: 5,
-                  delta: 2
-                }
-              },
-              omega: {
-                label: "Roll Speed",
-                range: [0, 10],
-                resolution: 0.01,
-                initialValue: {
-                  base: 1,
-                  delta: 0.2
-                }
-              },
-              randomness: {
-                label: "Randomness",
-                range: [0, 1],
-                resolution: 0.01,
-                initialValue: 0.15
-              }
-            }
-          }, {
-            modelType: "twoEye",
-            color: 0xdd0000,
-            parameters: {
-              K: {
-                label: "Reaction Strength",
-                range: [-5, 5],
-                resolution: 0.01,
-                initialValue: {
-                  base: -1,
-                  delta: 0.2
-                }
-              },
-              v: {
-                label: "Forward Speed",
-                range: [0, 10],
-                resolution: 0.1,
-                initialValue: {
-                  base: 5,
-                  delta: 2
-                }
-              },
-              omega: {
-                label: "Roll Speed",
-                range: [0, 10],
-                resolution: 0.01,
-                initialValue: {
-                  base: 1,
-                  delta: 0.2
-                }
-              },
-              randomness: {
-                label: "Randomness",
-                range: [0, 1],
-                resolution: 0.01,
-                initialValue: 0.15
-              }
-            }
-          }],
+          }
+        ],
           euglenaCount: {
             range: [1, 10],
             initialValue: 1

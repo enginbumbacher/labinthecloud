@@ -3,9 +3,9 @@
 
 .component__multilayerimage {
   position: relative;
-  display: inline-block;
+  display: block;
   width: 100%;
-  height: 140px;
+  height: 190px;
 
   #labels .multilayerimage__configuration,
   #bodybckgrnd .multilayerimage__configuration,
@@ -13,14 +13,15 @@
     position: absolute;
     top: 0;
     left: 10%;
-    z-index: 1;
+    z-index: 0;
     visibility: hidden;
     width: 80%;
+    height: 100%;
     margin: 0 auto;
   }
 
   .multilayerimage__configuration img {
-    width:100%;
+    height: 100%
   }
 
   #labels {
@@ -30,7 +31,7 @@
     left: 5%
   }
   #bodybckgrnd {
-    z-index: 0;
+    z-index: 1;
     visibility: visible;
     opacity: 1;
   }

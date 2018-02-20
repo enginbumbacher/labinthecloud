@@ -12,6 +12,10 @@
       ],
       "required": true
     },
+    "expForm": {
+      "type": "object",
+      "required": false
+    },
     "date_created": {
       "type": "date",
       "required": true,

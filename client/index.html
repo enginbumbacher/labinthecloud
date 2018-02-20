@@ -76,6 +76,8 @@
         <block type="roll_speed" id="roll_speed" disabled='false' max_use='0' sensors='both'>
           <field name="SPEED">5</field>
         </block>
+        <block type="stop_forward" id="stop_forward" disabled='false' max_use='2' sensors='both'></block>
+        <block type="stop_rolling" id="stop_rolling" disabled='false' max_use='2' sensors='both'></block>
         <block type="turn_lr" id="turn_lr" disabled='false' max_use='2' sensors='both'>
           <field name="DIRECTION">LEFT</field>
         </block>
@@ -87,8 +89,6 @@
           <field name="DIRECTION">TOWARDS</field>
           <field name="OBJECT">STRONGER</field>
         </block>
-        <block type="stop_forward" id="stop_forward" disabled='false' max_use='2' sensors='both'></block>
-        <block type="stop_rolling" id="stop_rolling" disabled='false' max_use='2' sensors='both'></block>
         <block type="turn_randomly" id="turn_randomly" disabled='false' max_use='2' sensors='both'></block>
       </category>
       <category name="Sensing" colour="#805ba5">
@@ -101,15 +101,6 @@
           <field name="MAGNITUDE">VERY_SMALL</field>
         </block>
         <block type="modifier_rand" id="modifier_rand" disabled='false' max_use='0' sensors='both'></block>
-        <block type="math_number" id="math_number" disabled='false' max_use='0' sensors='both'>
-          <field name="NUM">0</field>
-        </block>
-        <block type="quant_prop_1sensor" id="quant_prop_1sensor" disabled='false' max_use='0' sensors='one'>
-          <field name="FACTOR">LIGHT_DIFF</field>
-        </block>
-        <block type="quant_prop_2sensors" id="quant_prop_2sensors" disabled='false' max_use='0' sensors='two'>
-          <field name="FACTOR">LIGHT_DIFF</field>
-        </block>
       </category>
       <category name="Processing" colour="#5AB8A5">
       </category>
@@ -146,7 +137,7 @@
         experiment: {
           experimentForm: 'narrative', // 'table', 'narrative'
           maxDuration: 60,
-          //bpuId: "eug6", //"eug10"
+          bpuId: "eug1", //"eug10"
           //euglenaServerMode:"demo"
           //,experimentHistory
         },
@@ -156,11 +147,11 @@
             color: 0x2222ff,
             modelModality: 'functional', // 'mechanistic' or 'functional'
             parameters: {
-              allowedConfigs: [],//['alldirections_frontleft','alldirections_frontcenter_shield_left','directed_frontleft','2_directed_front'],
+              allowedConfigs: ['alldirections_frontleft','alldirections_frontcenter_shield_left','directed_frontleft','2directed_front'],
               bodyConfiguration: {
                 label: "Photoreceptors",
                 color: '#7030A0',
-                initialValue: "sensorConfig_1",
+                initialValue: "sensorConfig_3",
               },
               opacity: {
                 label: "Body Opacity",
@@ -211,7 +202,7 @@
             options: {1: 1, 2: 2, 5: 5, 30: 30},
             initialValue: 1
           },
-          simulationFps: 12
+          simulationFps: 9
         },
         visualization: {
            visualizationTypes: [

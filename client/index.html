@@ -141,7 +141,7 @@
           experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
           modelModality: 'create', // 'observe','explore','create'
           expModelModality: 'simultaneous', //'simultaneous','sequential' - for seeing model and live not together
-          enableDirectComparison: true // false: cannot do direct comparison between models
+          enableDirectComparison: false // false: cannot do direct comparison between models
         },
         experiment: {
           experimentForm: 'narrative', // 'table', 'narrative'
@@ -205,46 +205,7 @@
                 // If functional: {'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast', 'roll_100': 'very fast'}
               }
             }
-          }, {
-            modelType: "twoEye",
-            color: 0xdd0000,
-            parameters: {
-              K: {
-                label: "Coupling",
-                range: [-2, 2],
-                resolution: 0.01,
-                initialValue: {
-                  base: -1,
-                  delta: 0.2
-                }
-              },
-              v: {
-                label: "Forward Speed",
-                range: [0, 10],
-                resolution: 0.1,
-                initialValue: {
-                  base: 5,
-                  delta: 2
-                }
-              },
-              omega: {
-                label: "Roll Speed",
-                range: [-5, 5],
-                resolution: 0.01,
-                initialValue: {
-                  base: 1,
-                  delta: 0.2
-                }
-              },
-              randomness: {
-                label: "Randomness",
-                range: [0, 1],
-                resolution: 0.01,
-                initialValue: 0.15
-              }
-            }
-          }
-        ],
+          }],
           euglenaCount: {
             range: [10, 50],
             options: {1: 1, 2: 2, 5: 5, 30: 30},
@@ -265,24 +226,11 @@
               height: 160
             }
           }, {
-            id: "histogram",
-            label: "Histogram",
-            settings: {
-              binCount: 10,
-              vRange: null,
-              mode: 'component',
-              dT: 2,
-              tStep: 1,
-
-              width: 300,
-              height: 160
-            }
-          }, {
             id: "timeseries",
             label: "Time Series",
             settings: {
               vRange: null,
-              mode: 'component',
+              mode: 'total',
               stdBand: true,
               dT: 1,
 
@@ -292,9 +240,6 @@
           }
         ]
         },
-        aggregate: {
-         timeWindow: 2
-       },
        modeling: {
         timeWindow: 2
        }

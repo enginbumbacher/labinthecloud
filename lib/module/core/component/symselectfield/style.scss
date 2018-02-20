@@ -1,0 +1,30 @@
+@import "../../../../scss_includes/variables";
+
+.component__symselectfield {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+
+  .symselectfield__label {
+    display: inline-block;
+    flex-grow: 1;
+  }
+  .symselectfield__select {
+    display: inline-block;
+    margin: 0 0.5rem;
+  }
+
+  .symselectfield__variation {
+    display: inline-block;
+    width: 150px;
+
+    .symselectfield__checkbox {
+      position: relative;
+      display: inline;
+    }
+    .variation__description{
+      position: relative;
+      display: inline;
+    }
+  }
+}

@@ -153,38 +153,53 @@
           tabs: [{
             modelType: "blockly",
             color: 0x2222ff,
-            modelModality: 'mechanistic',
+            modelModality: 'functional', // 'mechanistic' or 'functional'
             parameters: {
+              allowedConfigs: [],//['alldirections_frontleft','alldirections_frontcenter_shield_left','directed_frontleft','2_directed_front'],
               bodyConfiguration: {
-                label: "  Photoreceptor configuration",
-                initialValue: "configuration_3",
+                label: "Photoreceptors",
+                color: '#7030A0',
+                initialValue: "sensorConfig_1",
               },
               opacity: {
-                label: "  Body Opacity",
+                label: "Body Opacity",
                 color: '#759364',
-                initialValue: 'opacity_40',
+                initialValue: 'opacity_20',
+                maxValue: 1.0,
                 options: {'opacity_0': '0 percent', 'opacity_20': '20 percent', 'opacity_40': '40 percent', 'opacity_60': '60 percent', 'opacity_80': '80 percent', 'opacity_100': '100 percent'}
               },
               K: {
-                label: "  Reaction Strength", // If mechanistic: "Reaction Strength", if functional: "Reaction Speed"
+                label: "Reaction Strength", // If mechanistic: "Reaction Strength", if functional: "Reaction Speed"
                 color: '#2F5597',
                 initialValue: 'reaction_25',
+                maxValue: 2,
                 options: {'reaction_25': 'weak', 'reaction_50': 'medium', 'reaction_75': 'strong', 'reaction_100': 'very strong'}
                 // If mechanistic: {'reaction_25': 'weak', 'reaction_50': 'medium', 'reaction_75': 'strong', 'reaction_100': 'very strong'}
                 // If functional: {'reaction_25': 'slow', 'reaction_50': 'medium', 'reaction_75': 'fast', 'reaction_100': 'very fast'}
               },
               v: {
-                label: "  Motor Strength", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
+                label: "Motor Strength", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
                 color: '#C00000',
                 initialValue: 'forward_25',
+                maxValue: 10,
                 options: {'forward_25': 'weak', 'forward_50': 'medium', 'forward_75': 'strong', 'forward_100': 'very strong'}
                 // If mechanistic: {'forward_25': 'weak', 'forward_50': 'medium', 'forward_75': 'strong', 'forward_100': 'very strong'}
                 // If functional: {'forward_25': 'slow', 'forward_50': 'medium', 'forward_75': 'fast', 'forward_100': 'very fast'}
               },
               omega: {
-                label: "  Roll Strength", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
+                label: "Roll Strength", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
                 color: '#C55A11',
+                initialValue: 'roll_25',
+                maxValue: 5,
                 options: {'roll_25': 'weak', 'roll_50': 'medium', 'roll_75': 'strong', 'roll_100': 'very strong'}
+                // If mechanistic: {'roll_25': 'weak', 'roll_50': 'medium', 'roll_75': 'strong', 'roll_100': 'very strong'}
+                // If functional: {'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast', 'roll_100': 'very fast'}
+              },
+              variation: {
+                label: "Variation btw Euglena:", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
+                initialValue: 'variation_25',
+                maxValue: 0.6,
+                options: {'variation_25': 'small', 'variation_50': 'medium', 'variation_75': 'large', 'variation_100': 'very large'}
                 // If mechanistic: {'roll_25': 'weak', 'roll_50': 'medium', 'roll_75': 'strong', 'roll_100': 'very strong'}
                 // If functional: {'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast', 'roll_100': 'very fast'}
               }
@@ -192,7 +207,7 @@
           }
         ],
           euglenaCount: {
-            range: [1, 10],
+            options: [1,2,5,30],
             initialValue: 1
           },
           simulationFps: 12

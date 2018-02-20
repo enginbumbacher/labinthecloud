@@ -28,10 +28,12 @@ define(function (require) {
 
       _this._options = {};
       if (model.get('color')) _this.$el.find('.selectfield__label').css('color', model.get('color'));
+      //if (model.get('inverse_order')) { this.$el.find(".selectfield__label").remove().insertAfter(this.$el.find(".selectfield__select"));}
 
       _this._render(model);
 
       _this.$el.find(".selectfield__select").on('change', _this._onFieldChange);
+      _this.$el.find(".selectfield__select").css({ 'font-size': '12px' });
       return _this;
     }
 

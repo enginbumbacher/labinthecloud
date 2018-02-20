@@ -110,12 +110,14 @@ class EuglenaBody {
     */
     this.bodyConfiguration = bodyConfig;
 
+    console.log(bodyConfig)
+
     // Also account for random numbers
-    this.fw_speed = config.v + (Math.random() * 2 - 1) * config.v_delta;
-    this.roll_speed = config.omega + (Math.random() * 2 - 1) * config.omega_delta;
-    this.reaction_strength = this.bodyConfiguration.motorConnection? config.k + (Math.random() * 2 - 1) * config.k_delta : 0;
-    this.body_opacity = config.opacity ? config.opacity + (Math.random() * 2 - 1) * config.opacity_delta : 0.0;
-    
+    this.fw_speed = config.v_numeric + (Math.random() * 2 - 1) * config.variation_numeric * config.v_numeric;
+    this.roll_speed = config.omega_numeric + (Math.random() * 2 - 1) * config.variation_numeric * config.omega_numeric;
+    this.reaction_strength = this.bodyConfiguration.motorConnection? config.k_numeric + (Math.random() * 2 - 1) * config.variation_numeric * config.k_numeric : 0;
+    this.body_opacity = config.opacity ? config.opacity_numeric + (Math.random() * 2 - 1) * config.variation_numeric * config.opacity_numeric : 0.0;
+
     // for each sensor in the bodyConfiguration, create the corresponding Euglenasensor instantiation.
     this.lightSensors = [];
     Object.keys(this.bodyConfiguration).map((sensor,ind) => {

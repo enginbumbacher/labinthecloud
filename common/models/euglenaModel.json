@@ -26,7 +26,7 @@
       "type": "text",
       "required": false
     },
-    "bodyConfigJSON": {
+    "sensorConfigJSON": {
       "type": "text",
       "required": false
     },

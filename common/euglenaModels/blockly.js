@@ -13,7 +13,7 @@ var onlyPositiveLightChange = true; // if yaw can be changed only when the light
 module.exports = {
   initialize: (config) => {
     config.track.blockly = {
-      euglenaBody:  new EuglenaBody.EuglenaBody(config.model.configuration,JSON.parse(config.model.bodyConfigJSON))
+      euglenaBody:  new EuglenaBody.EuglenaBody(config.model.configuration,JSON.parse(config.model.sensorConfigJSON))
     }
   },
 

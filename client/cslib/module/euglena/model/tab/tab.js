@@ -59,6 +59,13 @@ define(function (require) {
       _this._form.view().addEventListener('ModelForm.AddToAggregate', _this._onAggregateRequest);
       _this._form.view().addEventListener('ModelForm.NewRequest', _this._onNewRequest);
 
+      // Insert a title of the tab
+      var titleNode = document.createElement('h2');
+      titleNode.className = 'tab__model__title';
+      titleNode.innerHTML = 'Model of the Body';
+
+      _this.view().$dom().append(titleNode);
+
       _this._nameForm = NameForm.create();
       _this._nameForm.view().addEventListener('ModelSave.Submit', _this._onNameSubmit);
       _this._nameForm.view().addEventListener('ModelSave.Cancel', _this._onNameCancel);

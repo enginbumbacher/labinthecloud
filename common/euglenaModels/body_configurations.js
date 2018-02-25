@@ -112,7 +112,14 @@ class EuglenaBody {
 
     // Also account for random numbers
     this.fw_speed = config.v_numeric + (Math.random() * 2 - 1) * config.variation_numeric * config.v_numeric;
-    this.roll_speed = config.omega_numeric + (Math.random() * 2 - 1) * config.variation_numeric * config.omega_numeric;
+
+    // either load roll speed (omega) or calculated it from forward speed
+    if (config.omega_numeric) {
+      this.roll_speed = config.omega_numeric + (Math.random() * 2 - 1) * config.variation_numeric * config.omega_numeric;
+    } else if (Object.keys(config).indexOf('motion_numeric') >-1) {
+      this.roll_speed = config.motion_numeric * (this.fw_speed + (Math.random() * 2 - 1) * config.variation_numeric * config.v_numeric);
+    }
+
     this.reaction_strength = this.bodyConfiguration.motorConnection? config.k_numeric + (Math.random() * 2 - 1) * config.variation_numeric * config.k_numeric : 0;
     this.body_opacity = config.opacity ? config.opacity_numeric + (Math.random() * 2 - 1) * config.variation_numeric * config.opacity_numeric : 0.0;
 

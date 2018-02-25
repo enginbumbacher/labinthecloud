@@ -3,8 +3,8 @@
 .modeling {
   position: absolute;
   z-index: 100;
-  right: -100%;
-  width: 100%;
+  right: -550px;
+  width: 550px;
   height: 98%;
   top: 1%;
   border: 1px solid $palette__gray__dark;
@@ -19,6 +19,8 @@
 
   &__content {
     padding: 2rem;
+    width: 100%;
+    min-height: 850px;
     overflow: auto;
   }
 
@@ -43,11 +45,13 @@
     flex-direction: column;
     align-items: top;
     justify-content: flex-start;
-    overflow: auto;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
 
     &__input {
       height: 10%;
-      min-width: 500px;
+      min-width: 400px;
       border: 1px solid $palette__gray__dark;
       background: $palette__white;
       text-align: center;
@@ -59,7 +63,7 @@
     &__arrow {
       height: 50px;
       text-align: center;
-      min-width: 500px;
+      width: 450px;
       margin: 0.5rem;
       display: flex;
       justify-content: space-around;
@@ -70,10 +74,10 @@
     }
 
     &__blockly {
-      height: 480px;
+      height: 550px;
       //height: 80%;
-      min-width: 500px;
-      min-height: 400px;
+      min-width: 450px;
+      min-height: 300px;
       border: 1px solid $palette__gray__dark;
       background: $palette__white;
       text-align: center;

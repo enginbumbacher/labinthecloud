@@ -145,8 +145,8 @@
           tabs: [{
             modelType: "blockly",
             color: 0x2222ff,
-            modelModality: 'functional', // 'mechanistic' or 'functional'
             parameters: {
+              modelRepresentation: 'mechanistic', // 'mechanistic' or 'functional'
               allowedConfigs: ['alldirections_frontleft','alldirections_frontcenter_shield_left','directed_frontleft','2directed_front'],
               bodyConfiguration: {
                 label: "Photoreceptors",
@@ -160,6 +160,32 @@
                 maxValue: 1.0,
                 options: {'opacity_0': '0 percent', 'opacity_20': '20 percent', 'opacity_40': '40 percent', 'opacity_60': '60 percent', 'opacity_80': '80 percent', 'opacity_100': '100 percent'}
               },
+              motion: {
+                label: "Motion Type",
+                color: '#C55A11',
+                alignField: 'true',
+                initialValue: 'motion_flap_0',
+                maxValue: 0.7,
+                options: {'motion_flap_0': 'flap', 'motion_twist_100': 'twist'}
+              },
+              /*omega: {
+                label: "Roll Strength", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
+                color: '#C55A11',
+                initialValue: 'roll_25',
+                maxValue: 5,
+                options: {'roll_25': 'weak', 'roll_50': 'medium', 'roll_75': 'strong', 'roll_100': 'very strong'}
+                // If mechanistic: {'roll_25': 'weak', 'roll_50': 'medium', 'roll_75': 'strong', 'roll_100': 'very strong'}
+                // If functional: {'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast', 'roll_100': 'very fast'}
+              },*/
+              v: {
+                label: "Motor Strength", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
+                color: '#C00000',
+                initialValue: 'motor_25',
+                maxValue: 10,
+                options: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'strong', 'motor_100': 'very strong'}
+                // If mechanistic: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'strong', 'motor_100': 'very strong'}
+                // If functional: {'motor_25': 'slow', 'motor_50': 'medium', 'motor_75': 'fast', 'motor_100': 'very fast'}
+              },
               K: {
                 label: "Reaction Strength", // If mechanistic: "Reaction Strength", if functional: "Reaction Speed"
                 color: '#2F5597',
@@ -168,24 +194,6 @@
                 options: {'reaction_25': 'weak', 'reaction_50': 'medium', 'reaction_75': 'strong', 'reaction_100': 'very strong'}
                 // If mechanistic: {'reaction_25': 'weak', 'reaction_50': 'medium', 'reaction_75': 'strong', 'reaction_100': 'very strong'}
                 // If functional: {'reaction_25': 'slow', 'reaction_50': 'medium', 'reaction_75': 'fast', 'reaction_100': 'very fast'}
-              },
-              v: {
-                label: "Motor Strength", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
-                color: '#C00000',
-                initialValue: 'forward_25',
-                maxValue: 10,
-                options: {'forward_25': 'weak', 'forward_50': 'medium', 'forward_75': 'strong', 'forward_100': 'very strong'}
-                // If mechanistic: {'forward_25': 'weak', 'forward_50': 'medium', 'forward_75': 'strong', 'forward_100': 'very strong'}
-                // If functional: {'forward_25': 'slow', 'forward_50': 'medium', 'forward_75': 'fast', 'forward_100': 'very fast'}
-              },
-              omega: {
-                label: "Roll Strength", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
-                color: '#C55A11',
-                initialValue: 'roll_25',
-                maxValue: 5,
-                options: {'roll_25': 'weak', 'roll_50': 'medium', 'roll_75': 'strong', 'roll_100': 'very strong'}
-                // If mechanistic: {'roll_25': 'weak', 'roll_50': 'medium', 'roll_75': 'strong', 'roll_100': 'very strong'}
-                // If functional: {'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast', 'roll_100': 'very fast'}
               },
               variation: {
                 label: "Variation btw Euglena:", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
@@ -199,8 +207,8 @@
           }],
           euglenaCount: {
             range: [10, 50],
-            options: {1: 1, 2: 2, 5: 5, 30: 30},
-            initialValue: 1
+            options: {1: 1, 2: 2, 5: 5},
+            initialValue: 5
           },
           simulationFps: 9
         },

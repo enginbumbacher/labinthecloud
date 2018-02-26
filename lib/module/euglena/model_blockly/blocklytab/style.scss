@@ -3,8 +3,8 @@
 .modeling {
   position: absolute;
   z-index: 100;
-  right: -550px;
-  width: 550px;
+  right: -650px;
+  width: 650px;
   height: 98%;
   top: 1%;
   border: 1px solid $palette__gray__dark;
@@ -20,7 +20,7 @@
   &__content {
     padding: 2rem;
     width: 100%;
-    min-height: 850px;
+    height: 750px;
     overflow: auto;
   }
 
@@ -57,11 +57,17 @@
       text-align: center;
       font-family: $font__title;
       font-weight: $font__title__weight;
+      font-size: 14px;
       padding: 0.5rem 2rem;
+
+      #one-eye,
+      #two-eyes {
+        color: #7030A0;
+      }
     }
 
     &__arrow {
-      height: 50px;
+      height: 30px;
       text-align: center;
       width: 450px;
       margin: 0.5rem;
@@ -70,7 +76,7 @@
     }
 
     &__arrow img {
-      height: 50px;
+      height: 30px;
     }
 
     &__blockly {
@@ -78,7 +84,7 @@
       //height: 80%;
       min-width: 450px;
       min-height: 300px;
-      border: 1px solid $palette__gray__dark;
+      border: 0px;
       background: $palette__white;
       text-align: center;
       padding: 0.5rem 2rem;

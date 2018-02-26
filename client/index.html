@@ -69,54 +69,51 @@
   </head>
   <body>
     <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
-      <category name="Behaving" colour="#C55A11">
-        <block type="forward_speed" id='forward_speed' disabled='false' max_use='0' sensors='both'>
-          <field name="SPEED">5</field>
-        </block>
-        <block type="roll_speed" id="roll_speed" disabled='false' max_use='0' sensors='both'>
-          <field name="SPEED">5</field>
-        </block>
-        <block type="stop_forward" id="stop_forward" disabled='false' max_use='2' sensors='both'></block>
-        <block type="stop_rolling" id="stop_rolling" disabled='false' max_use='2' sensors='both'></block>
-        <block type="turn_lr" id="turn_lr" disabled='false' max_use='2' sensors='both'>
+      <category name="Direction" colour="#C55A11">
+        <block type="turn_lr" id="turn_lr" disabled='false' max_use='4' sensors='both'>
           <field name="DIRECTION">LEFT</field>
         </block>
-        <block type="turn_at_1sensor" id="turn_at_1sensor" disabled='false' max_use='2' sensors='one'>
+        <block type="turn_at_1sensor" id="turn_at_1sensor" disabled='false' max_use='4' sensors='one' equivalence='turn_at_2sensors'>
           <field name="DIRECTION">TOWARDS</field>
-          <field name="OBJECT">SENSOR</field>
         </block>
-        <block type="turn_at_2sensors" id="turn_at_2sensors" disabled='false' max_use='2' sensors='two'>
+        <block type="turn_at_2sensors" id="turn_at_2sensors" disabled='false' max_use='4' sensors='two' equivalence='turn_at_1sensor'>
           <field name="DIRECTION">TOWARDS</field>
-          <field name="OBJECT">STRONGER</field>
         </block>
-        <block type="turn_randomly" id="turn_randomly" disabled='false' max_use='2' sensors='both'></block>
+        <block type="turn_randomly" id="turn_randomly" disabled='false' max_use='4' sensors='both'></block>
       </category>
-      <category name="Sensing" colour="#805ba5">
-        <block class='sensing' type="see_light" id="see_light" disabled='false' max_use='1' sensors='both'>
-          <field name='THRESHOLD'>0</field>
+      <category name="Motion" colour="#C55A11">
+        <block type="twistflap" id="twistflap" disabled='false' max_use='4' sensors='both'></block>
+        <block type="forward_speed" id='forward_speed' disabled='false' max_use='4' sensors='both'>
+          <field name="SPEED">5</field>
         </block>
       </category>
       <category name="Quantities" colour="#5ba5a5">
         <block type="qual_absolute" id="qual_absolute" disabled='false' max_use='0' sensors='both'>
-          <field name="MAGNITUDE">VERY_SMALL</field>
+          <field name="MAGNITUDE">SMALL</field>
         </block>
         <block type="modifier_rand" id="modifier_rand" disabled='false' max_use='0' sensors='both'></block>
       </category>
-      <category name="Processing" colour="#5AB8A5">
-      </category>
-      <category name="Programming" colour="#5b6da5">
-        <block type="text" id="text" disabled='false' max_use='0' sensors='both'>
-          <field name="TEXT"></field>
+      <category name="Signal Conditions" colour="#805ba5">
+        <block class='sensing' type="see_light_quantity" id="see_light_quantity" disabled='false' max_use='3' sensors='both'>
+          <field name='THRESHOLD'>THRESH_20</field>
         </block>
-        <block type="colour_picker" id="colour_picker" disabled='false' max_use='0' sensors='both'>
-          <field name="COLOUR">#ff0000</field>
-        </block>
-        <block type="controls_if" id="controls_if" disabled='false' max_use='0' sensors='both'></block>
       </category>
     </xml>
     <xml xmlns="http://www.w3.org/1999/xhtml" id="defaultWorkspaceBlocks" style="display:none">
       <variables></variables>
-      <block type="every_time" id="XN3[kHW+k6_69-gU$#lo" x="63" y="63" max_use='0' sensors='both'></block>
+      <block type="master_block" id="master_block" x="5" y="63" max_use='0' sensors='both'>
+        <statement name="CODE">
+          <block class='sensing' type="either_way" id="either_way" max_use='0' sensors='both'>
+            <next>
+              <block class='sensing' type="no_light" id="no_light" max_use='0' sensors='both'>
+                <next>
+                  <block class='sensing' type="see_light" id="see_light" max_use='0' sensors='both'></block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
     </xml>
     <div class="loader">Loading..</div>
     <script src="/cslib/thirdparty/blockly/blockly_compressed.js"></script>
@@ -138,7 +135,7 @@
           experimentForm: 'narrative', // 'table', 'narrative'
           maxDuration: 60,
           bpuId: "eug1", //"eug10"
-          //euglenaServerMode:"demo"
+          euglenaServerMode:"demo"
           //,experimentHistory
         },
         model: {
@@ -147,11 +144,12 @@
             color: 0x2222ff,
             parameters: {
               modelRepresentation: 'mechanistic', // 'mechanistic' or 'functional'
-              allowedConfigs: ['alldirections_frontleft','alldirections_frontcenter_shield_left','directed_frontleft','2directed_front'],
+              allowedConfigs: ['2directed_front'],
               bodyConfiguration: {
-                label: "Photoreceptors",
+                label: "Photosensors",
                 color: '#7030A0',
-                initialValue: "sensorConfig_3",
+                initialValue: "sensorConfig_13",
+                min_width: '210px'
               },
               opacity: {
                 label: "Body Opacity",
@@ -161,12 +159,12 @@
                 options: {'opacity_0': '0 percent', 'opacity_20': '20 percent', 'opacity_40': '40 percent', 'opacity_60': '60 percent', 'opacity_80': '80 percent', 'opacity_100': '100 percent'}
               },
               motion: {
-                label: "Motion Type",
+                label: "Forward Motion",
                 color: '#C55A11',
                 alignField: 'true',
                 initialValue: 'motion_flap_0',
                 maxValue: 0.7,
-                options: {'motion_flap_0': 'flap', 'motion_twist_100': 'twist'}
+                options: {'motion_flap_0': 'flapping', 'motion_twist_100': 'twisting'}
               },
               /*omega: {
                 label: "Roll Strength", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
@@ -195,14 +193,14 @@
                 // If mechanistic: {'reaction_25': 'weak', 'reaction_50': 'medium', 'reaction_75': 'strong', 'reaction_100': 'very strong'}
                 // If functional: {'reaction_25': 'slow', 'reaction_50': 'medium', 'reaction_75': 'fast', 'reaction_100': 'very fast'}
               },
-              variation: {
+              /*variation: {
                 label: "Variation btw Euglena:", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
                 initialValue: 'variation_25',
                 maxValue: 0.6,
                 options: {'variation_25': 'small', 'variation_50': 'medium', 'variation_75': 'large', 'variation_100': 'very large'}
                 // If mechanistic: {'roll_25': 'weak', 'roll_50': 'medium', 'roll_75': 'strong', 'roll_100': 'very strong'}
                 // If functional: {'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast', 'roll_100': 'very fast'}
-              }
+              }*/
             }
           }],
           euglenaCount: {

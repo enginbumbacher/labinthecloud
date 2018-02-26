@@ -127,8 +127,8 @@ module.exports = {
     */
     const dT = 1 / config.result.fps;
 
-    var fw_speed = EugBody.fw_speed;
-    var roll_speed = EugBody.roll_speed;
+    var fw_speed = 0;
+    var roll_speed = 0;
     var delta_yaw = 0;
     var state = '';
 

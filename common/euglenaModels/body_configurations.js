@@ -4,7 +4,7 @@ const defaults = {
   adaptation_level: 0.4,
   adaptation_duration: 0,
   adaptation_threshold:0,
-  memory_duration: 20, // defined in number of frames
+  memory_duration: 60, // defined in number of frames
   sensitivity_threshold: 0.03,
   yaw_min: 0.1,
   shock_threshold: 0,
@@ -110,13 +110,20 @@ class EuglenaBody {
     */
     this.bodyConfiguration = bodyConfig;
 
-    console.log(bodyConfig)
-
     // Also account for random numbers
-    this.fw_speed = config.v_numeric + (Math.random() * 2 - 1) * config.variation_numeric * config.v_numeric;
-    this.roll_speed = config.omega_numeric + (Math.random() * 2 - 1) * config.variation_numeric * config.omega_numeric;
-    this.reaction_strength = this.bodyConfiguration.motorConnection? config.k_numeric + (Math.random() * 2 - 1) * config.variation_numeric * config.k_numeric : 0;
-    this.body_opacity = config.opacity ? config.opacity_numeric + (Math.random() * 2 - 1) * config.variation_numeric * config.opacity_numeric : 0.0;
+    this.variation = config.variation_numeric ? config.variation_numeric : 0;
+
+    this.fw_speed = config.v_numeric + (Math.random() * 2 - 1) * this.variation * config.v_numeric;
+
+    // either load roll speed (omega) or calculated it from forward speed
+    if (config.omega_numeric) {
+      this.roll_speed = config.omega_numeric + (Math.random() * 2 - 1) * this.variation * config.omega_numeric;
+    } else if (Object.keys(config).indexOf('motion_numeric') >-1) {
+      this.roll_speed = config.motion_numeric * (this.fw_speed + (Math.random() * 2 - 1) * this.variation * config.v_numeric);
+    }
+
+    this.reaction_strength = this.bodyConfiguration.motorConnection? config.k_numeric + (Math.random() * 2 - 1) * this.variation * config.k_numeric : 0;
+    this.body_opacity = config.opacity ? config.opacity_numeric + (Math.random() * 2 - 1) * this.variation * config.opacity_numeric : 0.0;
 
     // for each sensor in the bodyConfiguration, create the corresponding Euglenasensor instantiation.
     this.lightSensors = [];

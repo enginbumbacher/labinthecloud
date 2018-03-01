@@ -138,20 +138,20 @@
             color: 0x2222ff,
             parameters: {
               modelRepresentation: 'mechanistic', // 'mechanistic' or 'functional'
-              allowedConfigs: ['2directed_front'],
+              allowedConfigs: [],
               bodyConfiguration: {
                 label: "Photosensors",
                 color: '#7030A0',
                 initialValue: "sensorConfig_13",
                 min_width: '210px'
               },
-              /*opacity: {
+              opacity: {
                 label: "Body Opacity",
                 color: '#759364',
                 initialValue: 'opacity_20',
                 maxValue: 1.0,
                 options: {'opacity_0': '0 percent', 'opacity_20': '20 percent', 'opacity_40': '40 percent', 'opacity_60': '60 percent', 'opacity_80': '80 percent', 'opacity_100': '100 percent'}
-              },*/
+              },
               motion: {
                 label: "Forward Motion",
                 color: '#C55A11',
@@ -187,14 +187,14 @@
                 // If mechanistic: {'reaction_25': 'weak', 'reaction_50': 'medium', 'reaction_75': 'strong', 'reaction_100': 'very strong'}
                 // If functional: {'reaction_25': 'slow', 'reaction_50': 'medium', 'reaction_75': 'fast', 'reaction_100': 'very fast'}
               },
-              /*variation: {
+              variation: {
                 label: "Variation btw Euglena:", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
                 initialValue: 'variation_25',
                 maxValue: 0.6,
                 options: {'variation_25': 'small', 'variation_50': 'medium', 'variation_75': 'large', 'variation_100': 'very large'}
                 // If mechanistic: {'roll_25': 'weak', 'roll_50': 'medium', 'roll_75': 'strong', 'roll_100': 'very strong'}
                 // If functional: {'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast', 'roll_100': 'very fast'}
-              }*/
+              }
             }
           }],
           euglenaCount: {

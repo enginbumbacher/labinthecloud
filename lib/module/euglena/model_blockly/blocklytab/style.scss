@@ -38,6 +38,15 @@
     cursor: pointer;
     width: 10rem;
     text-align: center;
+
+    #selectModeling.flipped {
+        height: 20px;
+        transform: scaleY(-1);
+    }
+    #selectModeling.notflipped {
+        height: 20px;
+        transform: scaleY(1);
+    }
   }
 
   &__display {

@@ -10,7 +10,6 @@
     border-bottom: 1px solid $palette__gray__dark;
     display: flex;
 
-
     & > div {
       flex: 1;
     }
@@ -37,6 +36,29 @@
     overflow: auto;
     height: 90%;
     width: 100%;
+
+    #moveTabs.flippedX {
+        width: 40px;
+        height: 20px;
+        //position: absolute;
+        //display: block;
+        //top: 0px;
+        //left: 0px;
+        background-color: white;
+        margin-right: 30px;
+        transform: scaleX(-1);
+    }
+    #moveTabs.notflippedX {
+        width: 40px;
+        height: 20px;
+        //position: absolute;
+        //display: block;
+        //top: 0px;
+        //left: 0px;
+        background-color: white;
+        margin-right: 30px;
+        transform: scaleX(1);
+    }
 
   }
 

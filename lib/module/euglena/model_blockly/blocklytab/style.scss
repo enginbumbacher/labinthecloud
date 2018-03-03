@@ -39,11 +39,11 @@
     width: 10rem;
     text-align: center;
 
-    #selectModeling.flipped {
+    #selectModeling.flippedY {
         height: 20px;
         transform: scaleY(-1);
     }
-    #selectModeling.notflipped {
+    #selectModeling.notflippedY {
         height: 20px;
         transform: scaleY(1);
     }

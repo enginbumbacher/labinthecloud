@@ -40,22 +40,12 @@
     #moveTabs.flippedX {
         width: 40px;
         height: 20px;
-        //position: absolute;
-        //display: block;
-        //top: 0px;
-        //left: 0px;
-        background-color: white;
         margin-right: 30px;
         transform: scaleX(-1);
     }
     #moveTabs.notflippedX {
         width: 40px;
         height: 20px;
-        //position: absolute;
-        //display: block;
-        //top: 0px;
-        //left: 0px;
-        background-color: white;
         margin-right: 30px;
         transform: scaleX(1);
     }

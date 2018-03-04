@@ -110,20 +110,17 @@ class EuglenaBody {
     */
     this.bodyConfiguration = bodyConfig;
 
-    // Also account for random numbers
-    this.variation = config.variation_numeric ? config.variation_numeric : 0;
-
-    this.fw_speed = config.v_numeric + (Math.random() * 2 - 1) * this.variation * config.v_numeric;
+        this.fw_speed = config.v_numeric + (Math.random() * 2 - 1) * config.v_variation * config.v_numeric;
 
     // either load roll speed (omega) or calculated it from forward speed
     if (config.omega_numeric) {
-      this.roll_speed = config.omega_numeric + (Math.random() * 2 - 1) * this.variation * config.omega_numeric;
+      this.roll_speed = config.omega_numeric + (Math.random() * 2 - 1) * config.omega_variation * config.omega_numeric;
     } else if (Object.keys(config).indexOf('motion_numeric') >-1) {
-      this.roll_speed = config.motion_numeric * (this.fw_speed + (Math.random() * 2 - 1) * this.variation * config.v_numeric);
+      this.roll_speed = config.motion_numeric * (this.fw_speed + (Math.random() * 2 - 1) * config.v_variation * config.v_numeric);
     }
 
-    this.reaction_strength = this.bodyConfiguration.motorConnection? config.k_numeric + (Math.random() * 2 - 1) * this.variation * config.k_numeric : 0;
-    this.body_opacity = config.opacity ? config.opacity_numeric + (Math.random() * 2 - 1) * this.variation * config.opacity_numeric : 0.0;
+    this.reaction_strength = this.bodyConfiguration.motorConnection? config.k_numeric + (Math.random() * 2 - 1) * config.k_variation * config.k_numeric : 0;
+    this.body_opacity = config.opacity ? config.opacity_numeric + (Math.random() * 2 - 1) * config.opacity_variation * config.opacity_numeric : 0.0;
 
     // for each sensor in the bodyConfiguration, create the corresponding Euglenasensor instantiation.
     this.lightSensors = [];

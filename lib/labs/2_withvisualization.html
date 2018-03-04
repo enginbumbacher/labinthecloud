@@ -69,7 +69,7 @@
   </head>
   <body>
     <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
-      <category name="Direction" colour="#C55A11">
+      <category name="Direction" colour="#2F5596">
         <block type="turn_lr" id="turn_lr" disabled='false' max_use='4' sensors='both'>
           <field name="DIRECTION">LEFT</field>
         </block>
@@ -81,13 +81,21 @@
         </block>
         <block type="turn_randomly" id="turn_randomly" disabled='false' max_use='4' sensors='both'></block>
       </category>
-      <category name="Motion" colour="#C55A11">
-        <block type="twistflap" id="twistflap" disabled='false' max_use='4' sensors='both'></block>
-        <block type="forward_speed" id='forward_speed' disabled='false' max_use='4' sensors='both'>
+      <category name="Forward Motion" colour="#C00200">
+        <block type="move_normal" id="move_normal" disabled='false' max_use='4' sensors='both'></block>
+        <block type="move_change" id='move_change' disabled='false' max_use='4' sensors='both'>
           <field name="SPEED">5</field>
         </block>
+        <block type="move_stop" id="move_stop" disabled='false' max_use='4' sensors='both'></block>
       </category>
-      <category name="Signal Conditions" colour="#805ba5">
+      <category name="Roll Motion" colour="#C55A11">
+        <block type="roll_normal" id="roll_normal" disabled='false' max_use='4' sensors='both'></block>
+        <block type="roll_change" id='roll_change' disabled='false' max_use='4' sensors='both'>
+          <field name="SPEED">5</field>
+        </block>
+        <block type="roll_stop" id="roll_stop" disabled='false' max_use='4' sensors='both'></block>
+      </category>
+      <category name="Light Conditions" colour="#805ba5">
         <block class='sensing' type="see_light_quantity" id="see_light_quantity" disabled='false' max_use='3' sensors='both'>
           <field name='THRESHOLD'>THRESH_20</field>
         </block>

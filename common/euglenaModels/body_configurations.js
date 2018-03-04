@@ -130,6 +130,10 @@ class EuglenaBody {
       }
     });
 
+    if (this.lightSensors.length == 1 && this.lightSensors[0].field == 2*Math.PI) {
+      this.body_opacity = 0.6;
+    }
+
     this.spotPositions = [];
     // modify the sensors based on the spots
     if (this.bodyConfiguration.spotPositions) {

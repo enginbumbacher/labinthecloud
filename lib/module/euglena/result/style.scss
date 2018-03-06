@@ -9,10 +9,11 @@
     background: $palette__gray__medium_dark;
     border-bottom: 1px solid $palette__gray__dark;
     display: flex;
+    justify-content: space-evenly;
 
-    & > div {
-      flex: 1;
-    }
+    // & > div {
+    //   flex: 1;
+    // }
 
     label {
       margin-right: 1rem;
@@ -20,12 +21,15 @@
     }
     &__experiment {
       text-align: left;
+      flex-grow: 1;
     }
     &__model {
       text-align: center;
+      flex-grow: 1;
     }
     &__visualization {
       text-align: right;
+      flex-grow: 2;
     }
   }
 
@@ -61,13 +65,13 @@
   }
 
   &__euglena{
-        min-width: 500px;
+        min-width: 600px;
         min-height: 500px;
         text-align: center;
   }
 
   &__euglena_2{
-        min-width: 500px;
+        min-width: 600px;
         min-height: 500px;
         flex-grow: 1;
         text-align: center;

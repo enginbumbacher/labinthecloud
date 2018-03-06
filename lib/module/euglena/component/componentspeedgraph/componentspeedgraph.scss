@@ -1,8 +1,26 @@
 @import "../../../../scss_includes/mixins";
 @import "../../../../scss_includes/variables";
 
-.time-series {
+.component-speed {
   &__graph {
+    max-width: 700px;
+    display: block;
+    position: relative;
+
+    &__image {
+      position: absolute;
+      top: 45.2%;
+      left: 6%;
+      width: 100px;
+      height: 70px;
+      text-anchor: middle;
+
+      &__label{
+        text-anchor: middle;
+        font-weight: bold;
+        font-size: 10px;
+      }
+    }
     &__line {
       fill: none;
       stroke-width: 1;
@@ -38,11 +56,28 @@
         fill: $palette__gray__dark;
         text-anchor: middle;
         font-weight: bold;
+        font-size: 12px;
+      }
+      &-y text {
+        display: none;
       }
     }
     &__title {
       text-align: center;
       text-anchor: middle;
+    }
+
+    &__arrow {
+      &-label {
+        fill: $palette__gray__dark;
+        text-anchor: middle;
+        font-weight: bold;
+      }
+
+      &-marker {
+        stroke: black;
+          fill: black;
+      }
     }
   }
   border: 1px solid $palette__gray__dark;

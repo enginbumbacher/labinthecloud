@@ -86,14 +86,12 @@
         <block type="move_change" id='move_change' disabled='false' max_use='4' sensors='both'>
           <field name="SPEED">5</field>
         </block>
-        <block type="move_stop" id="move_stop" disabled='false' max_use='4' sensors='both'></block>
       </category>
       <category name="Roll Motion" colour="#C55A11">
         <block type="roll_normal" id="roll_normal" disabled='false' max_use='4' sensors='both'></block>
         <block type="roll_change" id='roll_change' disabled='false' max_use='4' sensors='both'>
           <field name="SPEED">5</field>
         </block>
-        <block type="roll_stop" id="roll_stop" disabled='false' max_use='4' sensors='both'></block>
       </category>
       <category name="Light Conditions" colour="#805ba5">
         <block class='sensing' type="see_light_quantity" id="see_light_quantity" disabled='false' max_use='3' sensors='both'>
@@ -136,7 +134,7 @@
         experiment: {
           experimentForm: 'narrative', // 'table', 'narrative'
           maxDuration: 60,
-          bpuId: "eug1", //"eug10"
+          bpuId: "eug5", //"eug10"
           //euglenaServerMode:"demo"
           //,experimentHistory
         },

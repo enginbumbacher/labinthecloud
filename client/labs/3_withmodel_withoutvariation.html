@@ -86,14 +86,12 @@
         <block type="move_change" id='move_change' disabled='false' max_use='4' sensors='both'>
           <field name="SPEED">5</field>
         </block>
-        <block type="move_stop" id="move_stop" disabled='false' max_use='4' sensors='both'></block>
       </category>
       <category name="Roll Motion" colour="#C55A11">
         <block type="roll_normal" id="roll_normal" disabled='false' max_use='4' sensors='both'></block>
         <block type="roll_change" id='roll_change' disabled='false' max_use='4' sensors='both'>
           <field name="SPEED">5</field>
         </block>
-        <block type="roll_stop" id="roll_stop" disabled='false' max_use='4' sensors='both'></block>
       </category>
       <category name="Light Conditions" colour="#805ba5">
         <block class='sensing' type="see_light_quantity" id="see_light_quantity" disabled='false' max_use='3' sensors='both'>
@@ -145,13 +143,14 @@
             modelType: "blockly",
             color: 0x2222ff,
             parameters: {
-              modelRepresentation: 'mechanistic', // 'mechanistic' or 'functional'
-              allowedConfigs: ['2directed_front'],
+              modelRepresentation: 'functional', // 'mechanistic' or 'functional'
+              allowedConfigs: ['2directed_front','directed_frontleft','directed_frontright','alldirections_frontcenter','alldirections_frontleft'],
               bodyConfiguration: {
-                label: "Photosensors",
+                label: "Light sensor",
                 color: '#7030A0',
                 initialValue: "sensorConfig_13",
-                min_width: '210px'
+                min_width: '210px',
+                description: 'Select different configurations for the light sensor. You can change position, number and type of sensors.'
               },
               /*opacity: {
                 label: "Body Opacity",
@@ -160,38 +159,44 @@
                 maxValue: 1.0,
                 options: {'opacity_0': '0 percent', 'opacity_20': '20 percent', 'opacity_40': '40 percent', 'opacity_60': '60 percent', 'opacity_80': '80 percent', 'opacity_100': '100 percent'}
               },*/
-              motion: {
+              /*motion: {
                 label: "Forward Motion",
                 color: '#C55A11',
                 alignField: 'true',
                 initialValue: 'motion_flap_0',
                 maxValue: 0.7,
                 options: {'motion_flap_0': 'flapping', 'motion_twist_100': 'twisting'}
-              },
-              /*omega: {
-                label: "Roll Strength", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
+              },*/
+              omega: {
+                label: "Roll speed", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
                 color: '#C55A11',
                 initialValue: 'roll_25',
                 maxValue: 5,
-                options: {'roll_25': 'weak', 'roll_50': 'medium', 'roll_75': 'strong', 'roll_100': 'very strong'}
+                varOptions: {},
+                options: {'roll_0': 'no roll (0%)', 'roll_25': 'slow (25%)', 'roll_50': 'medium (50%)', 'roll_75': 'fast (75%)', 'roll_100': 'very fast (100%)'},
+                description: 'Set the speed at which the model rotates around its long body axis normally, if it is programmed to rotate. The percentage refers to the maximum possible intensity for any model. See how the orange arrow changes when you change the value.'
                 // If mechanistic: {'roll_25': 'weak', 'roll_50': 'medium', 'roll_75': 'strong', 'roll_100': 'very strong'}
                 // If functional: {'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast', 'roll_100': 'very fast'}
-              },*/
+              },
               v: {
-                label: "Motor Strength", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
+                label: "Speed", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
                 color: '#C00000',
                 initialValue: 'motor_25',
                 maxValue: 10,
-                options: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'strong', 'motor_100': 'very strong'}
+                varOptions: {},
+                options: {'motor_25': 'slow (25%)', 'motor_50': 'medium (50%)', 'motor_75': 'fast (75%)', 'motor_100': 'very fast (100%)'},
+                description: 'Set the speed at which the model moves forward, if it is programmed to move. The percentage refers to the maximum possible intensity for any model. See how the red arrow changes when you change the value.'
                 // If mechanistic: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'strong', 'motor_100': 'very strong'}
                 // If functional: {'motor_25': 'slow', 'motor_50': 'medium', 'motor_75': 'fast', 'motor_100': 'very fast'}
               },
               K: {
-                label: "Reaction Strength", // If mechanistic: "Reaction Strength", if functional: "Reaction Speed"
+                label: "Response", // If mechanistic: "Reaction Strength", if functional: "Reaction Speed"
                 color: '#2F5597',
                 initialValue: 'reaction_25',
                 maxValue: 2,
-                options: {'reaction_25': 'weak', 'reaction_50': 'medium', 'reaction_75': 'strong', 'reaction_100': 'very strong'}
+                varOptions: {},
+                options: {'reaction_25': 'weak (25%)', 'reaction_50': 'medium (50%)', 'reaction_75': 'strong (75%)', 'reaction_100': 'very strong (100%)'},
+                description: 'Set the intensity at which the model is responding to light, if it is programmed to respond. The percentage refers to the maximum possible intensity for any model. See how the blue arrows change when you change the value.'
                 // If mechanistic: {'reaction_25': 'weak', 'reaction_50': 'medium', 'reaction_75': 'strong', 'reaction_100': 'very strong'}
                 // If functional: {'reaction_25': 'slow', 'reaction_50': 'medium', 'reaction_75': 'fast', 'reaction_100': 'very fast'}
               },
@@ -214,29 +219,41 @@
         },
         visualization: {
            visualizationTypes: [
-          {
-            id: "circle",
-            label: "Circle",
-            settings: {
-              binCount: 24, //15° bins
-              dT: 2,
-              tStep: 0.5,
-              width: 160,
-              height: 160
-            }
-          }, {
-            id: "timeseries",
-            label: "Time Series",
-            settings: {
-              vRange: null,
-              mode: 'total',
-              stdBand: true,
-              dT: 1,
+             {
+               id: "circle",
+               label: "Circular Distribution",
+               settings: {
+                 binCount: 12, //15° bins
+                 dT: 1, // in seconds; indicates time window for binning
+                 tStep: 0.5, // in seconds, i.e. tStep = 0.5 --> Half a second; indicates time at which graph steps forward
+                 width: 320,
+                 height: 320
+               }
+             }, {
+               id: "timeseries",
+               label: "Total Speed",
+               settings: {
+                 vRange: null,
+                 mode: 'total',
+                 stdBand: true,
+                 dT: 1,
 
-              width: 300,
-              height: 200
-            }
-          }
+                 width: 500,
+                 height: 400
+               }
+             }, {
+               id: "componentspeed",
+               label: "Up/Down and Left/Right Speed",
+               settings: {
+                 vRange: null,
+                 mode: 'component',
+                 stdBand: true,
+                 dT: 1,
+
+                 width: 450,
+                 height: 250
+               }
+             }
         ]
         },
        modeling: {

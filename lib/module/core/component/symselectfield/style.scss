@@ -12,12 +12,14 @@
   .symselectfield__select {
     display: inline-block;
     margin: 0 0.5rem;
-    min-width: 130px;
+    min-width: 90px;
   }
 
   .symselectfield__variation {
     display: inline-block;
     width: 160px;
+    vertical-align: middle;
+    text-align: center;
 
     .variation__select {
       display: inline;

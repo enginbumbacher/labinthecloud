@@ -168,34 +168,34 @@
                 options: {'motion_flap_0': 'flapping', 'motion_twist_100': 'twisting'}
               },*/
               omega: {
-                label: "Roll speed", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
+                label: "Rotation speed", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
                 color: '#C55A11',
                 initialValue: 'roll_25',
                 maxValue: 5,
-                varOptions: {'variation_0': '0%', 'variation_10': '10%', 'variation_25': '25%', 'variation_50': '50%'},
-                options: {'roll_0': 'no roll (0%)', 'roll_25': 'slow (25%)', 'roll_50': 'medium (50%)', 'roll_75': 'fast (75%)', 'roll_100': 'very fast (100%)'},
+                varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
+                options: {'roll_0': 'no rotation', 'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast', 'roll_100': 'very fast'},
                 description: 'Set the speed at which the model rotates around its long body axis normally, if it is programmed to rotate. The percentage refers to the maximum possible intensity for any model. See how the orange arrow changes when you change the value.'
                 // If mechanistic: {'roll_25': 'weak', 'roll_50': 'medium', 'roll_75': 'strong', 'roll_100': 'very strong'}
                 // If functional: {'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast', 'roll_100': 'very fast'}
               },
               v: {
-                label: "Speed", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
+                label: "Forward speed", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
                 color: '#C00000',
                 initialValue: 'motor_25',
                 maxValue: 10,
-                varOptions: {'variation_0': '0%', 'variation_10': '10%', 'variation_25': '25%', 'variation_50': '50%'},
-                options: {'motor_25': 'slow (25%)', 'motor_50': 'medium (50%)', 'motor_75': 'fast (75%)', 'motor_100': 'very fast (100%)'},
+                varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
+                options: {'motor_25': 'slow', 'motor_50': 'medium', 'motor_75': 'fast', 'motor_100': 'very fast'},
                 description: 'Set the speed at which the model moves forward, if it is programmed to move. The percentage refers to the maximum possible intensity for any model. See how the red arrow changes when you change the value.'
                 // If mechanistic: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'strong', 'motor_100': 'very strong'}
                 // If functional: {'motor_25': 'slow', 'motor_50': 'medium', 'motor_75': 'fast', 'motor_100': 'very fast'}
               },
               K: {
-                label: "Response", // If mechanistic: "Reaction Strength", if functional: "Reaction Speed"
+                label: "Turn speed", // If mechanistic: "Reaction Strength", if functional: "Reaction Speed"
                 color: '#2F5597',
                 initialValue: 'reaction_25',
                 maxValue: 2,
-                varOptions: {'variation_0': '0%', 'variation_10': '10%', 'variation_25': '25%', 'variation_50': '50%'},
-                options: {'reaction_25': 'weak (25%)', 'reaction_50': 'medium (50%)', 'reaction_75': 'strong (75%)', 'reaction_100': 'very strong (100%)'},
+                varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
+                options: {'reaction_25': 'slow', 'reaction_50': 'medium', 'reaction_75': 'fast', 'reaction_100': 'very fast'},
                 description: 'Set the intensity at which the model is responding to light, if it is programmed to respond. The percentage refers to the maximum possible intensity for any model. See how the blue arrows change when you change the value.'
                 // If mechanistic: {'reaction_25': 'weak', 'reaction_50': 'medium', 'reaction_75': 'strong', 'reaction_100': 'very strong'}
                 // If functional: {'reaction_25': 'slow', 'reaction_50': 'medium', 'reaction_75': 'fast', 'reaction_100': 'very fast'}

@@ -49,20 +49,41 @@
     }
     &__reset {
       &.component__button {
-        left: 1%;
+        left: 0.5%;
       }
     }
     &__toggle {
       &.component__button {
-        left: calc(1% + 5.5rem);
+        left: calc(0.5% + 5.5rem);
+      }
+    }
+
+    &__playback {
+      &.component__button {
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        bottom: 20%;
+        left: calc(0.5% + 11rem);
+        .button {
+          font-size: 10px;
+          width: 4rem;
+          height: 3rem;
+          padding: 0;
+          //border-radius: 50%;
+          border: 1px solid $palette__gray__dark;
+          background: $palette__white;
+          outline: none;
+          text-align: center;
+        }
       }
     }
   }
 
   .component__field {
     position: absolute;
-    left: 30%;
-    width: 70%;
+    left: 35%;
+    width: 65%;
     .sliderfield {
       &__field_wrap {
         position: relative;

@@ -366,8 +366,8 @@ module.exports = (Result) => {
     if (context.args.data.demo) {
       return next();
     }
-
-    if (context.args.data.bpu_api_id) {
+    if (context.args.data.bpu_api_id && !context.args.data.tracks) {
+      console.log('generate new results')
       createBpuResults(Result.app, context).then(() => {
         next();
       }).catch((err) => {
@@ -383,6 +383,9 @@ module.exports = (Result) => {
         console.error(err.stack);
         next();
       })
+    } else if (context.args.data.bpu_api_id && context.args.data.tracks) {
+      console.log('generate old results')
+      next();
     } else {
       createSimulatedResults(Result.app, context).then(() => {
         next();

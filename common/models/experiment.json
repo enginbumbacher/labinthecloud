@@ -29,6 +29,11 @@
     "lab": {
       "type": "string",
       "required": false
+    },
+    "copyOfID": {
+      "type": "number",
+      "required": false,
+      "default": 0
     }
   },
   "validations": [],

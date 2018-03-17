@@ -367,7 +367,6 @@ module.exports = (Result) => {
       return next();
     }
     if (context.args.data.bpu_api_id && !context.args.data.tracks) {
-      console.log('generate new results')
       createBpuResults(Result.app, context).then(() => {
         next();
       }).catch((err) => {
@@ -384,7 +383,6 @@ module.exports = (Result) => {
         next();
       })
     } else if (context.args.data.bpu_api_id && context.args.data.tracks) {
-      console.log('generate old results')
       next();
     } else {
       createSimulatedResults(Result.app, context).then(() => {

@@ -128,7 +128,7 @@
           maxLoginTime: 0,
           experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
           modelModality: 'create', // 'observe','explore','create'
-          expModelModality: 'justmodel', //'simultaneous','sequential', 'justmodel' - for seeing model and live not together
+          expModelModality: 'sequential', //'simultaneous','sequential', 'justmodel' - for seeing model and live not together
           enableDirectComparison: false, // false: cannot do direct comparison between models
         },
         experiment: {
@@ -140,6 +140,7 @@
           //experimentHistory: [31,36]
         },
         model: {
+          modelName: "Model of the Body",
           tabs: [{
             modelType: "blockly",
             color: 0x2222ff,
@@ -149,7 +150,7 @@
               bodyConfiguration: {
                 label: "Light sensor",
                 color: '#7030A0',
-                initialValue: "sensorConfig_13",
+                initialValue: "sensorConfig_3",
                 min_width: '210px',
                 description: 'Select different configurations for the light sensor. You can change position, number and type of sensors.'
               },
@@ -215,6 +216,10 @@
             range: [10, 50],
             options: {1: 1, 2: 2, 5: 5},
             initialValue: 5
+          },
+          euglenaInit: {
+            options: {0: 'random', 1: 'aligned'},
+            initialValue: 1
           },
           simulationFps: 9
         },

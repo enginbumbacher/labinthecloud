@@ -128,7 +128,7 @@
           maxLoginTime: 0,
           experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
           modelModality: 'create', // 'observe','explore','create'
-          expModelModality: 'simultaneous', //'simultaneous','sequential' - for seeing model and live not together
+          expModelModality: 'justmodel', //'simultaneous','sequential' - for seeing model and live not together
           enableDirectComparison: false, // false: cannot do direct comparison between models,
           enableExperimentView: false
         },
@@ -140,6 +140,7 @@
           //,experimentHistory
         },
         model: {
+          modelName: "Model of Euglena",
           tabs: [{
             modelType: "blockly",
             color: 0x2222ff,
@@ -171,7 +172,7 @@
               omega: {
                 label: "Rotation speed", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
                 color: '#C55A11',
-                initialValue: 'roll_25',
+                initialValue: 'roll_0',
                 maxValue: 5,
                 varOptions: {},
                 options: {'roll_0': 'no rotation', 'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast', 'roll_100': 'very fast'},
@@ -214,7 +215,11 @@
           euglenaCount: {
             range: [10, 50],
             options: {1: 1, 2: 2, 20: 20},
-            initialValue: 5
+            initialValue: 2
+          },
+          euglenaInit: {
+            options: {0: 'random', 1: 'aligned'},
+            initialValue: 1
           },
           simulationFps: 9
         },

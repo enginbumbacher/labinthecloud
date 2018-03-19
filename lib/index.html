@@ -128,8 +128,8 @@
           maxLoginTime: 0,
           experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
           modelModality: 'create', // 'observe','explore','create'
-          expModelModality: 'simultaneous', //'simultaneous','sequential' - for seeing model and live not together
-          enableDirectComparison: false // false: cannot do direct comparison between models
+          expModelModality: 'justmodel', //'simultaneous','sequential', 'justmodel' - for seeing model and live not together
+          enableDirectComparison: false, // false: cannot do direct comparison between models
         },
         experiment: {
           experimentForm: 'narrative', // 'table', 'narrative'
@@ -145,7 +145,7 @@
             color: 0x2222ff,
             parameters: {
               modelRepresentation: 'functional', // 'mechanistic' or 'functional'
-              allowedConfigs: ['2directed_front','directed_frontleft','directed_frontright','alldirections_frontcenter','alldirections_frontleft'],
+              allowedConfigs: ['2sensors_front','1sensor_frontleft','1sensor_frontright','1omnisensor_frontcenter','1omnisensor_frontleft'],
               bodyConfiguration: {
                 label: "Light sensor",
                 color: '#7030A0',
@@ -220,17 +220,18 @@
         },
         visualization: {
            visualizationTypes: [
-          {
-            id: "circle",
-            label: "Circular Distribution",
-            settings: {
-              binCount: 12, //15° bins
-              dT: 1, // in seconds; indicates time window for binning
-              tStep: 0.5, // in seconds, i.e. tStep = 0.5 --> Half a second; indicates time at which graph steps forward
-              width: 320,
-              height: 320
-            }
-          }, {
+           {
+             id: "circle",
+             label: "Circular Distribution",
+             settings: {
+               binCount: 12, //15° bins
+               dT: 1, // in seconds; indicates time window for binning
+               tStep: 0.5, // in seconds, i.e. tStep = 0.5 --> Half a second; indicates time at which graph steps forward
+               width: 320,
+               height: 320
+             }
+           },
+           {
             id: "timeseries",
             label: "Total Speed",
             settings: {

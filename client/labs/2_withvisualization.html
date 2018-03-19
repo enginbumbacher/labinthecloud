@@ -126,7 +126,7 @@
       window.EuglenaConfig = {
         system: {
           maxLoginTime: 0,
-          experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
+          experimentModality: 'explore', // 'observe','explore','create', 'createAndHistory'
           modelModality: 'create', // 'observe','explore','create'
           expModelModality: 'sequential', //'simultaneous','sequential' - for seeing model and live not together
           enableDirectComparison: false // false: cannot do direct comparison between models
@@ -134,9 +134,9 @@
         experiment: {
           experimentForm: 'narrative', // 'table', 'narrative'
           maxDuration: 60,
-          bpuId: "eug1", //"eug10"
-          //euglenaServerMode:"demo"
-          //,experimentHistory
+          //bpuId: "eug1", //"eug10"
+          euglenaServerMode:"simulate",
+          experimentHistory: [70,132]
         },
         model: {
           tabs: [],
@@ -158,30 +158,6 @@
                  tStep: 0.5, // in seconds, i.e. tStep = 0.5 --> Half a second; indicates time at which graph steps forward
                  width: 320,
                  height: 320
-               }
-             }, {
-               id: "timeseries",
-               label: "Total Speed",
-               settings: {
-                 vRange: null,
-                 mode: 'total',
-                 stdBand: true,
-                 dT: 1,
-
-                 width: 500,
-                 height: 400
-               }
-             }, {
-               id: "componentspeed",
-               label: "Up/Down and Left/Right Speed",
-               settings: {
-                 vRange: null,
-                 mode: 'component',
-                 stdBand: true,
-                 dT: 1,
-
-                 width: 450,
-                 height: 250
                }
              }
         ]

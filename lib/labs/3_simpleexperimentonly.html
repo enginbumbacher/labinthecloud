@@ -126,30 +126,41 @@
       window.EuglenaConfig = {
         system: {
           maxLoginTime: 0,
-          experimentModality: 'explore', // 'observe','explore','create', 'createAndHistory'
+          experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
           modelModality: 'create', // 'observe','explore','create'
-          expModelModality: 'simultaneous', //'simultaneous','sequential' - for seeing model and live not together
+          expModelModality: 'sequential', //'simultaneous','sequential' - for seeing model and live not together
           enableDirectComparison: false // false: cannot do direct comparison between models
         },
         experiment: {
           experimentForm: 'narrative', // 'table', 'narrative'
           maxDuration: 60,
-          //bpuId: ["eug5","eug7"], //"eug1","eug4","eug5","eug6","eug7","eug8","eug15","eug16"
+          //bpuId: "eug1", //"eug10"
           euglenaServerMode:"simulate",
-          formOptions: 'partial', // 'complete' with alldirections and diagonal; 'partial': without alldirections and diagonal
           experimentHistory: [70,132]
         },
         model: {
           tabs: [],
           euglenaCount: {
             range: [10, 50],
-            options: {1: 1, 2: 2, 5: 5},
+            options: {1: 1, 2: 2, 5: 5, 20: 20},
             initialValue: 5
           },
           simulationFps: 9
         },
         visualization: {
-           visualizationTypes: []
+           visualizationTypes: [
+             {
+               id: "circle",
+               label: "Circular Distribution",
+               settings: {
+                 binCount: 12, //15° bins
+                 dT: 1, // in seconds; indicates time window for binning
+                 tStep: 0.5, // in seconds, i.e. tStep = 0.5 --> Half a second; indicates time at which graph steps forward
+                 width: 320,
+                 height: 320
+               }
+             }
+           ]
         },
        modeling: {
         timeWindow: 2

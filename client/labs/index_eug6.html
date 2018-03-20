@@ -128,141 +128,41 @@
           maxLoginTime: 0,
           experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
           modelModality: 'create', // 'observe','explore','create'
-          expModelModality: 'simultaneous', //'simultaneous','sequential', 'justmodel' - for seeing model and live not together
+          expModelModality: 'sequential', //'simultaneous','sequential' - for seeing model and live not together
           enableDirectComparison: false, // false: cannot do direct comparison between models
+          enableExperimentView: true
         },
         experiment: {
           experimentForm: 'narrative', // 'table', 'narrative'
           maxDuration: 60,
-          bpuId: ["eug7"], //"eug1","eug4","eug5","eug6","eug7","eug8","eug15","eug16"
-          euglenaServerMode:"bpu",
+          bpuId: "eug6", //"eug10"
+          euglenaServerMode: "bpu",
           formOptions: 'complete', // 'complete' with alldirections and diagonal; 'partial': without alldirections and diagonal
-          //experimentHistory: [31,36]
+          //experimentHistory: [70,132]
         },
         model: {
-          modelName: "Model of the Body",
-          modelHistory: [1305,1311],
-          tabs: [{
-            modelType: "blockly",
-            color: 0x2222ff,
-            parameters: {
-              modelRepresentation: 'functional', // 'mechanistic' or 'functional'
-              allowedConfigs: ['2sensors_front','1sensor_frontleft','1sensor_frontright','1omnisensor_frontcenter','1omnisensor_frontleft'],
-              bodyConfiguration: {
-                label: "Light sensor",
-                color: '#7030A0',
-                initialValue: "sensorConfig_3",
-                min_width: '210px',
-                description: 'Select different configurations for the light sensor. You can change position, number and type of sensors.'
-              },
-              /*opacity: {
-                label: "Body Opacity",
-                color: '#759364',
-                initialValue: 'opacity_20',
-                maxValue: 1.0,
-                options: {'opacity_0': '0 percent', 'opacity_20': '20 percent', 'opacity_40': '40 percent', 'opacity_60': '60 percent', 'opacity_80': '80 percent', 'opacity_100': '100 percent'}
-              },*/
-              /*motion: {
-                label: "Forward Motion",
-                color: '#C55A11',
-                alignField: 'true',
-                initialValue: 'motion_flap_0',
-                maxValue: 0.7,
-                options: {'motion_flap_0': 'flapping', 'motion_twist_100': 'twisting'}
-              },*/
-              omega: {
-                label: "Rotation speed", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
-                color: '#C55A11',
-                initialValue: 'roll_25',
-                maxValue: 5,
-                varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
-                options: {'roll_0': 'no rotation', 'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast', 'roll_100': 'very fast'},
-                description: 'Set the speed at which the model rotates around its long body axis normally, if it is programmed to rotate. The percentage refers to the maximum possible intensity for any model. See how the orange arrow changes when you change the value.'
-                // If mechanistic: {'roll_25': 'weak', 'roll_50': 'medium', 'roll_75': 'strong', 'roll_100': 'very strong'}
-                // If functional: {'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast', 'roll_100': 'very fast'}
-              },
-              v: {
-                label: "Forward speed", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
-                color: '#C00000',
-                initialValue: 'motor_25',
-                maxValue: 10,
-                varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
-                options: {'motor_25': 'slow', 'motor_50': 'medium', 'motor_75': 'fast', 'motor_100': 'very fast'},
-                description: 'Set the speed at which the model moves forward, if it is programmed to move. The percentage refers to the maximum possible intensity for any model. See how the red arrow changes when you change the value.'
-                // If mechanistic: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'strong', 'motor_100': 'very strong'}
-                // If functional: {'motor_25': 'slow', 'motor_50': 'medium', 'motor_75': 'fast', 'motor_100': 'very fast'}
-              },
-              K: {
-                label: "Turn speed", // If mechanistic: "Reaction Strength", if functional: "Reaction Speed"
-                color: '#2F5597',
-                initialValue: 'reaction_25',
-                maxValue: 2,
-                varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
-                options: {'reaction_25': 'slow', 'reaction_50': 'medium', 'reaction_75': 'fast', 'reaction_100': 'very fast'},
-                description: 'Set the intensity at which the model is responding to light, if it is programmed to respond. The percentage refers to the maximum possible intensity for any model. See how the blue arrows change when you change the value.'
-                // If mechanistic: {'reaction_25': 'weak', 'reaction_50': 'medium', 'reaction_75': 'strong', 'reaction_100': 'very strong'}
-                // If functional: {'reaction_25': 'slow', 'reaction_50': 'medium', 'reaction_75': 'fast', 'reaction_100': 'very fast'}
-              },
-              /*variation: {
-                label: "Variation btw Euglena:", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
-                initialValue: 'variation_25',
-                maxValue: 0.6,
-                options: {'variation_25': 'small', 'variation_50': 'medium', 'variation_75': 'large', 'variation_100': 'very large'}
-                // If mechanistic: {'roll_25': 'weak', 'roll_50': 'medium', 'roll_75': 'strong', 'roll_100': 'very strong'}
-                // If functional: {'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast', 'roll_100': 'very fast'}
-              }*/
-            }
-          }],
+          tabs: [],
           euglenaCount: {
             range: [10, 50],
-            options: {1: 1, 2: 2, 5: 5},
+            options: {1: 1, 2: 2, 5: 5, 20: 20},
             initialValue: 5
-          },
-          euglenaInit: {
-            options: {1: 'random', 2: 'all same'},
-            initialValue: 1
           },
           simulationFps: 9
         },
         visualization: {
            visualizationTypes: [
-           {
-             id: "circle",
-             label: "Circular Distribution",
-             settings: {
-               binCount: 12, //15° bins
-               dT: 1, // in seconds; indicates time window for binning
-               tStep: 0.5, // in seconds, i.e. tStep = 0.5 --> Half a second; indicates time at which graph steps forward
-               width: 320,
-               height: 320
+             {
+               id: "circle",
+               label: "Circular Distribution",
+               settings: {
+                 binCount: 12, //15° bins
+                 dT: 1, // in seconds; indicates time window for binning
+                 tStep: 0.5, // in seconds, i.e. tStep = 0.5 --> Half a second; indicates time at which graph steps forward
+                 width: 320,
+                 height: 320
+               }
              }
-           },
-           {
-            id: "timeseries",
-            label: "Total Speed",
-            settings: {
-              vRange: null,
-              mode: 'total',
-              stdBand: true,
-              dT: 1,
-
-              width: 500,
-              height: 400
-            }
-          }, {
-            id: "componentspeed",
-            label: "Up/Down and Left/Right Speed",
-            settings: {
-              vRange: null,
-              mode: 'component',
-              stdBand: true,
-              dT: 1,
-
-              width: 450,
-              height: 250
-            }
-          }
-        ]
+           ]
         },
        modeling: {
         timeWindow: 2

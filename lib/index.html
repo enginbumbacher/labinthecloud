@@ -127,8 +127,8 @@
         system: {
           maxLoginTime: 0,
           experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
-          modelModality: 'create', // 'observe','explore','create'
-          expModelModality: 'sequential', //'simultaneous','sequential', 'justmodel' - for seeing model and live not together
+          modelModality: 'explore', // 'observe','explore','create'
+          expModelModality: 'simultaneous', //'simultaneous','sequential', 'justmodel' - for seeing model and live not together
           enableDirectComparison: false, // false: cannot do direct comparison between models
         },
         experiment: {
@@ -141,6 +141,7 @@
         },
         model: {
           modelName: "Model of the Body",
+          modelHistory: [1311],
           tabs: [{
             modelType: "blockly",
             color: 0x2222ff,

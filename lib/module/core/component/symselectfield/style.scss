@@ -32,6 +32,11 @@
       position: relative;
       display: inline;
       font-size: 12px;
+      &_small {
+        position: relative;
+        display: inline;
+        font-size: 12px;
+      }
     }
 
     .variation__popup{

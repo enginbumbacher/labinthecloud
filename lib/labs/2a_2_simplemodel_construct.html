@@ -127,27 +127,26 @@
         system: {
           maxLoginTime: 0,
           experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
-          modelModality: 'explore', // 'observe','explore','create'
-          expModelModality: 'simultaneous', //'simultaneous','sequential', 'justmodel' - for seeing model and live not together
-          enableDirectComparison: false, // false: cannot do direct comparison between models
+          modelModality: 'create', // 'observe','explore','create'
+          expModelModality: 'justmodel', //'simultaneous','sequential' - for seeing model and live not together
+          enableDirectComparison: false, // false: cannot do direct comparison between models,
+          enableExperimentView: false
         },
         experiment: {
           experimentForm: 'narrative', // 'table', 'narrative'
           maxDuration: 60,
-          //bpuId: ["eug5","eug7"], //"eug1","eug4","eug5","eug6","eug7","eug8","eug15","eug16"
-          euglenaServerMode:"simulate",
-          formOptions: 'partial', // 'complete' with alldirections and diagonal; 'partial': without alldirections and diagonal
-          //experimentHistory: [31,36]
+          bpuId: "eug1", //"eug10"
+          //euglenaServerMode:"demo"
+          //,experimentHistory
         },
         model: {
-          modelName: "Model of the Body",
-          modelHistory: [1311],
+          modelName: "Model of Euglena",
           tabs: [{
             modelType: "blockly",
-            color: 0x2222ff,
+            color: 0x0EDA44,//0x2222ff,
             parameters: {
               modelRepresentation: 'functional', // 'mechanistic' or 'functional'
-              allowedConfigs: ['2sensors_front','1sensor_frontleft','1sensor_frontright','1omnisensor_frontcenter','1omnisensor_frontleft'],
+              allowedConfigs: ['1sensor_frontleft'],
               bodyConfiguration: {
                 label: "Light sensor",
                 color: '#7030A0',
@@ -173,9 +172,9 @@
               omega: {
                 label: "Rotation speed", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
                 color: '#C55A11',
-                initialValue: 'roll_25',
+                initialValue: 'roll_0',
                 maxValue: 5,
-                varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
+                varOptions: {},
                 options: {'roll_0': 'no rotation', 'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast', 'roll_100': 'very fast'},
                 description: 'Set the speed at which the model rotates around its long body axis normally, if it is programmed to rotate. The percentage refers to the maximum possible intensity for any model. See how the orange arrow changes when you change the value.'
                 // If mechanistic: {'roll_25': 'weak', 'roll_50': 'medium', 'roll_75': 'strong', 'roll_100': 'very strong'}
@@ -186,7 +185,7 @@
                 color: '#C00000',
                 initialValue: 'motor_25',
                 maxValue: 10,
-                varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
+                varOptions: {},
                 options: {'motor_25': 'slow', 'motor_50': 'medium', 'motor_75': 'fast', 'motor_100': 'very fast'},
                 description: 'Set the speed at which the model moves forward, if it is programmed to move. The percentage refers to the maximum possible intensity for any model. See how the red arrow changes when you change the value.'
                 // If mechanistic: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'strong', 'motor_100': 'very strong'}
@@ -197,7 +196,7 @@
                 color: '#2F5597',
                 initialValue: 'reaction_25',
                 maxValue: 2,
-                varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
+                varOptions: {},
                 options: {'reaction_25': 'slow', 'reaction_50': 'medium', 'reaction_75': 'fast', 'reaction_100': 'very fast'},
                 description: 'Set the intensity at which the model is responding to light, if it is programmed to respond. The percentage refers to the maximum possible intensity for any model. See how the blue arrows change when you change the value.'
                 // If mechanistic: {'reaction_25': 'weak', 'reaction_50': 'medium', 'reaction_75': 'strong', 'reaction_100': 'very strong'}
@@ -215,8 +214,8 @@
           }],
           euglenaCount: {
             range: [10, 50],
-            options: {1: 1, 2: 2, 5: 5},
-            initialValue: 5
+            options: {1: 1, 2: 2, 20: 20},
+            initialValue: 2
           },
           euglenaInit: {
             options: {0: 'random', 1: 'aligned'},
@@ -226,42 +225,41 @@
         },
         visualization: {
            visualizationTypes: [
-           {
-             id: "circle",
-             label: "Circular Distribution",
-             settings: {
-               binCount: 12, //15° bins
-               dT: 1, // in seconds; indicates time window for binning
-               tStep: 0.5, // in seconds, i.e. tStep = 0.5 --> Half a second; indicates time at which graph steps forward
-               width: 320,
-               height: 320
+             {
+               id: "circle",
+               label: "Circular Distribution",
+               settings: {
+                 binCount: 12, //15° bins
+                 dT: 1, // in seconds; indicates time window for binning
+                 tStep: 0.5, // in seconds, i.e. tStep = 0.5 --> Half a second; indicates time at which graph steps forward
+                 width: 320,
+                 height: 320
+               }
+             }, {
+               id: "timeseries",
+               label: "Total Speed",
+               settings: {
+                 vRange: null,
+                 mode: 'total',
+                 stdBand: true,
+                 dT: 1,
+
+                 width: 500,
+                 height: 400
+               }
+             }, {
+               id: "componentspeed",
+               label: "Up/Down and Left/Right Speed",
+               settings: {
+                 vRange: null,
+                 mode: 'component',
+                 stdBand: true,
+                 dT: 1,
+
+                 width: 450,
+                 height: 250
+               }
              }
-           },
-           {
-            id: "timeseries",
-            label: "Total Speed",
-            settings: {
-              vRange: null,
-              mode: 'total',
-              stdBand: true,
-              dT: 1,
-
-              width: 500,
-              height: 400
-            }
-          }, {
-            id: "componentspeed",
-            label: "Up/Down and Left/Right Speed",
-            settings: {
-              vRange: null,
-              mode: 'component',
-              stdBand: true,
-              dT: 1,
-
-              width: 450,
-              height: 250
-            }
-          }
         ]
         },
        modeling: {
@@ -269,6 +267,6 @@
        }
       };
     </script>
-    <script data-main="./cslib/init" src="./cslib/thirdparty/require/require.js"></script>
+    <script data-main="/cslib/init" src="/cslib/thirdparty/require/require.js"></script>
   </body>
 </html>

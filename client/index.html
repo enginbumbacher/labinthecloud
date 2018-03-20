@@ -126,9 +126,9 @@
       window.EuglenaConfig = {
         system: {
           maxLoginTime: 0,
-          experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
-          modelModality: 'explore', // 'observe','explore','create'
-          expModelModality: 'simultaneous', //'simultaneous','sequential', 'justmodel' - for seeing model and live not together
+          experimentModality: 'explore', // 'observe','explore','create', 'createAndHistory'
+          modelModality: 'create', // 'observe','explore','create'
+          expModelModality: 'justmodel', //'simultaneous','sequential', 'justmodel' - for seeing model and live not together
           enableDirectComparison: false, // false: cannot do direct comparison between models
         },
         experiment: {
@@ -137,11 +137,11 @@
           //bpuId: ["eug5","eug7"], //"eug1","eug4","eug5","eug6","eug7","eug8","eug15","eug16"
           euglenaServerMode:"simulate",
           formOptions: 'partial', // 'complete' with alldirections and diagonal; 'partial': without alldirections and diagonal
-          //experimentHistory: [31,36]
+          experimentHistory: [31,36]
         },
         model: {
           modelName: "Model of the Body",
-          modelHistory: [1311],
+          modelHistory: [1305,1311],
           tabs: [{
             modelType: "blockly",
             color: 0x2222ff,

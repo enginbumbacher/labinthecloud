@@ -126,7 +126,7 @@
       window.EuglenaConfig = {
         system: {
           maxLoginTime: 0,
-          experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
+          experimentModality: 'explore', // 'observe','explore','create', 'createAndHistory'
           modelModality: 'create', // 'observe','explore','create'
           expModelModality: 'justmodel', //'simultaneous','sequential' - for seeing model and live not together
           enableDirectComparison: false, // false: cannot do direct comparison between models,
@@ -135,12 +135,13 @@
         experiment: {
           experimentForm: 'narrative', // 'table', 'narrative'
           maxDuration: 60,
-          bpuId: "eug1", //"eug10"
+          //bpuId: "eug1", //"eug10"
           //euglenaServerMode:"demo"
           //,experimentHistory
         },
         model: {
           modelName: "Model of Euglena",
+          //modelHistory: [],
           tabs: [{
             modelType: "blockly",
             color: 0x0EDA44,//0x2222ff,

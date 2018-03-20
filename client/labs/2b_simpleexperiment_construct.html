@@ -129,14 +129,15 @@
           experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
           modelModality: 'create', // 'observe','explore','create'
           expModelModality: 'sequential', //'simultaneous','sequential' - for seeing model and live not together
-          enableDirectComparison: false // false: cannot do direct comparison between models
+          enableDirectComparison: false, // false: cannot do direct comparison between models
+          enableExperimentView: true
         },
         experiment: {
           experimentForm: 'narrative', // 'table', 'narrative'
           maxDuration: 60,
-          //bpuId: "eug1", //"eug10"
-          euglenaServerMode:"simulate",
-          experimentHistory: [70,132]
+          bpuId: "eug7", //"eug10"
+          euglenaServerMode: "simulate",
+          //experimentHistory: [70,132]
         },
         model: {
           tabs: [],

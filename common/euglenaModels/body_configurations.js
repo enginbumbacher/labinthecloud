@@ -110,7 +110,7 @@ class EuglenaBody {
     */
     this.bodyConfiguration = bodyConfig;
 
-        this.fw_speed = config.v_numeric + (Math.random() * 2 - 1) * config.v_variation * config.v_numeric;
+    this.fw_speed = config.v_numeric + (Math.random() * 2 - 1) * config.v_variation * config.v_numeric;
 
     // either load roll speed (omega) or calculated it from forward speed
     if (config.omega_numeric) {

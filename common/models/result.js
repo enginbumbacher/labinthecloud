@@ -182,14 +182,25 @@ const _createModelResults = (app, result, model) => {
     result.numFrames = duration * result.fps;
     const tracks = [];
     for (let euglenaId = 0; euglenaId < model.configuration.count; euglenaId++) {
-      let initialization = {
-        x: (Math.random() * 2 - 1) * 640 / (2 * liveResult.magnification),
-        y: (Math.random() * 2 - 1) * 480 / (2 * liveResult.magnification),
-        z: 0,
-        yaw: Math.random() * 2 * Math.PI,
-        roll: Math.random() * 2 * Math.PI,
-        pitch: Math.random() * 2 * Math.PI
-      };
+      if (model.configuration.initialization === '1') // 1 is random
+        var initialization = {
+          x: (Math.random() * 2 - 1) * 640 / (2 * liveResult.magnification),
+          y: (Math.random() * 2 - 1) * 480 / (2 * liveResult.magnification),
+          z: 0,
+          yaw: Math.random() * 2 * Math.PI,
+          roll: Math.random() * 2 * Math.PI,
+          pitch: Math.random() * 2 * Math.PI
+        };
+      else {
+        var initialization = {
+          x: (Math.random() * 2 - 1) * 640 / (2 * liveResult.magnification),
+          y: (Math.random() * 2 - 1) * 480 / (2 * liveResult.magnification),
+          z: 0,
+          yaw: 0,
+          roll: 0,
+          pitch: Math.PI / 2
+        };
+      }
       if (result.initialization && result.initialization.length > euglenaId) {
         initialization = result.initialization[euglenaId]
       }

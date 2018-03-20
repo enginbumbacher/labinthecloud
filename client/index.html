@@ -87,7 +87,7 @@
           <field name="SPEED">5</field>
         </block>
       </category>
-      <category name="Roll Motion" colour="#C55A11">
+      <category name="Rotation" colour="#C55A11">
         <block type="roll_normal" id="roll_normal" disabled='false' max_use='4' sensors='both'></block>
         <block type="roll_change" id='roll_change' disabled='false' max_use='4' sensors='both'>
           <field name="SPEED">5</field>
@@ -126,9 +126,9 @@
       window.EuglenaConfig = {
         system: {
           maxLoginTime: 0,
-          experimentModality: 'explore', // 'observe','explore','create', 'createAndHistory'
+          experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
           modelModality: 'create', // 'observe','explore','create'
-          expModelModality: 'justmodel', //'simultaneous','sequential', 'justmodel' - for seeing model and live not together
+          expModelModality: 'simultaneous', //'simultaneous','sequential', 'justmodel' - for seeing model and live not together
           enableDirectComparison: false, // false: cannot do direct comparison between models
         },
         experiment: {
@@ -219,7 +219,7 @@
             initialValue: 5
           },
           euglenaInit: {
-            options: {0: 'random', 1: 'aligned'},
+            options: {1: 'random', 2: 'all same'},
             initialValue: 1
           },
           simulationFps: 9

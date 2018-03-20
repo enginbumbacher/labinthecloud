@@ -197,7 +197,7 @@ const _createModelResults = (app, result, model) => {
           y: (Math.random() * 2 - 1) * 480 / (2 * liveResult.magnification),
           z: 0,
           yaw: 0,
-          roll: 0,
+          roll: Math.PI,
           pitch: Math.PI / 2
         };
       }

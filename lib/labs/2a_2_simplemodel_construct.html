@@ -136,12 +136,13 @@
           experimentForm: 'narrative', // 'table', 'narrative'
           maxDuration: 60,
           //bpuId: "eug1", //"eug10"
-          //euglenaServerMode:"demo"
-          //,experimentHistory
+          euglenaServerMode:"simulate",
+          formOptions: 'partial', // 'complete' with alldirections and diagonal; 'partial': without alldirections and diagonal
+          experimentHistory: [14,15]
         },
         model: {
           modelName: "Model of Euglena",
-          //modelHistory: [],
+          modelHistory: [1],
           tabs: [{
             modelType: "blockly",
             color: 0x0EDA44,//0x2222ff,

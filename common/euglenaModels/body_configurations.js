@@ -4,7 +4,7 @@ const defaults = {
   adaptation_level: 0.4,
   adaptation_duration: 0,
   adaptation_threshold:0,
-  memory_duration: 60, // defined in number of frames
+  memory_duration: 80, // defined in number of frames
   sensitivity_threshold: 0.03,
   yaw_min: 0.1,
   shock_threshold: 0,

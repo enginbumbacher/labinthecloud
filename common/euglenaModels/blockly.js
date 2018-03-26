@@ -118,8 +118,8 @@ module.exports = {
       if(EugBody.lightSensors.length >2) console.log("there are more than 2 sensors.");
       // substract the left from the right eye
       var sensorOrder = ((EugBody.lightSensors[1].getPosition3D()).y - (EugBody.lightSensors[0].getPosition3D()).y) > 0 ? [0,1] : [1,0];
-      var lightDiff = (sensorOrder.map((v,ind) => {return sensorIntensities[v]})).reduce(function(a, b) { return a - b });
-      lightInfo['diffBtwSensors'] = lightDiff;
+      var sensorDiff = (sensorOrder.map((v,ind) => {return sensorIntensities[v]})).reduce(function(a, b) { return a - b });
+      lightInfo['diffBtwSensors'] = sensorDiff;
     }
 
     /* ********* Integrate the blockly code *********

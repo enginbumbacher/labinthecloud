@@ -188,7 +188,7 @@ const _createModelResults = (app, result, model) => {
           y: (Math.random() * 2 - 1) * 480 / (2 * liveResult.magnification),
           z: 0,
           yaw: Math.random() * 2 * Math.PI,
-          roll: Math.random() * 2 * Math.PI,
+          roll: 0,
           pitch: Math.random() * 2 * Math.PI
         };
       else {
@@ -197,7 +197,7 @@ const _createModelResults = (app, result, model) => {
           y: (Math.random() * 2 - 1) * 480 / (2 * liveResult.magnification),
           z: 0,
           yaw: 0,
-          roll: 0,
+          roll: 0.1,
           pitch: Math.PI / 2
         };
       }
@@ -229,7 +229,7 @@ const _createModelResults = (app, result, model) => {
     var resetRandom = Array.from({length: model.configuration.count}, () => resetMin + Math.floor(Math.random() * resetMax));
 
     var resetAngleMin = 2;
-    var resetAngleMax = 10;
+    var resetAngleMax = 15;
     var randomnessFactor = model.modelType == 'blockly' ? basicParameters.randomnessFactor : model.configuration.randomness;
     var resetRandomAngle = EuglenaUtils.setRandomAngleMatrix(model.configuration.count, basicParameters.randomSmoothWindow, resetAngleMax, resetAngleMin, randomnessFactor);
 

@@ -134,14 +134,14 @@
         experiment: {
           experimentForm: 'narrative', // 'table', 'narrative'
           maxDuration: 60,
-          bpuId: "bpu16", //["eug5","eug7"], //"eug1","eug4","eug5","eug6","eug7","eug8","eug15","eug16"
-          euglenaServerMode:"bpu",
+          bpuId: "eug16", //["eug5","eug7"], //"eug1","eug4","eug5","eug6","eug7","eug8","eug15","eug16"
+          euglenaServerMode:"simulate",
           formOptions: 'complete', // 'complete' with alldirections and diagonal; 'partial': without alldirections and diagonal
-          //experimentHistory: [31,36]
+          experimentHistory: [14]
         },
         model: {
           modelName: "Model of the Body",
-          modelHistory: [1305,1311],
+          //modelHistory: [1305,1311],
           tabs: [{
             modelType: "blockly",
             color: 0x2222ff,
@@ -219,8 +219,8 @@
             initialValue: 5
           },
           euglenaInit: {
-            options: {1: 'random', 2: 'all point to right'},
-            initialValue: 1
+            options: {"1": 'random', "2": 'all point to right'},
+            initialValue: "1"
           },
           simulationFps: 9
         },

@@ -70,29 +70,32 @@
   <body>
     <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
       <category name="Turning" colour="#2F5596">
-          <block type="turn_at_1sensor" id="turn_at_1sensor" disabled='false' max_use='2' sensors='one' equivalence='turn_at_2sensors'>
+          <block type="turn_at_1sensor" id="turn_at_1sensor" disabled='false' max_use='2' sensors='one'>
           <field name="DIRECTION">TOWARDS</field>
         </block>
-        <block type="turn_at_2sensors" id="turn_at_2sensors" disabled='false' max_use='2' sensors='two' equivalence='turn_at_1sensor'>
-          <field name="DIRECTION">TOWARDS</field>
+        <block type="turn_lr" id="turn_lr" disabled='false' max_use='2' sensors='both'>
+          <field name="DIRECTION">LEFT</field>
         </block>
+        <!-- <block type="turn_at_2sensors" id="turn_at_2sensors" disabled='false' max_use='2' sensors='two' equivalence='turn_at_1sensor'>
+          <field name="DIRECTION">TOWARDS</field>
+        </block> -->
         <!-- <block type="turn_randomly" id="turn_randomly" disabled='false' max_use='2' sensors='both'></block> -->
         <!-- <block type="turn_change" id='turn_change' disabled='false' max_use='2' sensors='both'>
           <field name="SPEED">CHANGE_20</field>
         </block> -->
       </category>
       <category name="Forward" colour="#805ba5">
-        <block type="move_normal" id="move_normal" disabled='false' max_use='2' sensors='both'></block>
+        <block type="move_normal" id="move_normal" disabled='false' max_use='1' sensors='both'></block>
         <!-- <block type="move_change" id='move_change' disabled='false' max_use='2' sensors='both'>
           <field name="SPEED">CHANGE_20</field>
         </block> -->
       </category>
-      <!-- <category name="Rotation" colour="#C55A11">
-        <block type="roll_normal" id="roll_normal" disabled='false' max_use='2' sensors='both'></block>
-        <block type="roll_change" id='roll_change' disabled='false' max_use='2' sensors='both'>
+      <category name="Rotation" colour="#C55A11">
+        <block type="roll_normal" id="roll_normal" disabled='false' max_use='1' sensors='both'></block>
+        <!-- <block type="roll_change" id='roll_change' disabled='false' max_use='2' sensors='both'>
           <field name="SPEED">CHANGE_20</field>
-        </block>
-      </category> -->
+        </block> -->
+      </category>
       <!-- <category name="Additional Blocks" colour="#00A407">
         <block class='sensing' type="see_light_quantity" id="see_light_quantity" disabled='false' max_use='2' sensors='both'>
           <field name='THRESHOLD'>THRESH_20</field>
@@ -126,9 +129,9 @@
       window.EuglenaConfig = {
         system: {
           maxLoginTime: 0,
-          experimentModality: 'explore', // 'observe','explore','create', 'createAndHistory'
+          experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
           modelModality: 'explore', // 'observe','explore','create'
-          expModelModality: 'justmodel', //'simultaneous','sequential' ,'justmodel','justbody' - for seeing model and live not together
+          expModelModality: 'simultaneous', //'simultaneous','sequential' ,'justmodel','justbody' - for seeing model and live not together
           enableDirectComparison: false, // false: cannot do direct comparison between models,
           enableExperimentView: false
         },
@@ -137,18 +140,18 @@
           maxDuration: 60,
           //bpuId: "eug1", //"eug10"
           euglenaServerMode:"simulate",
-          formOptions: 'partial', // 'complete' with alldirections and diagonal; 'partial': without alldirections and diagonal
-          experimentHistory: [14,15]
+          formOptions: 'complete', // 'complete' with alldirections and diagonal; 'partial': without alldirections and diagonal
+          experimentHistory: [14,15,399,400]
         },
         model: {
-          modelName: "Model of Euglena",
-          modelHistory: [2],
+          modelName: "Model of Body",
+          modelHistory: [3,5],
           tabs: [{
             modelType: "blockly",
             color: 0x2222ff,
             parameters: {
               modelRepresentation: 'functional', // 'mechanistic' or 'functional'
-              allowedConfigs: ['1sensor_frontleft','1sensor_frontright'],
+              allowedConfigs: ['2sensors_front','1sensor_frontleft','1sensor_frontright'],
               bodyConfiguration: {
                 label: "Light sensor",
                 color: '#C00000',
@@ -172,34 +175,34 @@
                 options: {'motion_flap_0': 'flapping', 'motion_twist_100': 'twisting'}
               },*/
               omega: {
-                label: "Rotation speed", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
+                label: "Default Rotation", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
                 color: '#C55A11',
                 initialValue: 'roll_0',
-                maxValue: 5,
+                maxValue: 6,
                 varOptions: {},
-                options: {'roll_0': 'no rotation', 'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast', 'roll_100': 'very fast'},
+                options: {'roll_0': 'no rotation', 'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast'},
                 description: 'Set the speed at which the model rotates around its long body axis normally, if it is programmed to rotate. The percentage refers to the maximum possible intensity for any model. See how the orange arrow changes when you change the value.'
                 // If mechanistic: {'roll_25': 'weak', 'roll_50': 'medium', 'roll_75': 'strong', 'roll_100': 'very strong'}
                 // If functional: {'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast', 'roll_100': 'very fast'}
               },
               v: {
-                label: "Forward speed", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
+                label: "Default Forward", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
                 color: '#7030A0',
                 initialValue: 'motor_25',
                 maxValue: 10,
                 varOptions: {},
-                options: {'motor_25': 'slow', 'motor_50': 'medium', 'motor_75': 'fast', 'motor_100': 'very fast'},
+                options: {'motor_25': 'slow', 'motor_50': 'medium', 'motor_75': 'fast'},
                 description: 'Set the speed at which the model moves forward, if it is programmed to move. The percentage refers to the maximum possible intensity for any model. See how the red arrow changes when you change the value.'
                 // If mechanistic: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'strong', 'motor_100': 'very strong'}
                 // If functional: {'motor_25': 'slow', 'motor_50': 'medium', 'motor_75': 'fast', 'motor_100': 'very fast'}
               },
               K: {
-                label: "Turn speed", // If mechanistic: "Reaction Strength", if functional: "Reaction Speed"
+                label: "Default Turn", // If mechanistic: "Reaction Strength", if functional: "Reaction Speed"
                 color: '#2F5597',
                 initialValue: 'reaction_25',
-                maxValue: 2,
+                maxValue: 3,
                 varOptions: {},
-                options: {'reaction_25': 'slow', 'reaction_50': 'medium', 'reaction_75': 'fast', 'reaction_100': 'very fast'},
+                options: {'reaction_25': 'slow', 'reaction_50': 'medium', 'reaction_75': 'fast'},
                 description: 'Set the intensity at which the model is responding to light, if it is programmed to respond. The percentage refers to the maximum possible intensity for any model. See how the blue arrows change when you change the value.'
                 // If mechanistic: {'reaction_25': 'weak', 'reaction_50': 'medium', 'reaction_75': 'strong', 'reaction_100': 'very strong'}
                 // If functional: {'reaction_25': 'slow', 'reaction_50': 'medium', 'reaction_75': 'fast', 'reaction_100': 'very fast'}
@@ -216,8 +219,8 @@
           }],
           euglenaCount: {
             range: [10, 50],
-            options: {1: 1, 2: 2, 20: 20},
-            initialValue: 2
+            options: {'1': 1, '2': 2, '10': 10, '30': 30},
+            initialValue: '2'
           },
           euglenaInit: {
             options: {'1': 'random', '2': 'aligned'},
@@ -237,7 +240,20 @@
                  width: 320,
                  height: 320
                }
-             }
+             },
+             {
+              id: "timeseries",
+              label: "Forward Speed",
+              settings: {
+                vRange: null,
+                mode: 'total',
+                stdBand: true,
+                dT: 1,
+
+                width: 500,
+                height: 400
+              }
+            }
         ]
         },
        modeling: {

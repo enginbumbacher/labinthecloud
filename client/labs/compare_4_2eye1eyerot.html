@@ -70,15 +70,15 @@
   <body>
     <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
       <category name="Turning" colour="#2F5596">
-          <block type="turn_at_1sensor" id="turn_at_1sensor" disabled='false' max_use='2' sensors='one' equivalence='turn_at_2sensors'>
+          <block type="turn_at_1sensor" id="turn_at_1sensor" disabled='false' max_use='2' sensors='one'>
           <field name="DIRECTION">TOWARDS</field>
         </block>
         <block type="turn_lr" id="turn_lr" disabled='false' max_use='2' sensors='both'>
           <field name="DIRECTION">LEFT</field>
         </block>
-        <!-- <block type="turn_at_2sensors" id="turn_at_2sensors" disabled='false' max_use='2' sensors='two' equivalence='turn_at_1sensor'>
+        <block type="turn_at_2sensors" id="turn_at_2sensors" disabled='false' max_use='2' sensors='two'>
           <field name="DIRECTION">TOWARDS</field>
-        </block> -->
+        </block>
         <!-- <block type="turn_randomly" id="turn_randomly" disabled='false' max_use='2' sensors='both'></block> -->
         <!-- <block type="turn_change" id='turn_change' disabled='false' max_use='2' sensors='both'>
           <field name="SPEED">CHANGE_20</field>

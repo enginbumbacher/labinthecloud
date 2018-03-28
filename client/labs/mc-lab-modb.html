@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Euglena Modeling</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <script type="text/javascript">
+      window.EuglenaConfig = {
+        lab: "model_b",
+        system: {
+          maxLoginTime: 00,
+          experimentModality: 'observe', // 'observe','explore','create', 'createAndHistory'
+          modelModality: 'observe', // 'observe','explore','create'
+          expModelModality: 'simultaneous', //'simultaneous','sequential' - for seeing model and live not together
+          enableDirectComparison: true // false: cannot do direct comparison between models
+        },
+        experiment: {
+          maxDuration: 60,
+          bpuId: "eug3",
+          experimentHistory: [1,9,3]
+        },
+        model: {
+          tabs: [{
+            modelType: "twoEye",
+            color: 0xdd0000,
+            parameters: {
+              K: {
+                label: "Coupling",
+                range: [-2, 2],
+                resolution: 0.01,
+                initialValue: {
+                  base: -1,
+                  delta: 0.2
+                }
+              },
+              v: {
+                label: "Forward Speed",
+                range: [0, 10],
+                resolution: 0.1,
+                initialValue: {
+                  base: 5,
+                  delta: 2
+                }
+              },
+              omega: {
+                label: "Roll Speed",
+                range: [-5, 5],
+                resolution: 0.01,
+                initialValue: {
+                  base: 1,
+                  delta: 0.2
+                }
+              },
+              randomness: {
+                label: "Randomness",
+                range: [0, 1],
+                resolution: 0.01,
+                initialValue: 0.15
+              }
+            }
+          }],
+          euglenaCount: {
+            range: [10, 50],
+            initialValue: 30
+          },
+          simulationFps: 12
+        },
+        visualization: {
+          visualizationTypes: []
+        }
+      };
+    </script>
+    <script data-main="/cslib/init" src="/cslib/thirdparty/require/require.js"></script>
+  </body>
+</html>

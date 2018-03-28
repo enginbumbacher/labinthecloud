@@ -21,12 +21,28 @@
     &__time-band {
       fill: $palette__gray__medium_dark;
     }
+    &__light {
+      &-time, &-arrow {
+        stroke: rgb(235,160,17);
+        fill: rgb(235,160,17);
+      }
+      &-label {
+        fill: rgb(235,160,17);
+        font-size: 10px;
+        text-anchor: middle;
+        width: 50px;
+      }
+    }
     &__axis {
       &-label {
         fill: $palette__gray__dark;
         text-anchor: middle;
         font-weight: bold;
       }
+    }
+    &__title {
+      text-align: center;
+      text-anchor: middle;
     }
   }
   border: 1px solid $palette__gray__dark;

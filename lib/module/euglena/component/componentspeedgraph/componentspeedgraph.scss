@@ -1,0 +1,88 @@
+@import "../../../../scss_includes/mixins";
+@import "../../../../scss_includes/variables";
+
+.component-speed {
+  &__graph {
+    max-width: 700px;
+    display: block;
+    position: relative;
+
+    &__image {
+      position: absolute;
+      top: 45.2%;
+      left: 6%;
+      width: 100px;
+      height: 70px;
+      text-anchor: middle;
+
+      &__label{
+        text-anchor: middle;
+        font-weight: bold;
+        font-size: 10px;
+      }
+    }
+    &__line {
+      fill: none;
+      stroke-width: 1;
+      opacity: 0.75;
+      stroke: $palette__gray__medium_dark;
+    }
+    &__std {
+      opacity: 0.5;
+      &__live {
+        fill: $palette__gray__medium_dark;
+      }
+      &__model {
+        fill: $palette__blue__euglena;
+      }
+    }
+    &__time-band {
+      fill: $palette__gray__medium_dark;
+    }
+    &__light {
+      &-time, &-arrow {
+        stroke: rgb(235,160,17);
+        fill: rgb(235,160,17);
+      }
+      &-label {
+        fill: rgb(235,160,17);
+        font-size: 10px;
+        text-anchor: middle;
+        width: 50px;
+      }
+    }
+    &__axis {
+      &-label {
+        fill: $palette__gray__dark;
+        text-anchor: middle;
+        font-weight: bold;
+        font-size: 12px;
+      }
+      &-y text {
+        display: none;
+      }
+    }
+    &__title {
+      text-align: center;
+      text-anchor: middle;
+    }
+
+    &__arrow {
+      &-label {
+        fill: $palette__gray__dark;
+        text-anchor: middle;
+        font-weight: bold;
+      }
+
+      &-marker {
+        stroke: black;
+          fill: black;
+      }
+    }
+  }
+  border: 1px solid $palette__gray__dark;
+  text-align: center;
+  padding: 0.5rem;
+  display: inline-block;
+  margin: 1rem;
+}

@@ -1,16 +1,19 @@
 @import "../../../scss_includes/variables";
 
 .results {
+  height: 100%;
+
   &__controls {
     padding: 1.5rem;
     margin: -1.5rem -1.5rem 1rem;
     background: $palette__gray__medium_dark;
     border-bottom: 1px solid $palette__gray__dark;
     display: flex;
+    justify-content: space-evenly;
 
-    & > div {
-      flex: 1;
-    }
+    // & > div {
+    //   flex: 1;
+    // }
 
     label {
       margin-right: 1rem;
@@ -18,12 +21,59 @@
     }
     &__experiment {
       text-align: left;
+      flex-grow: 1;
     }
     &__model {
       text-align: center;
+      flex-grow: 1;
     }
     &__visualization {
       text-align: right;
+      flex-grow: 2;
     }
+  }
+
+  &__visuals {
+    display:flex;
+    align-items: top;
+    justify-content: flex-start;
+    overflow: auto;
+    height: 90%;
+    width: 100%;
+
+    #moveTabs.flippedX {
+        width: 40px;
+        height: 20px;
+        margin-right: 30px;
+        transform: scaleX(-1);
+    }
+    #moveTabs.notflippedX {
+        width: 40px;
+        height: 20px;
+        margin-right: 30px;
+        transform: scaleX(1);
+    }
+  }
+
+  &__visualization{
+        min-width: 400px;
+        min-height: 500px;
+        margin-left: 10px;
+        margin-right: 10px;
+        flex-grow: 2;
+        text-align: center;
+  }
+
+  &__euglena{
+        min-width: 600px;
+        min-height: 500px;
+        text-align: center;
+  }
+
+  &__euglena_2{
+        min-width: 600px;
+        min-height: 500px;
+        flex-grow: 1;
+        text-align: center;
   }
 }

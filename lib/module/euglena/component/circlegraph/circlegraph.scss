@@ -2,6 +2,13 @@
 @import "../../../../scss_includes/variables";
 
 .circle-graph {
+  max-width: 430px;
+
+  &__title {
+    text-align: center;
+    text-anchor: middle;
+  }
+
   &__slice {
     fill: $palette__gray__medium;
     stroke: $palette__gray__dark;
@@ -15,11 +22,18 @@
   }
   border: 1px solid $palette__gray__dark;
   text-align: center;
-  padding: 1rem;
+  padding: 2rem;
   display: inline-block;
   vertical-align: top;
-  margin: 1rem;
+  margin: 5rem;
   position: relative;
+
+  &__line {
+    fill: none;
+    stroke-width: 5;
+    opacity: 0.9;
+    stroke: $palette__gray__medium_dark;
+  }
 
   &__meta {
     border-top: 1px solid $palette__gray__dark;
@@ -40,7 +54,7 @@
 
   &__graph {
     position: relative;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
   }
 
   &__lights {

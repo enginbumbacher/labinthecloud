@@ -9,19 +9,21 @@
 
       .field__label {
         margin-right: 1rem;
-        font-size: 1.2rem;
       }
     }
-    .field__label {
-      font-size: 1.2rem;
-    }
+
     .component {
       &__field {
         margin: 1rem 0;
+
+        .selectfield__select {
+          margin-left: 0.5rem;
+        }
       }
       &__sliderfield,
       &__symsliderfield {
         display: flex;
+
 
         .field__label {
           flex: 2;

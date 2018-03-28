@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Euglena Modeling</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      /* https://projects.lukehaas.me/css-loaders/ */
+      .loader,
+      .loader:before,
+      .loader:after {
+        border-radius: 50%;
+        width: 2.5em;
+        height: 2.5em;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+        -webkit-animation: load7 1.8s infinite ease-in-out;
+        animation: load7 1.8s infinite ease-in-out;
+      }
+      .loader {
+        color: #000000;
+        font-size: 10px;
+        margin: 80px auto;
+        position: relative;
+        text-indent: -9999em;
+        -webkit-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-animation-delay: -0.16s;
+        animation-delay: -0.16s;
+      }
+      .loader:before,
+      .loader:after {
+        content: '';
+        position: absolute;
+        top: 0;
+      }
+      .loader:before {
+        left: -3.5em;
+        -webkit-animation-delay: -0.32s;
+        animation-delay: -0.32s;
+      }
+      .loader:after {
+        left: 3.5em;
+      }
+      @-webkit-keyframes .loader {
+        0%,
+        80%,
+        100% {
+          box-shadow: 0 2.5em 0 -1.3em;
+        }
+        40% {
+          box-shadow: 0 2.5em 0 0;
+        }
+      }
+      @keyframes load7 {
+        0%,
+        80%,
+        100% {
+          box-shadow: 0 2.5em 0 -1.3em;
+        }
+        40% {
+          box-shadow: 0 2.5em 0 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
+      <category name="Direction" colour="#2F5596">
+        <block type="turn_lr" id="turn_lr" disabled='false' max_use='4' sensors='both'>
+          <field name="DIRECTION">LEFT</field>
+        </block>
+        <block type="turn_at_1sensor" id="turn_at_1sensor" disabled='false' max_use='4' sensors='one' equivalence='turn_at_2sensors'>
+          <field name="DIRECTION">TOWARDS</field>
+        </block>
+        <block type="turn_at_2sensors" id="turn_at_2sensors" disabled='false' max_use='4' sensors='two' equivalence='turn_at_1sensor'>
+          <field name="DIRECTION">TOWARDS</field>
+        </block>
+        <block type="turn_randomly" id="turn_randomly" disabled='false' max_use='4' sensors='both'></block>
+      </category>
+      <category name="Forward Motion" colour="#C00200">
+        <block type="move_normal" id="move_normal" disabled='false' max_use='4' sensors='both'></block>
+        <block type="move_change" id='move_change' disabled='false' max_use='4' sensors='both'>
+          <field name="SPEED">5</field>
+        </block>
+      </category>
+      <category name="Roll Motion" colour="#C55A11">
+        <block type="roll_normal" id="roll_normal" disabled='false' max_use='4' sensors='both'></block>
+        <block type="roll_change" id='roll_change' disabled='false' max_use='4' sensors='both'>
+          <field name="SPEED">5</field>
+        </block>
+      </category>
+      <category name="Light Conditions" colour="#805ba5">
+        <block class='sensing' type="see_light_quantity" id="see_light_quantity" disabled='false' max_use='3' sensors='both'>
+          <field name='THRESHOLD'>THRESH_20</field>
+        </block>
+      </category>
+    </xml>
+    <xml xmlns="http://www.w3.org/1999/xhtml" id="defaultWorkspaceBlocks" style="display:none">
+      <variables></variables>
+      <block type="master_block" id="master_block" x="5" y="63" max_use='0' sensors='both'>
+        <statement name="CODE">
+          <block class='sensing' type="either_way" id="either_way" max_use='0' sensors='both'>
+            <next>
+              <block class='sensing' type="no_light" id="no_light" max_use='0' sensors='both'>
+                <next>
+                  <block class='sensing' type="see_light" id="see_light" max_use='0' sensors='both'></block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </xml>
+    <div class="loader">Loading..</div>
+    <script src="/cslib/thirdparty/blockly/blockly_compressed.js"></script>
+    <script src="/cslib/thirdparty/blockly/blocks_compressed.js"></script>
+    <script src="/cslib/thirdparty/blockly/javascript_compressed.js"></script>
+    <script src="/cslib/thirdparty/blockly/msg/js/en.js"></script>
+    <script src="/cslib/module/euglena/model_blockly/modeling_blocks.js"></script>
+
+    <script type="text/javascript">
+      window.EuglenaConfig = {
+        system: {
+          maxLoginTime: 0,
+          experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
+          modelModality: 'create', // 'observe','explore','create'
+          expModelModality: 'sequential', //'simultaneous','sequential' - for seeing model and live not together
+          enableDirectComparison: false // false: cannot do direct comparison between models
+        },
+        experiment: {
+          experimentForm: 'narrative', // 'table', 'narrative'
+          maxDuration: 60,
+          //bpuId: "eug1", //"eug10"
+          euglenaServerMode:"simulate",
+          experimentHistory: [70,132]
+        },
+        model: {
+          tabs: [],
+          euglenaCount: {
+            range: [10, 50],
+            options: {1: 1, 2: 2, 5: 5, 20: 20},
+            initialValue: 5
+          },
+          simulationFps: 9
+        },
+        visualization: {
+           visualizationTypes: [
+             {
+               id: "circle",
+               label: "Circular Distribution",
+               settings: {
+                 binCount: 12, //15° bins
+                 dT: 1, // in seconds; indicates time window for binning
+                 tStep: 0.5, // in seconds, i.e. tStep = 0.5 --> Half a second; indicates time at which graph steps forward
+                 width: 320,
+                 height: 320
+               }
+             }
+           ]
+        },
+       modeling: {
+        timeWindow: 2
+       }
+      };
+    </script>
+    <script data-main="/cslib/init" src="/cslib/thirdparty/require/require.js"></script>
+  </body>
+</html>

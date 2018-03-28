@@ -1,0 +1,63 @@
+@import "../../../../../scss_includes/variables";
+@import "../../../../../scss_includes/mixins";
+
+.component__multilayerimage {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 160px;
+  max-height: 160px;
+  margin: 0 0 2rem 0;
+
+  [id^="labels"],
+  #bodybckgrnd .multilayerimage__configuration,
+  .multilayerimage__configuration {
+    position: absolute;
+    top: 0;
+    left: 10%;
+    z-index: 2; // reaction: 0, sensor: 1, roll: 2, forward: 3
+    visibility: hidden;
+    width: 90%;
+    margin: 0 auto;
+  }
+    [id^="reaction_mechanistic"] {
+      z-index: 0;
+    }
+
+    [id^="reaction_functional"] {
+      z-index: 1;
+    }
+
+    [id^="roll_mechanistic"] {
+      z-index: 1;
+    }
+
+    [id^="roll_functional"] {
+      z-index: 0;
+    }
+
+    [id^="motion"] {
+      z-index: 0;
+    }
+
+    [id^="motor"] {
+      z-index: 3;
+    }
+
+
+  .multilayerimage__configuration img {
+    width: 100%;
+  }
+
+  [id^="labels"] {
+    z-index: 5;
+    visibility: visible;
+    width: 95%;
+    left: 5%
+  }
+  #bodybckgrnd {
+    z-index: 4;
+    visibility: visible;
+    opacity: 1;
+  }
+}

@@ -18,6 +18,18 @@
       "type": "object",
       "required": true
     },
+    "blocklyXml":{
+      "type": "text",
+      "required": false
+    },
+    "jsCode": {
+      "type": "text",
+      "required": false
+    },
+    "sensorConfigJSON": {
+      "type": "text",
+      "required": false
+    },
     "date_created": {
       "type": "date",
       "required": true,

@@ -1,14 +1,15 @@
 @import "../../../../scss_includes/mixins";
 @import "../../../../scss_includes/variables";
 
-$light-display__bar-width: 1rem;
+$light-display__bar-width: 2rem;
 
 .light-display {
-  background: $palette__black;
+  background: $palette__gray__medium_dark;
   padding: $light-display__bar-width;
   margin: 1rem;
   position: relative;
   display: inline-block;
+  text-align: center;
 
   &__light {
     position: absolute;

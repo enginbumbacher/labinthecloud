@@ -29,7 +29,6 @@
     "loopback-datasource-juggler": "^3.2.0",
     "mkdirp": "^0.5.1",
     "node-gyp": "^3.7.0",
-    "node-sass": "^4.9.2",
     "request": "^2.81.0",
     "request-promise": "^4.1.1",
     "serve-favicon": "^2.0.1",
@@ -58,6 +57,7 @@
     "gulp-util": "^3.0.7",
     "imagemin-pngquant": "^5.0.0",
     "minimist": "^1.2.0",
+    "node-sass": "^4.9.2",
     "nsp": "^2.1.0"
   }
 }

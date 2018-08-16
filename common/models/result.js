@@ -20,8 +20,9 @@ const basicParameters = {
   randomnessFactor: 1.0
 }
 
+const downloadBasePath = 'http://biotic.stanford.edu/account/joinlabwithdata/downloadFile';
 
-const downloadBasePath = 'http://euglena.stanford.edu/account/joinlabwithdata/downloadFile';
+// const downloadBasePath = 'http://euglena.stanford.edu/account/joinlabwithdata/downloadFile';
 
 const createBpuResults = (app, context) => {
   return Promise.all([

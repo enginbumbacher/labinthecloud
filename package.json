@@ -19,6 +19,7 @@
   "homepage": "https://bitbucket.org/radiantllama/tltl-euglena#readme",
   "dependencies": {
     "aws-sdk": "^2.102.0",
+    "bcrypt": "^3.0.0",
     "compression": "^1.0.3",
     "cookie-parser": "^1.4.3",
     "cors": "^2.5.2",

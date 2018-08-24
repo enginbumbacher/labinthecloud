@@ -12,6 +12,8 @@ client/video/*
 *.sublime-project
 *.sublime-workspace
 
+.env
+
 # Elastic Beanstalk Files
 # .elasticbeanstalk/*
 # !.elasticbeanstalk/*.cfg.yml

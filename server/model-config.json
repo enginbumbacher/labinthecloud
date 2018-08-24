@@ -14,22 +14,22 @@
     ]
   },
   "User": {
-    "dataSource": "db"
+    "dataSource": "mysql"
   },
   "AccessToken": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": false
   },
   "ACL": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": false
   },
   "Role": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": false
   },
   "Student": {
@@ -49,6 +49,10 @@
     "public": true
   },
   "Log": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "LabUser": {
     "dataSource": "mysql",
     "public": true
   }

@@ -18,6 +18,7 @@ const demoExperiments = [{
     trackFile: "/demodata/0/tracks.json",
     video: "/demodata/0/movie.mp4"
   },
+}, {
   configuration: [
     {"left":0,    "top":0,    "bottom":0,   "right":0,  "duration":2},
     {"left":100,  "top":100,  "bottom":100, "right":100,  "duration":16},

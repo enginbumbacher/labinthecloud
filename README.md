@@ -12,6 +12,25 @@ To compile the code, run:
 
 > $ npm run build
 
+Local environment variables are set using a .env file. In the root of your project, create a file named .env, containing the following configurations:
+
+```
+RDS_HOSTNAME = <MySQL Host>
+RDS_PORT = <MySQL Port>
+RDS_DB_NAME = <MySQL database name>
+RDS_USERNAME = <MySQL username>
+RDS_PASSWORD = <MySQL password>
+
+AWS_ACCESS_KEY_ID = <AWS key ID>
+AWS_SECRET_ACCESS_KEY = <AWS key>
+S3_BUCKET = <AWS S3 bucket name>
+
+ADMIN_EMAIL = <admin user email address, presumably yours>
+ADMIN_PASSWORD = <admin user password>
+
+COOKIE_SECRET = <string used for securing cookies; can be any string>
+```
+
 If you just wish to run the server by itself, use the following command.  
 
 > $ npm start

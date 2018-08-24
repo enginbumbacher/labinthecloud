@@ -18,3 +18,4 @@ client/video/*
 # .elasticbeanstalk/*
 # !.elasticbeanstalk/*.cfg.yml
 # !.elasticbeanstalk/*.global.yml
+.elasticbeanstalk/logs/*

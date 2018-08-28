@@ -99,7 +99,7 @@ const createBpuResults = (app, context) => {
 
       if (process.env.S3_BUCKET) {
         const s3 = new AWS.S3()
-        context.args.data.trackFile = `https://s3-us-east-2.amazonaws.com/${process.env.S3_BUCKET}/${fileName}`
+        context.args.data.trackFile = `https://s3.us-east-2.amazonaws.com/${process.env.S3_BUCKET}/${fileName}`
         return new Promise((resolve, reject) => {
           s3.putObject({
             Bucket: process.env.S3_BUCKET,
@@ -291,7 +291,7 @@ const _createModelResults = (app, result, model) => {
 
     if (process.env.S3_BUCKET) {
       const s3 = new AWS.S3()
-      result.trackFile = `https://s3-us-east-2.amazonaws.com/${process.env.S3_BUCKET}/${fileName}`
+      result.trackFile = `https://s3.us-east-2.amazonaws.com/${process.env.S3_BUCKET}/${fileName}`
       return new Promise((resolve, reject) => {
         s3.putObject({
           Bucket: process.env.S3_BUCKET,
@@ -325,6 +325,7 @@ const _createModelResults = (app, result, model) => {
 }
 
 const loadMeta = (context) => {
+  console.log(context.data.bpu_api_id, context.data.runTime);
   const backFill = (context.data.bpu_api_id && !context.data.runTime
     ? rp(`${downloadBasePath}/${context.data.bpu_api_id}/${context.data.bpu_api_id}.json`)
       .then((data) => {

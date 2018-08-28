@@ -19,15 +19,15 @@ module.exports = {
     "transports": [
       {
         "type": "smtp",
-        "host": "smtp.gmail.com",
+        "host": "smtp.sendgrid.net",
         "secure": true,
         "port": 465,
-        // "tls": {
-        //   "rejectUnauthorized": false
-        // },
+        "tls": {
+          "rejectUnauthorized": false
+        },
         "auth": {
-          "user": process.env.SCRIPT_EMAIL,
-          "pass": process.env.SCRIPT_EMAIL_PASSWORD
+          "user": process.env.SENDGRID_USER,
+          "pass": process.env.SENDGRID_PASSWORD
         }
       }
     ]

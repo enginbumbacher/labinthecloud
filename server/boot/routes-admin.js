@@ -113,7 +113,7 @@ module.exports = (app) => {
       user.verify({
         type: "email",
         to: user.email,
-        from: process.env.SCRIPT_EMAIL,
+        from: process.env.SCRIPT_EMAIL_ADDRESS,
         subject: "Complete your Lab in the Cloud registration",
         template: path.resolve(__dirname, '../views/emails/verify.ejs'),
         redirect: '/admin/verified',

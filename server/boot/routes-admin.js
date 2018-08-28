@@ -117,7 +117,10 @@ module.exports = (app) => {
         subject: "Complete your Lab in the Cloud registration",
         template: path.resolve(__dirname, '../views/emails/verify.ejs'),
         redirect: '/admin/verified',
-        user: user
+        user: user,
+        host: req.hostname,
+        port: req.protocol == "https" ? 443 : 80,
+        protocol: req.protocol
       }, (err, response, next) => {
         if (err) return next(err);
         console.log("Verification email sent: " + response);

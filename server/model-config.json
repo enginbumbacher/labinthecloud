@@ -54,6 +54,12 @@
   },
   "LabUser": {
     "dataSource": "mysql",
-    "public": true
+    "public": true,
+    "options": {
+      "emailVerificationRequired": true
+    }
+  },
+  "Email": {
+    "dataSource": "emailDs"
   }
 }

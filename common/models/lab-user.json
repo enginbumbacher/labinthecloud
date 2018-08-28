@@ -10,8 +10,16 @@
       "type": "string"
     }
   },
+  "restrictResetPasswordTokenScope": true,
   "validations": [],
   "relations": {},
-  "acls": [],
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principleId": "$everyone",
+      "accessType": "READ",
+      "permission": "ALLOW"
+    }
+  ],
   "methods": {}
 }

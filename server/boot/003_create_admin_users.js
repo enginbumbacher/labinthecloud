@@ -1,9 +1,7 @@
 module.exports = (app) => {
   app.models.LabUser.findOrCreate({
     where: {
-      and: [
-        { email: process.env.ADMIN_EMAIL }
-      ]
+      email: process.env.ADMIN_EMAIL
     }
   }, {
     email: process.env.ADMIN_EMAIL,

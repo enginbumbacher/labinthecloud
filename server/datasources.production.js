@@ -12,5 +12,24 @@ module.exports = {
     "name": "mysql",
     "user": process.env.RDS_USERNAME,
     "connector": "mysql"
+  },
+  "emailDs": {
+    "name": "emailDs",
+    "connector": "mail",
+    "transports": [
+      {
+        "type": "smtp",
+        "host": "smtp.gmail.com",
+        "secure": true,
+        "port": 465,
+        // "tls": {
+        //   "rejectUnauthorized": false
+        // },
+        "auth": {
+          "user": process.env.SCRIPT_EMAIL,
+          "pass": process.env.SCRIPT_EMAIL_PASSWORD
+        }
+      }
+    ]
   }
 }

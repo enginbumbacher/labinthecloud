@@ -15,12 +15,7 @@ module.exports = (app) => {
     let ctx = req.getCurrentContext();
     let user = ctx.get('currentUser');
     if (user) {
-      let msgs = req.session.messages;
-      delete req.session.messages;
-      res.render('pages/home', {
-        context: ctx,
-        messages: msgs
-      })
+      res.render('pages/home', {})
     } else {
       res.redirect('/admin/login');
     }
@@ -34,12 +29,7 @@ module.exports = (app) => {
       res.redirect('/admin');
       return;
     }
-    let msgs = req.session.messages;
-    delete req.session.messages;
-    res.render('pages/login', {
-      context: ctx,
-      messages: msgs
-    });
+    res.render('pages/login', {});
   });
 
   app.post('/admin/login', (req, res) => {
@@ -48,7 +38,6 @@ module.exports = (app) => {
       password: req.body.password
     }, 'user', (err, token) => {
       if (err) {
-        req.session.messages = req.session.messages || [];
         req.session.messages.push({
           type: "danger",
           text: "Login failed: " + err
@@ -76,17 +65,11 @@ module.exports = (app) => {
       res.redirect('/admin');
       return;
     }
-    let msgs = req.session.messages;
-    delete req.session.messages;
-    res.render('pages/register', {
-      context: ctx,
-      messages: msgs
-    });
+    res.render('pages/register', {});
   });
 
   app.post('/admin/register', (req, res) => {
     if (req.body.password !== req.body.confirm_password) {
-      req.session.messages = req.session.messages || [];
       req.session.messages.push({
         type: "danger",
         text: "Password does not match confirmation"
@@ -104,7 +87,6 @@ module.exports = (app) => {
       password: req.body.password
     }, (err, user, created) => {
       if (!created) {
-        req.session.messages = req.session.messages || [];
         req.session.messages.push({
           type: "danger",
           text: "Email address is already registered"
@@ -135,7 +117,6 @@ module.exports = (app) => {
       }, (err, response, next) => {
         if (err) return next(err);
         console.log("Verification email sent: " + response);
-        req.session.messages = req.session.messages || [];
         req.session.messages.push({
           type: "success",
           text: "Your account has been created! Please check your email and click on the verificaiton link before logging in."
@@ -146,17 +127,12 @@ module.exports = (app) => {
   });
 
   app.get('/admin/verified', (req, res) => {
-    let ctx = req.getCurrentContext();
-    res.render('pages/verified', {
-      context: ctx,
-      messages: req.session.messages
-    })
+    res.render('pages/verified', {});
   })
 
   app.get('/admin/logout', (req, res) => {
     if (req.accessToken) {
       LabUser.logout(req.accessToken.id);
-      req.session.messages = req.session.messages || [];
       req.session.messages.push({
         type: 'success',
         text: 'You have logged out'
@@ -170,11 +146,7 @@ module.exports = (app) => {
   })
 
   app.get('/admin/request-password-reset', (req, res) => {
-    let ctx = req.getCurrentContext();
-    res.render('pages/request-password-reset', {
-      context: ctx,
-      messages: req.session.messages
-    });
+    res.render('pages/request-password-reset', {});
   })
   app.post('/admin/request-password-reset', (req, res) => {
     LabUser.resetPassword({
@@ -182,7 +154,6 @@ module.exports = (app) => {
       baseUrl: req.hostname == "localhost" ? app.get('url') : `${req.protocol}://${req.hostname}/`
     }, (err) => {
       if (err) return res.status(401).send(err);
-      req.session.messages = req.session.messages || [];
       req.session.messages.push({
         type: 'success',
         text: 'Check your email for instructions to complete your password reset.'
@@ -194,10 +165,7 @@ module.exports = (app) => {
   app.get('/admin/reset-password', (req, res) => {
     if (!req.accessToken) return res.sendStatus(401);
 
-    let ctx = req.getCurrentContext();
     res.render('pages/reset-password', {
-      context: ctx,
-      messages: req.session.messages,
       postUrl: `/admin/reset-password?access_token=${req.accessToken.id}`
     })
   })
@@ -205,7 +173,6 @@ module.exports = (app) => {
     if (!req.accessToken) return res.sendStatus(401);
 
     if (req.body.password != req.body.confirm_password) {
-      req.session.messages = req.session.messages || [];
       req.session.messages.push({
         type: 'danger',
         text: 'Password and confirmation do not match'
@@ -215,7 +182,6 @@ module.exports = (app) => {
     }
 
     LabUser.setPassword(req.accessToken.userId, req.body.password, () => {
-      req.session.messages = req.session.messages || [];
       req.session.messages.push({
         type: 'success',
         text: 'You have successfully changed your password. Please log in.'

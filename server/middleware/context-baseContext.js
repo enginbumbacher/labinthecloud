@@ -28,6 +28,19 @@ module.exports = () => {
     req.getCurrentContext = function () {
       return req.baseContext;
     };
+
+    req.session.messages = req.session.messages || [];
+
+    let render = res.render;
+    res.render = (view, locals, cb) => {
+      locals = locals || {};
+      locals.messages = req.session.messages;
+      locals.context = req.getCurrentContext();
+      locals.user = locals.context.get('currentUser');
+      delete req.session.messages;
+
+      render.call(res, view, locals, cb);
+    }
     next();
   };
 };

@@ -168,4 +168,59 @@ module.exports = (app) => {
       res.redirect('/admin/login');
     }
   })
+
+  app.get('/admin/request-password-reset', (req, res) => {
+    let ctx = req.getCurrentContext();
+    res.render('pages/request-password-reset', {
+      context: ctx,
+      messages: req.session.messages
+    });
+  })
+  app.post('/admin/request-password-reset', (req, res) => {
+    LabUser.resetPassword({
+      email: req.body.email,
+      baseUrl: req.hostname == "localhost" ? app.get('url') : `${req.protocol}://${req.hostname}/`
+    }, (err) => {
+      if (err) return res.status(401).send(err);
+      req.session.messages = req.session.messages || [];
+      req.session.messages.push({
+        type: 'success',
+        text: 'Check your email for instructions to complete your password reset.'
+      });
+      res.redirect('/admin/login');
+    })
+  })
+
+  app.get('/admin/reset-password', (req, res) => {
+    if (!req.accessToken) return res.sendStatus(401);
+
+    let ctx = req.getCurrentContext();
+    res.render('pages/reset-password', {
+      context: ctx,
+      messages: req.session.messages,
+      postUrl: `/admin/reset-password?access_token=${req.accessToken.id}`
+    })
+  })
+  app.post('/admin/reset-password', (req, res) => {
+    if (!req.accessToken) return res.sendStatus(401);
+
+    if (req.body.password != req.body.confirm_password) {
+      req.session.messages = req.session.messages || [];
+      req.session.messages.push({
+        type: 'danger',
+        text: 'Password and confirmation do not match'
+      });
+      res.redirect(`/admin/reset-password?access_token=${req.accessToken.id}`);
+      return;
+    }
+
+    LabUser.setPassword(req.accessToken.userId, req.body.password, () => {
+      req.session.messages = req.session.messages || [];
+      req.session.messages.push({
+        type: 'success',
+        text: 'You have successfully changed your password. Please log in.'
+      });
+      res.redirect('/admin/login');
+    });
+  })
 }

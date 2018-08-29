@@ -29,6 +29,11 @@ ADMIN_EMAIL = <admin user email address, presumably yours>
 ADMIN_PASSWORD = <admin user password>
 
 COOKIE_SECRET = <string used for securing cookies; can be any string>
+
+SCRIPT_EMAIL_ADDRESS = <email address that system emails (registration, password reset, etc) are sent from>
+
+SENDGRID_USER = <SendGrid user to send automated emails>
+SENDGRID_PASSWORD = <SendGrid password to send automated emails>
 ```
 
 If you just wish to run the server by itself, use the following command.  

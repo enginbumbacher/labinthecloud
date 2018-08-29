@@ -38,39 +38,46 @@ const demoExperiments = [{
   }
 }];
 
-module.exports = (app) => {
-  demoExperiments.forEach((exp) => {
-    exp.demo = true;
-    exp.studentId = 0;
+module.exports = (app, cb) => {
+  Promise.all(demoExperiments.map((exp) => {
+    return new Promise((resolve, reject) => {
+      exp.demo = true;
+      exp.studentId = 0;
+      app.models.Experiment.findOrCreate({
+        where: {
+          and: [
+            { configuration: exp.configuration },
+            { demo: true },
+            { studentId: 0 }
+          ]
+        }
+      }, exp, (err, inst, created) => {
+        if (err) reject(err);
 
-    app.models.Experiment.findOrCreate({
-      where: {
-        and: [
-          { configuration: exp.configuration },
-          { demo: true },
-          { studentId: 0 }
-        ]
-      }
-    }, exp, (err, inst, created) => {
-      if (err) throw err;
+        if (created) {
+          // create result record
+          exp.result.demo = true;
+          exp.result.experimentId = inst.id
+          exp.result.trackFile = `/results/${inst.id}/live/${exp.result.bpu_api_id}.json`;
+          exp.result.video = `/video/${inst.id}/movie.mp4`;
 
-      if (created) {
-        // create result record
-        exp.result.demo = true;
-        exp.result.experimentId = inst.id
-        exp.result.trackFile = `/results/${inst.id}/live/${exp.result.bpu_api_id}.json`;
-        exp.result.video = `/video/${inst.id}/movie.mp4`;
+          // copy track file
+          fse.copySync(`${process.cwd()}${exp.source.trackFile}`, `${process.cwd()}/client${exp.result.trackFile}`)
 
-        // copy track file
-        fse.copySync(`${process.cwd()}${exp.source.trackFile}`, `${process.cwd()}/client${exp.result.trackFile}`)
+          // copy video file
+          fse.copySync(`${process.cwd()}${exp.source.video}`, `${process.cwd()}/client${exp.result.video}`)
 
-        // copy video file
-        fse.copySync(`${process.cwd()}${exp.source.video}`, `${process.cwd()}/client${exp.result.video}`)
+          app.models.Result.create(exp.result, (err, res) => {
+            if (err) reject(err);
+            resolve(true);
+          })
+        } else {
+          resolve(true);
+        }
+      })
 
-        app.models.Result.create(exp.result, (err, res) => {
-          if (err) throw err;
-        })
-      }
     })
-  })
+  })).then(() => {
+    cb();
+  });
 }

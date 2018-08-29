@@ -8,6 +8,8 @@ const AWS = require('aws-sdk'),
 module.exports = (app) => {
   let LabUser = app.models.LabUser;
   let User = app.models.User;
+  let Role = app.models.Role;
+  let RoleMapping = app.models.RoleMapping;
 
   app.get('/admin', (req, res) => {
     let ctx = req.getCurrentContext();
@@ -110,6 +112,15 @@ module.exports = (app) => {
         res.redirect('/admin/register');
         return;
       }
+
+      Role.find({
+        name: "instructor"
+      }, (err, instructorRole) => {
+        instructorRole.principals.create({
+          princpalType: RoleMapping.USER,
+          principalId: user.id
+        });
+      })
       user.verify({
         type: "email",
         to: user.email,
@@ -131,34 +142,6 @@ module.exports = (app) => {
         });
         res.redirect('/admin/register');
       });
-      // LabUser.login({
-      //   email: req.body.email,
-      //   password: req.body.password
-      // }, 'user', (err, token) => {
-      //   if (err) {
-      //     req.session.messages = req.session.messages || [];
-      //     req.session.messages.push({
-      //       type: "danger",
-      //       text: "Account created, but login failed somehow?: " + err
-      //     });
-      //     req.session.save(() => {
-      //       res.redirect('/admin/login');
-      //     })
-      //     return;
-      //   }
-      //   req.session.messages = req.session.messages || [];
-      //   req.session.messages.push({
-      //     type: "success",
-      //     text: "Welcome to Lab in the Cloud, " + req.body.email + "!"
-      //   });
-
-      //   res.cookie('access_token', token.id, {
-      //     signed: req.signedCookies ? true : false,
-      //     maxAge: 1000 * token.ttl
-      //   });
-
-      //   res.redirect('/admin');
-      // });
     });
   });
 

@@ -13,9 +13,12 @@ var path = require('path');
 var app = module.exports = loopback();
 var baseContext = require('./middleware/context-baseContext');
 var currentUser = require('./middleware/context-currentUser');
+var helmet = require('helmet');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+app.use(helmet());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 

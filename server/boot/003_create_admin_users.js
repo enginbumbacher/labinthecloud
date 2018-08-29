@@ -1,4 +1,4 @@
-module.exports = (app) => {
+module.exports = (app, cb) => {
   app.models.LabUser.findOrCreate({
     where: {
       email: process.env.ADMIN_EMAIL
@@ -14,5 +14,6 @@ module.exports = (app) => {
     } else {
       console.log("User already found: ", inst);
     }
+    cb();
   })
 }

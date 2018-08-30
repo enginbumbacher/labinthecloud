@@ -8,7 +8,7 @@ module.exports = function(LabUser) {
 <p>--<br/>The Lab in the Cloud team</p>`;
     LabUser.app.models.Email.send({
       to: info.email,
-      from: "noreply@labinthecloud.stanford.edu",
+      from: process.env.SCRIPT_EMAIL_ADDRESS,
       subject: "Lab in the Cloud - Password Reset",
       html: message
     }, (err) => {

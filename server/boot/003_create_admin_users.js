@@ -5,7 +5,8 @@ module.exports = (app, cb) => {
     }
   }, {
     email: process.env.ADMIN_EMAIL,
-    password: process.env.ADMIN_PASSWORD
+    password: process.env.ADMIN_PASSWORD,
+    emailVerified: true
   }, (err, inst, created) => {
     if (err) throw err;
 

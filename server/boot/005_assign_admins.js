@@ -33,15 +33,17 @@ module.exports = (app, cb) => {
         }
       }, (perr, principal) => {
         if (perr) throw perr;
-        if (!principal) {
+        if (principal.length == 0) {
           adminRole.principals.create({
             principalType: RoleMapping.USER,
             principalId: admin.id
           }, (pcerr, princip) => {
             if (pcerr) throw pcerr;
+            console.log('principal created: ', princip);
             cb();
           })
         } else {
+          console.log('principal already found: ', principal)
           cb();
         }
       });

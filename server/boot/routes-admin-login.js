@@ -96,10 +96,12 @@ module.exports = (app) => {
       }
 
       Role.findOne({
-        name: "instructor"
+        where: {
+          name: "instructor"
+        }
       }, (err, instructorRole) => {
         instructorRole.principals.create({
-          princpalType: RoleMapping.USER,
+          principalType: RoleMapping.USER,
           principalId: user.id
         });
       })

@@ -95,7 +95,7 @@ module.exports = (app) => {
         return;
       }
 
-      Role.find({
+      Role.findOne({
         name: "instructor"
       }, (err, instructorRole) => {
         instructorRole.principals.create({
@@ -103,6 +103,7 @@ module.exports = (app) => {
           principalId: user.id
         });
       })
+      let baseUrl = req.hostname == "localhost" ? app.get('url') : `${req.protocol}://${req.hostname}/`;
       user.verify({
         type: "email",
         to: user.email,
@@ -112,7 +113,7 @@ module.exports = (app) => {
         redirect: '/admin/verified',
         user: user,
         host: req.hostname,
-        port: req.protocol == "https" ? 443 : 80,
+        port: req.hostname == "localhost" ? app.get('port') : (req.protocol == "https" ? 443 : 80),
         protocol: req.protocol
       }, (err, response, next) => {
         if (err) return next(err);

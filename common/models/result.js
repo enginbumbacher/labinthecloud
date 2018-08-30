@@ -133,7 +133,7 @@ const createBpuResults = (app, context) => {
             if (err) reject(err);
             else resolve(true);
           })
-        }))
+        }));
         return promises;
       } else {
         context.args.data.trackFile = `/${fileName}`
@@ -349,7 +349,9 @@ const _createModelResults = (app, result, model) => {
 }
 
 const loadMeta = (context) => {
-  console.log(context.data.bpu_api_id, context.data.runTime);
+  // console.log("loading meta");
+  // console.log(context);
+  // console.log(context.data.bpu_api_id, context.data.runTime);
   const backFill = (context.data.bpu_api_id && !context.data.runTime
     ? rp(`${downloadBasePath}/${context.data.bpu_api_id}/${context.data.bpu_api_id}.json`)
       .then((data) => {
@@ -363,10 +365,31 @@ const loadMeta = (context) => {
   if (!context.data.trackFile) {
     trackLoad = Promise.resolve(true);
   } else if (context.data.trackFile && context.data.trackFile.match(/^http/)) {
-    trackLoad = rp(context.data.trackFile).then((fileData) => {
-      context.data.tracks = JSON.parse(fileData);
-      return true;
-    });
+    if (context.data.trackFile.match(/^https:\/\/s3/)) {
+      const s3 = new AWS.S3()
+      let s3Path = context.data.trackFile.split('/');
+      let bucket = s3Path[3];
+      let filePath = s3Path.slice(4).join('/');
+
+      trackLoad = new Promise((resolve, reject) => {
+        s3.getObject({
+          Bucket: bucket,
+          Key: filePath
+        }, (err, data) => {
+          if (err) {
+            reject(err);
+          } else {
+            context.data.tracks = JSON.parse(data.Body);
+            resolve(true);
+          }
+        })
+      })
+    } else {
+      trackLoad = rp(context.data.trackFile).then((fileData) => {
+        context.data.tracks = JSON.parse(fileData);
+        return true;
+      });
+    }
   } else {
     trackLoad = new Promise((resolve, reject) => {
       let trackFile;

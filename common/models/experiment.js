@@ -39,7 +39,7 @@ module.exports = function(Experiment) {
       include: {
         relation: "results",
         scope: {
-          fields: ['id', 'bpu_api_id'],
+          fields: ['id', 'bpu_api_id', 'runTime'],
           where: {
             bpu_api_id: {
               neq: null
@@ -80,7 +80,7 @@ module.exports = function(Experiment) {
       include: {
         relation: "results",
         scope: {
-          fields: ['id', 'bpu_api_id'],
+          fields: ['id', 'bpu_api_id', 'runTime'],
           where: {
             bpu_api_id: {
               neq: null
@@ -123,7 +123,7 @@ module.exports = function(Experiment) {
       include: {
         relation: "results",
         scope: {
-          fields: ['id', 'bpu_api_id'],
+          fields: ['id', 'bpu_api_id', 'runTime'],
           where: {
             bpu_api_id: {
               neq: null

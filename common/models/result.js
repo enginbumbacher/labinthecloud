@@ -20,7 +20,7 @@ const basicParameters = {
   randomnessFactor: 1.0
 }
 
-const downloadBasePath = 'http://biotic.stanford.edu/account/joinlabwithdata/downloadFile';
+const downloadBasePath = `${process.env.BIOLAB_URL}/account/joinlabwithdata/downloadFile`;
 
 // const downloadBasePath = 'http://euglena.stanford.edu/account/joinlabwithdata/downloadFile';
 
@@ -28,12 +28,18 @@ const createBpuResults = (app, context) => {
   return Promise.all([
       rp(`${downloadBasePath}/${context.args.data.bpu_api_id}/${context.args.data.bpu_api_id}.json`),
       rp(`${downloadBasePath}/${context.args.data.bpu_api_id}/tracks.json`),
-      ffprobe(`${downloadBasePath}/${context.args.data.bpu_api_id}/movie.mp4`, { path: ffprobeStatic.path })
+      ffprobe(`${downloadBasePath}/${context.args.data.bpu_api_id}/movie.mp4`, { path: ffprobeStatic.path }),
+      rp({
+        uri: `${downloadBasePath}/${context.args.data.bpu_api_id}/movie.mp4`,
+        resolveWithFullResponse: true,
+        encoding: null
+      })
     ])
     .then((downloads) => {
       let report = JSON.parse(downloads[0]),
         tracks = JSON.parse(downloads[1]),
-        exif = downloads[2];
+        exif = downloads[2],
+        videoFile = downloads[3];
       exif = exif.streams.filter((a) => a.codec_type == "video")[0];
       let fps = report.exp_metaData.numFrames / (report.exp_metaData.runTime / 1000);
       let magnification = report.exp_metaData.magnification;
@@ -100,7 +106,10 @@ const createBpuResults = (app, context) => {
       if (process.env.S3_BUCKET) {
         const s3 = new AWS.S3()
         context.args.data.trackFile = `https://s3.us-east-2.amazonaws.com/${process.env.S3_BUCKET}/${fileName}`
-        return new Promise((resolve, reject) => {
+        context.args.data.video = `https://s3.us-east-2.amazonaws.com/${process.env.S3_BUCKET}/experiments/${context.args.data.bpu_api_id}/movie.mp4`
+        let promises = [];
+        // push the track file to S3
+        promises.push(new Promise((resolve, reject) => {
           s3.putObject({
             Bucket: process.env.S3_BUCKET,
             Key: fileName,
@@ -110,7 +119,22 @@ const createBpuResults = (app, context) => {
             if (err) reject(err);
             else resolve(true);
           })
-        })
+        }));
+        // push the video file to S3
+        promises.push(new Promise((resolve, reject) => {
+          s3.putObject({
+            Bucket: process.env.S3_BUCKET,
+            Key: `experiments/${context.args.data.bpu_api_id}/movie.mp4`,
+            Body: videoFile.body,
+            ContentType: videoFile.headers['content-type'],
+            ContentLength: videoFile.headers['content-length'],
+            ACL: 'public-read'
+          }, (err, data) => {
+            if (err) reject(err);
+            else resolve(true);
+          })
+        }))
+        return promises;
       } else {
         context.args.data.trackFile = `/${fileName}`
         return new Promise((resolve, reject) => {

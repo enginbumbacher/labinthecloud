@@ -48,6 +48,8 @@ module.exports = function(Experiment) {
         }
       },
       order: 'date_created DESC'
+    }, {
+      skipTrackData: true
     }).then((exps) => {
       return Promise.all(exps.map((exp) => {
         return exp.results.count().then((count) => {
@@ -88,6 +90,8 @@ module.exports = function(Experiment) {
           }
         }
       }
+    }, {
+      skipTrackData: true
     }).then((exps) => {
       return Promise.all(exps.map((exp) => {
         return exp.results.count().then((count) => {
@@ -131,6 +135,8 @@ module.exports = function(Experiment) {
           }
         }
       }
+    }, {
+      skipTrackData: true
     }).then((exps) => {
       return Promise.all(exps.map((exp) => {
         return exp.results.count().then((count) => {

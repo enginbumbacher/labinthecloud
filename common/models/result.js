@@ -116,8 +116,12 @@ const createBpuResults = (app, context) => {
             Body: JSON.stringify(parsedTracks),
             ACL: 'public-read'
           }, (err, data) => {
-            if (err) reject(err);
-            else resolve(true);
+            if (err) {
+              reject(err);
+            } else {
+              // console.log('Track file uploaded:', data);
+              resolve(true);
+            }
           })
         }));
         // push the video file to S3
@@ -130,11 +134,15 @@ const createBpuResults = (app, context) => {
             ContentLength: videoFile.headers['content-length'],
             ACL: 'public-read'
           }, (err, data) => {
-            if (err) reject(err);
-            else resolve(true);
+            if (err) {
+              reject(err);
+            } else {
+              // console.log('Video file uploaded:', data);
+              resolve(true);
+            }
           })
         }));
-        return promises;
+        return Promise.all(promises);
       } else {
         context.args.data.trackFile = `/${fileName}`
         return new Promise((resolve, reject) => {
@@ -456,8 +464,12 @@ module.exports = (Result) => {
   });
 
   Result.observe('loaded', (ctx, next) => {
-    loadMeta(ctx).then(() => {
+    if (ctx.options && ctx.options.skipTrackData) {
       next();
-    });
+    } else {
+      loadMeta(ctx).then(() => {
+        next();
+      });
+    }
   });
 };

@@ -1,0 +1,9 @@
+<% include ../../partials/head %>
+<h1>Are you sure you want to remove <%= user.email %>?</h1>
+<div class="container">
+  <form method="post" action="/admin/user/<%= user.id %>/delete">
+    <button type="submit" name="deleteConfirmation" value="delete" class="btn btn-danger">Yes</button>
+    <a href="/admin/user/<%= user.id %>" class="btn btn-outline-dark">No</a>
+  </form>
+</div>
+<% include ../../partials/foot %>

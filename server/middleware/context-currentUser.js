@@ -8,7 +8,11 @@ module.exports = () => {
       return next();
     }
 
-    req.app.models.LabUser.findById(req.accessToken.userId, (err, user) => {
+    const RoleMapping = req.app.models.RoleMapping;
+    const Role = req.app.models.Role;
+    const User = req.app.models.LabUser;
+
+    User.findById(req.accessToken.userId, (err, user) => {
       if (err) {
         return next(err);
       }
@@ -17,14 +21,20 @@ module.exports = () => {
         return next();
       }
 
-      req.app.models.Role.getRoles({
-        principalType: req.app.models.RoleMapping.USER,
+      Role.getRoles({
+        principalType: RoleMapping.USER,
         principalId: user.id
       }, (err, roles) => {
-        let reqContext = req.getCurrentContext();
-        reqContext.set('currentUser', user);
-        reqContext.set('currentUserRoles', roles);
-        next();
+        Role.find({
+          where: {
+            or: roles.map((r) => { return { id: r }; })
+          }
+        }, (err, fullRoles) => {
+          let reqContext = req.getCurrentContext();
+          reqContext.set('currentUser', user);
+          reqContext.set('currentUserRoles', fullRoles.map((fr) => { return fr.name; }));
+          next();
+        })
       })
     })
   }

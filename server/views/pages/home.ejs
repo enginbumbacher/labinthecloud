@@ -1,0 +1,7 @@
+<% include ../partials/head %>
+<div class="row">
+<% context.get('currentUserRoles').forEach((role) => { %>
+  <%- include(`../partials/dashboard/${role}`) %>
+<% }); %>
+</div>
+<% include ../partials/foot %>

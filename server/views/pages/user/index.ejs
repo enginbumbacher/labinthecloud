@@ -1,0 +1,17 @@
+<% include ../../partials/head %>
+<h1>Users</h1>
+<div class="container paginated-list">
+  <div class="row">
+    <div class="col">
+      <div class="list-group">
+      <% users.forEach((user) => { %>
+        <a class="list-group-item list-group-item-action" href="/admin/user/<%= user.id %>">
+          <%= user.email %>
+        </a>
+      <% }) %>
+      </div>
+    </div>
+  </div>
+<%- include('../../partials/pagination', pagination) %>
+</div>
+<% include ../../partials/foot %>

@@ -31,6 +31,48 @@ module.exports = function(Experiment) {
     cb();
   });
 
+  Experiment.findDuplicate = (lightData, cb) => {
+    Experiment.find({
+      where: {
+        copyOfId: 0
+      },
+      include: {
+        relation: "results",
+        scope: {
+          fields: ['id', 'bpu_api_id', 'runTime'],
+          where: {
+            bpu_api_id: {
+              neq: null
+            }
+          }
+        }
+      },
+      order: 'date_created DESC'
+    }, {
+      skipTrackData: true
+    }).then((exps) => {
+      return Promise.all(exps.map((exp) => {
+        return exp.results.count().then((count) => {
+          if (count && JSON.stringify(exp.configuration) == JSON.stringify(lightData)) {
+            return exp;
+          }
+          return null
+        })
+      }))
+    }).then((withLive) => {
+      let out = withLive.filter((a) => a != null).map((exp) => {
+        return {
+          configuration: exp.configuration,
+          date_created: exp.date_created,
+          id: exp.id,
+        }
+      })
+      if (out.length) {
+        out = [out[0]];
+      }
+      cb(null, out);
+    })
+  }
 
   Experiment.expsWithResults = (copyOfID, cb) => {
     Experiment.find({
@@ -40,7 +82,7 @@ module.exports = function(Experiment) {
       include: {
         relation: "results",
         scope: {
-          fields: ['id', 'bpu_api_id'],
+          fields: ['id', 'bpu_api_id', 'runTime'],
           where: {
             bpu_api_id: {
               neq: null
@@ -48,6 +90,8 @@ module.exports = function(Experiment) {
           }
         }
       }
+    }, {
+      skipTrackData: true
     }).then((exps) => {
       return Promise.all(exps.map((exp) => {
         return exp.results.count().then((count) => {
@@ -83,7 +127,7 @@ module.exports = function(Experiment) {
       include: {
         relation: "results",
         scope: {
-          fields: ['id', 'bpu_api_id'],
+          fields: ['id', 'bpu_api_id', 'runTime'],
           where: {
             bpu_api_id: {
               neq: null
@@ -91,6 +135,8 @@ module.exports = function(Experiment) {
           }
         }
       }
+    }, {
+      skipTrackData: true
     }).then((exps) => {
       return Promise.all(exps.map((exp) => {
         return exp.results.count().then((count) => {
@@ -139,6 +185,22 @@ module.exports = function(Experiment) {
     accepts: [{
       arg: 'copyOfID',
       type: 'number'
+    }],
+    returns: [{
+      arg: 'experiments',
+      root: true,
+      type: 'array'
+    }]
+  })
+
+  Experiment.remoteMethod('findDuplicate', {
+    http: {
+      path: '/findDuplicate',
+      verb: 'get'
+    },
+    accepts: [{
+      arg: 'lightData',
+      type: 'array'
     }],
     returns: [{
       arg: 'experiments',

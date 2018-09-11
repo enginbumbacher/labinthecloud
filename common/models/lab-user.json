@@ -1,0 +1,25 @@
+{
+  "name": "LabUser",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "domain": {
+      "type": "string"
+    }
+  },
+  "restrictResetPasswordTokenScope": true,
+  "validations": [],
+  "relations": {},
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principleId": "$everyone",
+      "accessType": "READ",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": {}
+}

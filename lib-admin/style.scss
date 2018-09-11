@@ -1,0 +1,16 @@
+.litc-admin {
+  .litc {
+    &-navbar {
+      background: rgb(78,78,78);
+    }
+  }
+  main {
+    margin: 30px 0;
+  }
+
+  .paginated-list {
+    .row {
+      margin-top: 1rem;
+    }
+  }
+}

@@ -20,19 +20,26 @@ const basicParameters = {
   randomnessFactor: 1.0
 }
 
+const downloadBasePath = `${process.env.BIOLAB_URL}/account/joinlabwithdata/downloadFile`;
 
-const downloadBasePath = 'http://euglena.stanford.edu/account/joinlabwithdata/downloadFile';
+// const downloadBasePath = 'http://euglena.stanford.edu/account/joinlabwithdata/downloadFile';
 
 const createBpuResults = (app, context) => {
   return Promise.all([
       rp(`${downloadBasePath}/${context.args.data.bpu_api_id}/${context.args.data.bpu_api_id}.json`),
       rp(`${downloadBasePath}/${context.args.data.bpu_api_id}/tracks.json`),
-      ffprobe(`${downloadBasePath}/${context.args.data.bpu_api_id}/movie.mp4`, { path: ffprobeStatic.path })
+      ffprobe(`${downloadBasePath}/${context.args.data.bpu_api_id}/movie.mp4`, { path: ffprobeStatic.path }),
+      rp({
+        uri: `${downloadBasePath}/${context.args.data.bpu_api_id}/movie.mp4`,
+        resolveWithFullResponse: true,
+        encoding: null
+      })
     ])
     .then((downloads) => {
       let report = JSON.parse(downloads[0]),
         tracks = JSON.parse(downloads[1]),
-        exif = downloads[2];
+        exif = downloads[2],
+        videoFile = downloads[3];
       exif = exif.streams.filter((a) => a.codec_type == "video")[0];
       let fps = report.exp_metaData.numFrames / (report.exp_metaData.runTime / 1000);
       let magnification = report.exp_metaData.magnification;
@@ -98,18 +105,44 @@ const createBpuResults = (app, context) => {
 
       if (process.env.S3_BUCKET) {
         const s3 = new AWS.S3()
-        context.args.data.trackFile = `https://s3-us-east-2.amazonaws.com/${process.env.S3_BUCKET}/${fileName}`
-        return new Promise((resolve, reject) => {
+        context.args.data.trackFile = `https://s3.us-east-2.amazonaws.com/${process.env.S3_BUCKET}/${fileName}`
+        context.args.data.video = `https://s3.us-east-2.amazonaws.com/${process.env.S3_BUCKET}/experiments/${context.args.data.bpu_api_id}/movie.mp4`
+        let promises = [];
+        // push the track file to S3
+        promises.push(new Promise((resolve, reject) => {
           s3.putObject({
             Bucket: process.env.S3_BUCKET,
             Key: fileName,
             Body: JSON.stringify(parsedTracks),
             ACL: 'public-read'
           }, (err, data) => {
-            if (err) reject(err);
-            else resolve(true);
+            if (err) {
+              reject(err);
+            } else {
+              // console.log('Track file uploaded:', data);
+              resolve(true);
+            }
           })
-        })
+        }));
+        // push the video file to S3
+        promises.push(new Promise((resolve, reject) => {
+          s3.putObject({
+            Bucket: process.env.S3_BUCKET,
+            Key: `experiments/${context.args.data.bpu_api_id}/movie.mp4`,
+            Body: videoFile.body,
+            ContentType: videoFile.headers['content-type'],
+            ContentLength: videoFile.headers['content-length'],
+            ACL: 'public-read'
+          }, (err, data) => {
+            if (err) {
+              reject(err);
+            } else {
+              // console.log('Video file uploaded:', data);
+              resolve(true);
+            }
+          })
+        }));
+        return Promise.all(promises);
       } else {
         context.args.data.trackFile = `/${fileName}`
         return new Promise((resolve, reject) => {
@@ -290,7 +323,7 @@ const _createModelResults = (app, result, model) => {
 
     if (process.env.S3_BUCKET) {
       const s3 = new AWS.S3()
-      result.trackFile = `https://s3-us-east-2.amazonaws.com/${process.env.S3_BUCKET}/${fileName}`
+      result.trackFile = `https://s3.us-east-2.amazonaws.com/${process.env.S3_BUCKET}/${fileName}`
       return new Promise((resolve, reject) => {
         s3.putObject({
           Bucket: process.env.S3_BUCKET,
@@ -324,6 +357,9 @@ const _createModelResults = (app, result, model) => {
 }
 
 const loadMeta = (context) => {
+  // console.log("loading meta");
+  // console.log(context);
+  // console.log(context.data.bpu_api_id, context.data.runTime);
   const backFill = (context.data.bpu_api_id && !context.data.runTime
     ? rp(`${downloadBasePath}/${context.data.bpu_api_id}/${context.data.bpu_api_id}.json`)
       .then((data) => {
@@ -337,10 +373,31 @@ const loadMeta = (context) => {
   if (!context.data.trackFile) {
     trackLoad = Promise.resolve(true);
   } else if (context.data.trackFile && context.data.trackFile.match(/^http/)) {
-    trackLoad = rp(context.data.trackFile).then((fileData) => {
-      context.data.tracks = JSON.parse(fileData);
-      return true;
-    });
+    if (context.data.trackFile.match(/^https:\/\/s3/)) {
+      const s3 = new AWS.S3()
+      let s3Path = context.data.trackFile.split('/');
+      let bucket = s3Path[3];
+      let filePath = s3Path.slice(4).join('/');
+
+      trackLoad = new Promise((resolve, reject) => {
+        s3.getObject({
+          Bucket: bucket,
+          Key: filePath
+        }, (err, data) => {
+          if (err) {
+            reject(err);
+          } else {
+            context.data.tracks = JSON.parse(data.Body);
+            resolve(true);
+          }
+        })
+      })
+    } else {
+      trackLoad = rp(context.data.trackFile).then((fileData) => {
+        context.data.tracks = JSON.parse(fileData);
+        return true;
+      });
+    }
   } else {
     trackLoad = new Promise((resolve, reject) => {
       let trackFile;
@@ -407,8 +464,12 @@ module.exports = (Result) => {
   });
 
   Result.observe('loaded', (ctx, next) => {
-    loadMeta(ctx).then(() => {
+    if (ctx.options && ctx.options.skipTrackData) {
       next();
-    });
+    } else {
+      loadMeta(ctx).then(() => {
+        next();
+      });
+    }
   });
 };

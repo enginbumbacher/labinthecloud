@@ -8,19 +8,35 @@ Once both are installed, run the following from the project root to install all 
 
 > $ npm install
 
-We use the gulp build system. If this is not already installed, do so now:
+To compile the code, run:
 
-> $ npm install --global gulp-cli
+> $ npm run build
 
-When that process is complete, compiling/buiding and server start can be accomplished with the following command:
+Local environment variables are set using a .env file. In the root of your project, create a file named .env, containing the following configurations:
 
-> $ gulp
+```
+RDS_HOSTNAME = <MySQL Host>
+RDS_PORT = <MySQL Port>
+RDS_DB_NAME = <MySQL database name>
+RDS_USERNAME = <MySQL username>
+RDS_PASSWORD = <MySQL password>
 
-The project can then be found at localhost:3000. If a different port is desired, use the `--port` option:
+AWS_ACCESS_KEY_ID = <AWS key ID>
+AWS_SECRET_ACCESS_KEY = <AWS key>
+S3_BUCKET = <AWS S3 bucket name>
 
-> $ gulp --port=3001
->  [OR]
-> $ gulp -p 3001 
+ADMIN_EMAIL = <admin user email address, presumably yours>
+ADMIN_PASSWORD = <admin user password>
+
+COOKIE_SECRET = <string used for securing cookies; can be any string>
+
+SCRIPT_EMAIL_ADDRESS = <email address that system emails (registration, password reset, etc) are sent from>
+
+SENDGRID_USER = <SendGrid user to send automated emails>
+SENDGRID_PASSWORD = <SendGrid password to send automated emails>
+
+BIOLAB_URL = <BioLab server base url>
+```
 
 If you just wish to run the server by itself, use the following command.  
 

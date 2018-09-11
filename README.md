@@ -34,6 +34,8 @@ SCRIPT_EMAIL_ADDRESS = <email address that system emails (registration, password
 
 SENDGRID_USER = <SendGrid user to send automated emails>
 SENDGRID_PASSWORD = <SendGrid password to send automated emails>
+
+BIOLAB_URL = <BioLab server base url>
 ```
 
 If you just wish to run the server by itself, use the following command.  

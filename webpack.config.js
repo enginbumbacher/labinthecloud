@@ -2,9 +2,11 @@ const path = require('path');
 
 module.exports = {
   mode: 'production',
-  entry: './lib/index.js',
+  entry: {
+    'litc-main': './lib/index.js'
+  },
   output: {
-    filename: 'litc-main.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'client/cslib')
   },
   cache: true,

@@ -10,7 +10,9 @@ module.exports = function(app, cb) {
     'AccessToken',
     'ACL',
     'RoleMapping',
-    'Role'], () => {
+    'Role',
+    'Lab'
+  ], () => {
     process.nextTick(cb);
   });
 }

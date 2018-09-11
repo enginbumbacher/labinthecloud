@@ -3,6 +3,15 @@
     <title>Lab in the Cloud - Admin</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="/cslib/admin/admin.css" />
+<%
+if (styles) { 
+  styles.forEach((style) => { 
+%>
+    <link rel="stylesheet" href="<%= style %>" />
+<%
+  })
+} 
+%>
   </head>
   <body class="litc-admin">
     <nav class="navbar navbar-expand-lg navbar-dark litc-navbar" role="navigation">

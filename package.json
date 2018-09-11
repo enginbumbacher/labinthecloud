@@ -8,7 +8,8 @@
     "posttest": "npm run lint && nsp check",
     "build": "webpack",
     "watch": "webpack --watch",
-    "build-admin": "node-sass lib-admin/style.scss client/cslib/admin/admin.css"
+    "build-admin-js": "webpack --config webpack.admin.config.js",
+    "build-admin-style": "node-sass lib/module/admin/style.scss client/cslib/admin/admin.css"
   },
   "repository": {
     "type": "git",

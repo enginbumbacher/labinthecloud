@@ -227,47 +227,47 @@
         },
         visualization: {
            visualizationTypes: [
-           {
-             id: "circle",
-             label: "Cake Visualization",
-             settings: {
-               binCount: 12, //15° bins
-               dT: 1, // in seconds; indicates time window for binning
-               tStep: 0.5, // in seconds, i.e. tStep = 0.5 --> Half a second; indicates time at which graph steps forward
-               width: 320,
-               height: 320
-             }
-           },
-           {
-            id: "timeseries",
-            label: "Total Speed",
-            settings: {
-              vRange: null,
-              mode: 'total',
-              stdBand: true,
-              dT: 1,
+             {
+               id: "circle",
+               label: "Cake Visualization",
+               settings: {
+                 binCount: 12, //15° bins
+                 dT: 1, // in seconds; indicates time window for binning
+                 tStep: 0.5, // in seconds, i.e. tStep = 0.5 --> Half a second; indicates time at which graph steps forward
+                 width: 320,
+                 height: 320
+               }
+             },
+             {
+              id: "timeseries",
+              label: "Total Speed",
+              settings: {
+                vRange: null,
+                mode: 'total',
+                stdBand: true,
+                dT: 1,
 
-              width: 500,
-              height: 400
-            }
-          }, {
-            id: "componentspeed",
-            label: "Up/Down and Left/Right Speed",
-            settings: {
-              vRange: null,
-              mode: 'component',
-              stdBand: true,
-              dT: 1,
+                width: 500,
+                height: 400
+              }
+            }, {
+              id: "componentspeed",
+              label: "Up/Down and Left/Right Speed",
+              settings: {
+                vRange: null,
+                mode: 'component',
+                stdBand: true,
+                dT: 1,
 
-              width: 450,
-              height: 250
+                width: 450,
+                height: 250
+              }
             }
-          }
-        ]
+          ]
         },
-       modeling: {
-        timeWindow: 2
-       }
+        modeling: {
+          timeWindow: 2
+        }
       };
     </script>
     <!-- <script data-main="./cslib/init" src="./cslib/thirdparty/require/require.js"></script> -->

@@ -36,7 +36,7 @@ module.exports = () => {
       locals = locals || {};
       locals.messages = req.session.messages;
       locals.context = req.getCurrentContext();
-      locals.user = locals.context.get('currentUser');
+      locals.currentUser = locals.context.get('currentUser');
       delete req.session.messages;
 
       render.call(res, view, locals, cb);

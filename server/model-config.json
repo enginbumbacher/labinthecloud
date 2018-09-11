@@ -64,6 +64,14 @@
     "public": true,
     "options": {
       "emailVerificationRequired": true
+    },
+    "relations": {
+      "roles": {
+        "type": "hasMany",
+        "model": "Role",
+        "foreignKey": "principalId",
+        "through": "RoleMapping"
+      }
     }
   },
   "Email": {

@@ -46,7 +46,7 @@ module.exports = {
           options: {
             limit: 100,
             name: 'images/[hash]-[name].[ext]',
-            publicPath: "cslib/"
+            publicPath: "/cslib/"
           }
         }]
       },
@@ -57,7 +57,7 @@ module.exports = {
           options: {
             limit: 8000,
             name: 'fonts/[name].[ext]',
-            publicPath: 'cslib/'
+            publicPath: '/cslib/'
           }
         }
       }

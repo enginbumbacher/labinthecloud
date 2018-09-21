@@ -1,1 +1,41 @@
-.edit-lab-form__container {}
+.edit-lab-form__container {
+
+  .component__fieldgroup {
+    &.fieldgroup__collapsible {
+      border: 1px solid rgba(0,0,0,0.25);
+      padding: 1rem;
+      margin: 1rem 0;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      & > .field__label {
+        background: rgba(0,0,0,0.25);
+        margin: -1rem -1rem 0 -1rem;
+        padding: 1rem;
+        cursor: pointer;
+      }
+    }
+    &.fieldgroup__collapsed {
+      & > .fieldgroup__fields,
+      & > .field__errors,
+      & > .field__help {
+        display: none;
+      } 
+      & > .field__label {
+        margin-bottom: -1rem;
+      }
+    }
+  }
+
+  .component__symselectfield {
+    display: block;
+    .symselectfield__label {
+      display: block;
+    }
+    .symselectfield__select {
+      max-width: 35%;
+    }
+  }
+}

@@ -39,7 +39,7 @@ module.exports = function(Experiment) {
       include: {
         relation: "results",
         scope: {
-          fields: ['id', 'bpu_api_id'],
+          fields: ['id', 'bpu_api_id', 'runTime'],
           where: {
             bpu_api_id: {
               neq: null
@@ -48,6 +48,8 @@ module.exports = function(Experiment) {
         }
       },
       order: 'date_created DESC'
+    }, {
+      skipTrackData: true
     }).then((exps) => {
       return Promise.all(exps.map((exp) => {
         return exp.results.count().then((count) => {
@@ -80,7 +82,7 @@ module.exports = function(Experiment) {
       include: {
         relation: "results",
         scope: {
-          fields: ['id', 'bpu_api_id'],
+          fields: ['id', 'bpu_api_id', 'runTime'],
           where: {
             bpu_api_id: {
               neq: null
@@ -88,6 +90,8 @@ module.exports = function(Experiment) {
           }
         }
       }
+    }, {
+      skipTrackData: true
     }).then((exps) => {
       return Promise.all(exps.map((exp) => {
         return exp.results.count().then((count) => {
@@ -123,7 +127,7 @@ module.exports = function(Experiment) {
       include: {
         relation: "results",
         scope: {
-          fields: ['id', 'bpu_api_id'],
+          fields: ['id', 'bpu_api_id', 'runTime'],
           where: {
             bpu_api_id: {
               neq: null
@@ -131,6 +135,8 @@ module.exports = function(Experiment) {
           }
         }
       }
+    }, {
+      skipTrackData: true
     }).then((exps) => {
       return Promise.all(exps.map((exp) => {
         return exp.results.count().then((count) => {

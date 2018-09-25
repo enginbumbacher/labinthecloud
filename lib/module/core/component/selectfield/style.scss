@@ -1,0 +1,18 @@
+@import "../../../../scss_includes/variables";
+
+.component__selectfield {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+
+  .selectfield__label {
+    display: inline-block;
+    flex-grow: 1;
+    font-size: 14px;
+  }
+  .selectfield__select {
+    display: inline-block;
+    margin: 0 0.5rem;
+    min-width: 90px;
+  }
+}

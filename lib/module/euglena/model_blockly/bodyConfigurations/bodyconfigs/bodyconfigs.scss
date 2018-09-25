@@ -20,19 +20,19 @@
     width: 90%;
     margin: 0 auto;
   }
-    [id^="reaction_mechanistic"] {
+    [id^="mechanistic_reaction"] {
       z-index: 0;
     }
 
-    [id^="reaction_functional"] {
+    [id^="functional_reaction"] {
       z-index: 1;
     }
 
-    [id^="roll_mechanistic"] {
+    [id^="mechanistic_roll"] {
       z-index: 1;
     }
 
-    [id^="roll_functional"] {
+    [id^="functional_roll"] {
       z-index: 0;
     }
 

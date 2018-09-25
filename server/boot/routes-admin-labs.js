@@ -9,8 +9,10 @@ module.exports = (app) => {
       return user.labs.findOne({ where: { path: req.params.labPath } });
     }).then((lab) => {
       if (lab) {
+        let conf = lab.config;
+        conf.lab = lab.uuid;
         res.render('pages/lab/public', {
-          lab: lab.config
+          lab: conf
         })
       } else {
         res.sendStatus(404);

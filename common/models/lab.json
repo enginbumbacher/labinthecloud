@@ -22,6 +22,10 @@
     "config": {
       "type": "object",
       "required": true
+    },
+    "uuid": {
+      "type": "string",
+      "defaultFn": "uuidv4"
     }
   },
   "validations": [],

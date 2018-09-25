@@ -73,7 +73,7 @@
     <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
       <category name="Turning" colour="#2F5596">
   <% if (lab.model.blocks.turning.turn_at_1sensor.allow) { %>
-        <block type="turn_at_1sensor" id="turn_at_1sensor" disabled='false' max_use='<%= lab.model.blocks.turning.turn_at_1_sensor.maxUse %>' sensors='one' equivalence='turn_at_2sensors'>
+        <block type="turn_at_1sensor" id="turn_at_1sensor" disabled='false' max_use='<%= lab.model.blocks.turning.turn_at_1sensor.maxUse %>' sensors='one' equivalence='turn_at_2sensors'>
           <field name="DIRECTION">TOWARDS</field>
         </block>
   <% } %>

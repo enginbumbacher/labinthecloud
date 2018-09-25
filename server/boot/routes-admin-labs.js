@@ -233,6 +233,14 @@ module.exports = (app) => {
     let user = ctx.get('currentUser');
     if (!user) res.sendStatus(403);
 
+    Lab.findOne({ where: { id: req.params.labId }}).then((lab) => {
+      if (!lab) res.sendStatus(404);
+      if (user.id != lab.labUserId && !ctx.get('currentUserRoles').includes('admin')) res.sendStatus(403);
+
+      res.render('pages/lab/delete', {
+        lab: lab
+      })
+    })
   })
 
   // delete existing lab callback
@@ -241,5 +249,27 @@ module.exports = (app) => {
     let user = ctx.get('currentUser');
     if (!user) res.sendStatus(403);
 
+    Lab.findOne({ where: { id: req.params.labId }}).then((lab) => {
+      if (!lab) res.sendStatus(404);
+      if (user.id != lab.labUserId && !ctx.get('currentUserRoles').includes('admin')) res.sendStatus(403);
+
+      if (req.body.deleteConfirmation) {
+        Lab.destroyById(req.params.labId).then(() => {
+          req.session.messages.push({
+            type: 'success',
+            text: `Lab "${lab.title}" has been deleted`
+          })
+          res.redirect('/admin/labs');
+        })
+      } else {
+        req.session.messages.push({
+          type: 'danger',
+          text: 'You must press the button to confirm deletion'
+        });
+        res.redirect(`/admin/lab/${ req.params.labId }/delete`);
+      }
+    }, (err) => {
+      res.sendStatus(404);
+    });
   })
 }

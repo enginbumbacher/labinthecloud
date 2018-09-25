@@ -147,7 +147,7 @@
             modelType: "blockly",
             color: 0x2222ff,
             parameters: {
-              modelRepresentation: 'functional', // 'mechanistic' or 'functional'
+              modelRepresentation: 'mechanistic', // 'mechanistic' or 'functional'
               allowedConfigs: ['2sensors_front','1sensor_frontleft','1sensor_frontright','1omnisensor_frontcenter','1omnisensor_frontleft'],
               bodyConfiguration: {
                 initialValue: "sensorConfig_3",
@@ -169,13 +169,17 @@
                 options: {'motion_flap_0': 'flapping', 'motion_twist_100': 'twisting'}
               },*/
               omega: {
-                // initialValue: 'roll_25',
                 changeable: true,
                 visible: true,
                 label: null,
-                variation: true,
-                initialValue: null
+                variation: true
               },
+              // motion: {
+              //   changeable: true,
+              //   visible: true,
+              //   label: null
+              //   // variation: true
+              // },
               v: {
                 // initialValue: 'motor_25',
                 changeable: true,
@@ -198,8 +202,8 @@
                 variation: null,
                 visible: false,
                 initialValue: {
-                  qualitativeValue: "opacity_0",
-                  numericValue: 0,
+                  qualitativeValue: "opacity_50",
+                  numericValue: 0.5,
                   variation: 0
                 }
               }

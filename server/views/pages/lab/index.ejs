@@ -1,5 +1,12 @@
 <% include ../../partials/head %>
-<h1><%= title %></h1>
+<div class="d-flex align-items-center">
+  <h1><%= title %></h1>
+  <% if (allowCreate) { %>
+  <div class="ml-auto">
+    <a href="/admin/lab/create" class="btn btn-primary">Create new Lab</a>
+  </div>
+  <% } %>
+</div>
 <div class="container paginated-list">
   <div class="row">
     <div class="col">

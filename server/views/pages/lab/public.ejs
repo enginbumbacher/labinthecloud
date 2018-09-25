@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Euglena Modeling</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      /* https://projects.lukehaas.me/css-loaders/ */
+      .loader,
+      .loader:before,
+      .loader:after {
+        border-radius: 50%;
+        width: 2.5em;
+        height: 2.5em;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+        -webkit-animation: load7 1.8s infinite ease-in-out;
+        animation: load7 1.8s infinite ease-in-out;
+      }
+      .loader {
+        color: #000000;
+        font-size: 10px;
+        margin: 80px auto;
+        position: relative;
+        text-indent: -9999em;
+        -webkit-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-animation-delay: -0.16s;
+        animation-delay: -0.16s;
+      }
+      .loader:before,
+      .loader:after {
+        content: '';
+        position: absolute;
+        top: 0;
+      }
+      .loader:before {
+        left: -3.5em;
+        -webkit-animation-delay: -0.32s;
+        animation-delay: -0.32s;
+      }
+      .loader:after {
+        left: 3.5em;
+      }
+      @-webkit-keyframes .loader {
+        0%,
+        80%,
+        100% {
+          box-shadow: 0 2.5em 0 -1.3em;
+        }
+        40% {
+          box-shadow: 0 2.5em 0 0;
+        }
+      }
+      @keyframes load7 {
+        0%,
+        80%,
+        100% {
+          box-shadow: 0 2.5em 0 -1.3em;
+        }
+        40% {
+          box-shadow: 0 2.5em 0 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loader">Loading..</div>
+<% if (lab.model.blocks) { %>
+    <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
+      <category name="Turning" colour="#2F5596">
+  <% if (lab.model.blocks.turning.turn_at_1sensor.allow) { %>
+        <block type="turn_at_1sensor" id="turn_at_1sensor" disabled='false' max_use='<%= lab.model.blocks.turning.turn_at_1_sensor.maxUse %>' sensors='one' equivalence='turn_at_2sensors'>
+          <field name="DIRECTION">TOWARDS</field>
+        </block>
+  <% } %>
+  <% if (lab.model.blocks.turning.turn_at_2sensor.allow) { %>
+        <block type="turn_at_2sensors" id="turn_at_2sensors" disabled='false' max_use='<%= lab.model.blocks.turning.turn_at_2sensor.maxUse %>' sensors='two' equivalence='turn_at_1sensor'>
+          <field name="DIRECTION">TOWARDS</field>
+        </block>
+  <% } %>
+  <% if (lab.model.blocks.turning.turn_randomly.allow) { %>
+        <block type="turn_randomly" id="turn_randomly" disabled='false' max_use='<%= lab.model.blocks.turning.turn_randomly.maxUse %>' sensors='both'></block>
+  <% } %>
+  <% if (lab.model.blocks.turning.turn_change.allow) { %>
+        <block type="turn_change" id='turn_change' disabled='false' max_use='<%= lab.model.blocks.turning.turn_change.maxUse %>' sensors='both'>
+          <field name="SPEED">CHANGE_20</field>
+        </block>
+      </category>
+      <category name="Forward" colour="#805ba5">
+  <% } %>
+  <% if (lab.model.blocks.forward.move_normal.allow) { %>
+        <block type="move_normal" id="move_normal" disabled='false' max_use='<%= lab.model.blocks.forward.move_normal.maxUse %>' sensors='both'></block>
+  <% } %>
+  <% if (lab.model.blocks.forward.move_change.allow) { %>
+        <block type="move_change" id='move_change' disabled='false' max_use='<%= lab.model.blocks.forward.move_change.maxUse %>' sensors='both'>
+          <field name="SPEED">CHANGE_20</field>
+        </block>
+      </category>
+      <category name="Rotation" colour="#C55A11">
+  <% } %>
+  <% if (lab.model.blocks.rotation.roll_normal.allow) { %>
+        <block type="roll_normal" id="roll_normal" disabled='false' max_use='<%= lab.model.blocks.rotation.roll_normal.maxUse %>' sensors='both'></block>
+  <% } %>
+  <% if (lab.model.blocks.rotation.roll_change.allow) { %>
+        <block type="roll_change" id='roll_change' disabled='false' max_use='<%= lab.model.blocks.rotation.roll_change.maxUse %>' sensors='both'>
+          <field name="SPEED">CHANGE_20</field>
+        </block>
+      </category>
+      <category name="Additional Blocks" colour="#00A407">
+  <% } %>
+  <% if (lab.model.blocks.additional.see_light_quantity.allow) { %>
+        <block class='sensing' type="see_light_quantity" id="see_light_quantity" disabled='false' max_use='<%= lab.model.blocks.additional.see_light_quantity.maxUse %>' sensors='both'>
+          <field name='THRESHOLD'>THRESH_20</field>
+        </block>
+  <% } %>
+      </category>
+    </xml>
+    <xml xmlns="http://www.w3.org/1999/xhtml" id="defaultWorkspaceBlocks" style="display:none">
+      <variables></variables>
+      <block type="master_block" id="master_block" x="5" y="63" max_use='0' sensors='both'>
+        <statement name="CODE">
+          <block class='sensing' type="either_way" id="either_way" max_use='0' sensors='both'>
+            <next>
+              <block class='sensing' type="no_light" id="no_light" max_use='0' sensors='both'>
+                <next>
+                  <block class='sensing' type="see_light" id="see_light" max_use='0' sensors='both'></block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </xml>
+    <script src="/cslib/thirdparty/blockly/blockly_compressed.js"></script>
+    <script src="/cslib/thirdparty/blockly/blocks_compressed.js"></script>
+    <script src="/cslib/thirdparty/blockly/javascript_compressed.js"></script>
+    <script src="/cslib/thirdparty/blockly/msg/js/en.js"></script>
+    <script src="/cslib/module/euglena/model_blockly/modeling_blocks.js"></script>
+<% } %>
+
+    <script type="text/javascript">
+      window.EuglenaConfig = <%- JSON.stringify(lab) %>;
+    </script>
+    <script src="/cslib/litc-main.js"></script>
+  </body>
+</html>

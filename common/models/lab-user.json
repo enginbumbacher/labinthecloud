@@ -12,7 +12,7 @@
     },
     "uuid": {
       "type": "string",
-      "default": "$uuid"
+      "defaultFn": "uuidv4"
     }
   },
   "validations": [],

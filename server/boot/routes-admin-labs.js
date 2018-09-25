@@ -4,6 +4,20 @@ module.exports = (app) => {
   const User = app.models.LabUser;
   const Lab = app.models.Lab;
 
+  app.get('/lab/:userPath/:labPath', (req, res) => {
+    User.findOne({ where: { or: [{ uuid: req.params.userPath }, { domain: req.params.userPath }]}}).then((user) => {
+      return user.labs.findOne({ where: { path: req.params.labPath } });
+    }).then((lab) => {
+      if (lab) {
+        res.render('pages/lab/public', {
+          lab: lab.config
+        })
+      } else {
+        res.sendStatus(404);
+      }
+    })
+  })
+
   app.get('/admin/labs', (req, res) => {
     let ctx = req.getCurrentContext();
     let user = ctx.get('currentUser');
@@ -33,6 +47,16 @@ module.exports = (app) => {
         title: 'Labs',
         labs: labs,
         count: count,
+        allowCreate: true,
+        breadcrumb: [
+          {
+            label: 'Home',
+            url: '/admin'
+          },
+          {
+            label: 'Labs'
+          }
+        ],
         pagination: {
           label: "lab list navigation",
           links: paginationLinks,
@@ -48,6 +72,9 @@ module.exports = (app) => {
     let ctx = req.getCurrentContext();
     if (!ctx.get('currentUserRoles').includes("admin"))
       return res.sendStatus(403);
+
+    let perPage = parseInt(req.query.perPage) || 20;
+    let page = parseInt(req.query.page) || 1;
 
     User.findOne({ where: { id: req.params.userId }}).then((user) => {
       Promise.all([user.labs.count(), user.labs.find({
@@ -71,6 +98,24 @@ module.exports = (app) => {
           title: `Labs: ${user.email}`,
           labs: labs,
           count: count,
+          allowCreate: false,
+          breadcrumb: [
+            {
+              label: 'Home',
+              url: '/admin'
+            },
+            {
+              label: 'Users',
+              url: '/admin/users'
+            },
+            {
+              label: user.email,
+              url: `/admin/user/${user.id}`
+            },
+            {
+              label: 'Labs'
+            }
+          ],
           pagination: {
             label: "lab list navigation",
             links: paginationLinks,
@@ -91,7 +136,21 @@ module.exports = (app) => {
 
     res.render('pages/lab/single', {
       title: 'Create new lab',
-      lab: {}
+      lab: null,
+      breadcrumb: [
+        {
+          label: 'Home',
+          url: '/admin'
+        },
+        {
+          label: 'Labs',
+          url: '/admin/labs'
+        },
+        {
+          label: 'Create'
+        }
+      ],
+      owner: user
     });
   })
 
@@ -138,9 +197,25 @@ module.exports = (app) => {
 
     Lab.findOne({ where: { id: req.params.labId }}).then((lab) => {
       if (user.id != lab.userId && !ctx.get('currentUserRoles').includes('admin')) res.sendStatus(403);
-      res.render('pages/lab/single', {
-        title: `Edit lab: ${req.params.labId}`,
-        lab: lab
+      User.findOne({ where: { id: lab.labUserId }}).then((owner) => {
+        res.render('pages/lab/single', {
+          title: `Edit lab: ${lab.title}`,
+          lab: lab,
+          breadcrumb: [
+            {
+              label: 'Home',
+              url: '/admin'
+            },
+            {
+              label: 'Labs',
+              url: '/admin/labs'
+            },
+            {
+              label: lab.title
+            }
+          ],
+          owner: owner
+        })
       })
     })
   })

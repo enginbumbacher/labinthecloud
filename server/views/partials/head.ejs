@@ -51,3 +51,27 @@ if (styles) {
         <div class="alert alert-<%= msg.type %>"><%= msg.text %></div>
 <%  })
 } %>
+<%
+if (breadcrumb) {
+%>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+<%  
+  breadcrumb.forEach((crumb, ind) => {
+    var isLast = ind == breadcrumb.length - 1;
+    if (isLast) {
+%>
+            <li class="breadcrumb-item active"><%= crumb.label %></li>
+<%
+    } else {
+%>
+            <li class="breadcrumb-item"><a href="<%= crumb.url %>"><%= crumb.label %></a></li>
+<%      
+    }
+  })
+%>
+          </ol>
+        </nav>
+<%
+}
+%>

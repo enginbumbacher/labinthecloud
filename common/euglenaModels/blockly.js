@@ -95,7 +95,7 @@ module.exports = {
     // Store the sensorIntensities in prevIntensities
     // Average for 2 sensors, or actual value for 1 sensor
     // Alternatively choose the max of 2 sensors
-    if (prevIntensities.length == EugBody.defaults.memory_duration) {
+    if (prevIntensities.length == EugBody.defaults.adapt_memory) {
       prevIntensities.splice(0,1);
     }
     var sensorIntensitiesAvg = sensorIntensities.reduce(function(a, b) { return a + b });

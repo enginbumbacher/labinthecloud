@@ -5,8 +5,8 @@
   z-index: 100;
   right: -700px;
   width: 700px;
-  height: 95%;
-  top: 8%;
+  height: 98%;
+  top: 1%;
   border: 1px solid $palette__gray__dark;
   background: $palette__white;
   padding-right: 4rem;
@@ -14,13 +14,67 @@
 
   &.modeling__open {
     right: -4rem;
-    z-index: 110;
+    z-index: 300;
+    position: fixed;
   }
 
   &__content {
-    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     width: 100%;
-    height: 80%;
+    padding:1rem;
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  &__interface {
+    overflow: auto;
+    height: 100%;
+
+    &__signal-generation, &__signal-activation, &__signal-processing, &__behavior-generation {
+      border: 1px solid red;
+      display: flex;
+      flex-direction: row;
+
+      &__viz {
+        flex: 1;
+        border: 1px solid green;
+      }
+
+      &__model {
+        flex: 3;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        border: 1px solid blue;
+
+      }
+
+      &__params {
+        border: 1px solid blue;
+      }
+
+      &__text {
+        border: 1px solid blue;
+        font-size: 13px;
+        line-height: 1.6;
+        max-height: 10rem;
+        overflow: auto;
+      }
+    }
+
+    &__paragraphInserts {
+      background: $palette__gray__medium
+    }
+
+    &__textInserts {
+      border: 2px solid tomato;
+      background: $palette__gray__light
+    }
+
   }
 
   &__tab {
@@ -29,7 +83,7 @@
     border: 1px solid $palette__gray__dark;
     background: $palette__white;
     position: absolute;
-    top: calc(34% + 10.5rem);
+    top: calc(50% - 4.5rem);
     left: calc(-6.2rem - 2px);
     border-bottom: none;
     padding: 0.5rem 1rem;
@@ -46,58 +100,6 @@
         height: 20px;
         transform: scaleY(1);
     }
-  }
-
-  &__display {
-    display: flex;
-    flex-direction: column;
-    align-items: top;
-    justify-content: flex-start;
-    width: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-
-    &__input {
-      height: 10%;
-      min-width: 400px;
-      border: 1px solid $palette__gray__dark;
-      background: $palette__white;
-      text-align: center;
-      font-family: $font__title;
-      font-weight: $font__title__weight;
-      font-size: 14px;
-      padding: 0.5rem 2rem;
-
-      #one-eye,
-      #two-eyes {
-        color: #7030A0;
-      }
-    }
-
-    &__arrow {
-      height: 30px;
-      text-align: center;
-      width: 450px;
-      margin: 0.5rem;
-      display: flex;
-      justify-content: space-around;
-    }
-
-    &__arrow img {
-      height: 30px;
-    }
-
-    &__blockly {
-      height: 450px;
-      //height: 80%;
-      min-width: 550px;
-      min-height: 300px;
-      border: 0px;
-      background: $palette__white;
-      text-align: center;
-      padding: 0.5rem 2rem;
-    }
-
   }
 
 }

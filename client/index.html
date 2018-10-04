@@ -120,7 +120,7 @@
     <script src="/cslib/thirdparty/blockly/blocks_compressed.js"></script>
     <script src="/cslib/thirdparty/blockly/javascript_compressed.js"></script>
     <script src="/cslib/thirdparty/blockly/msg/js/en.js"></script>
-    <script src="/cslib/module/euglena/model_blockly/modeling_blocks.js"></script>
+    <script src="/cslib/module/euglena/model_blockly/blocklytab/modeling_blocks.js"></script>
 
     <script type="text/javascript">
       window.EuglenaConfig = {
@@ -145,32 +145,24 @@
           //modelHistory: [1305,1311],
           tabs: [{
             modelType: "mech",
+            modelForm: 'mechanistic', // 'mechanistic' or 'functional'
+            parameterForm: 'quantitative', //'qualitative' or 'quantitative'
             color: 0x2222ff,
             regionNames: {
-              sensor: {label: 'Sensor', color: [192,0,0], position: 0},
-              motor: {label: 'Flagellum', color: [112,48,160], position: 1},
-              settings: {label: 'Model Settings', color: [184,184,184], position: 2}
+              sensor: {label: 'Sensor Geometry', color: [192,0,0]},
+              motor: {label: 'Flagellum Forward Motion', color: [112,48,160]},
+              settings: {label: 'Model Settings', color: [184,184,184]}
               //order: ['sensor','motor','settings']
             },
             parameters: {
-              modelRepresentation: 'functional', // 'mechanistic' or 'functional'
               sensorType: {
                 region: 'sensor',
                 label: "Sensor Type",
                 color: '#C00000',
                 initialValue: "type_1side",
                 min_width: '210px',
-                options: {'type_1side': 'One sensor on side', 'type_1middle':'One sensor in middle', 'type_2sensors': '2 sensors'},
+                options: {'type_1side': 'One sensor on side', 'type_1middle':'One sensor in middle', 'type_2sensors': '2 sensors', 'type_eyespot': 'One sensor in middle with shader'},
                 description: 'Select different types for the light sensor. You can change location and number of sensors.'
-              },
-              sensorShape: {
-                region: 'sensor',
-                label: "Sensor Receptive Field",
-                color: '#C00000',
-                initialValue: "shape_50",
-                min_width: '210px',
-                options: {'shape_50': 'half', 'shape_100': 'full'},//'shape_10': 'small', 'shape_25': 'quarter',
-                description: 'Select different sizes of the receptive field for the light sensor.'
               },
               sensorPosition: {
                 region: 'sensor',
@@ -178,7 +170,7 @@
                 color: '#C00000',
                 initialValue: "position_0",
                 min_width: '210px',
-                options: {'position_0':'close', 'position_100': 'far'},//'position_50':'medium',
+                options: {'position_0':'close', 'position_100': 'far'},
                 description: 'Select the distance from the sensor to the flagellum.'
               },
               /*opacity: {
@@ -189,51 +181,55 @@
                 maxValue: 1.0,
 
               },*/
-              /*motion: {
-                category: 'motor',
+              motion: {
+                region: 'motor',
                 label: "Forward Motion",
                 color: '#C55A11',
-                alignField: 'true',
-                initialValue: 'motion_flap_0',
-                maxValue: 0.7,
-                options: {'motion_flap_0': 'flapping', 'motion_twist_100': 'twisting'}
-              },*/
-              omega: {
-                region: 'motor',
-                label: "Default Rotation", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
-                color: '#C55A11',
-                initialValue: 'roll_25',
-                maxValue: 6,
-                varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
-                options: {'roll_0': 'no rotation', 'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast'},
-                description: 'Set the speed at which the model rotates around its long body axis normally, if it is programmed to rotate. The percentage refers to the maximum possible intensity for any model. See how the orange arrow changes when you change the value.'
-                // If mechanistic: {'roll_25': 'weak', 'roll_50': 'medium', 'roll_75': 'strong', 'roll_100': 'very strong'}
-                // If functional: {'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast', 'roll_100': 'very fast'}
+                min_width: '210px',
+                initialValue: 'motion_wave',
+                options: {'motion_wave': 'waving', 'motion_spiral': 'spiraling'},
+                description: 'Change this text'
               },
+              // omega: {
+              //   region: 'motor',
+              //   label: "Default Rotation", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
+              //   color: '#C55A11',
+              //   initialValue: 'roll_25',
+              //   maxValue: 6,
+              //   varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
+              //   options: {'roll_0': 'no rotation', 'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast'},
+              //   description: 'Set the speed at which the model rotates around its long body axis normally, if it is programmed to rotate. The percentage refers to the maximum possible intensity for any model. See how the orange arrow changes when you change the value.'
+              //   // If mechanistic: {'roll_25': 'weak', 'roll_50': 'medium', 'roll_75': 'strong', 'roll_100': 'very strong'}
+              //   // If functional: {'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast', 'roll_100': 'very fast'}
+              // },
               v: {
                 region: 'motor',
-                label: "Default Forward", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
+                label: "Forward Speed <br> [micrometers / second]", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
                 color: '#7030A0',
-                initialValue: 'motor_25',
-                maxValue: 10,
+                initialValue: { base: 80,delta: 10 }, //'motor_25',
+                min_width: '130px',
+                maxValue: 2,
                 varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
-                options: {'motor_25': 'slow', 'motor_50': 'medium', 'motor_75': 'fast'},
-                description: 'Set the speed at which the model moves forward, if it is programmed to move. The percentage refers to the maximum possible intensity for any model. See how the red arrow changes when you change the value.'
+                options: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'fast'},
+                description: 'Set the speed at which the model moves forward, if it is programmed to move. The percentage refers to the maximum possible intensity for any model. See how the red arrow changes when you change the value.',
+                min: 50,
+                max: 200,
+                steps: 10
                 // If mechanistic: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'strong', 'motor_100': 'very strong'}
                 // If functional: {'motor_25': 'slow', 'motor_50': 'medium', 'motor_75': 'fast', 'motor_100': 'very fast'}
               },
-              K: {
-                region: 'motor',
-                label: "Default Turn", // If mechanistic: "Reaction Strength", if functional: "Reaction Speed"
-                color: '#2F5597',
-                initialValue: 'reaction_25',
-                maxValue: 2,
-                varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
-                options: {'reaction_25': 'slow', 'reaction_50': 'medium', 'reaction_75': 'fast'},
-                description: 'Set the intensity at which the model is responding to light, if it is programmed to respond. The percentage refers to the maximum possible intensity for any model. See how the blue arrows change when you change the value.'
-                // If mechanistic: {'reaction_25': 'weak', 'reaction_50': 'medium', 'reaction_75': 'strong', 'reaction_100': 'very strong'}
-                // If functional: {'reaction_25': 'slow', 'reaction_50': 'medium', 'reaction_75': 'fast', 'reaction_100': 'very fast'}
-              }
+              // turnStrength: {
+              //   region: 'motor',
+              //   label: "Default Turn", // If mechanistic: "Reaction Strength", if functional: "Reaction Speed"
+              //   color: '#2F5597',
+              //   initialValue: 'reaction_25',
+              //   maxValue: 2,
+              //   varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
+              //   options: {'reaction_25': 'slow', 'reaction_50': 'medium', 'reaction_75': 'fast'},
+              //   description: 'Set the intensity at which the model is responding to light, if it is programmed to respond. The percentage refers to the maximum possible intensity for any model. See how the blue arrows change when you change the value.'
+              //   // If mechanistic: {'reaction_25': 'weak', 'reaction_50': 'medium', 'reaction_75': 'strong', 'reaction_100': 'very strong'}
+              //   // If functional: {'reaction_25': 'slow', 'reaction_50': 'medium', 'reaction_75': 'fast', 'reaction_100': 'very fast'}
+              // }
               /*variation: {
                 label: "Variation btw Euglena:", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
                 initialValue: 'variation_25',
@@ -247,7 +243,7 @@
           euglenaCount: {
             range: [10, 50],
             options: {1: 1, 2: 2, 20: 20},
-            initialValue: 5,
+            initialValue: 1,
             region: 'settings',
           },
           euglenaInit: {
@@ -297,8 +293,100 @@
           }
         ]
         },
-       modelingMech: {
-        timeWindow: 2
+       modeling: {
+        timeWindow: 2,
+        regionNames: {
+          signal: {label: 'Activate Signal', color: [192,0,0]},
+          behavior: {label: 'Activate Reaction to Signal', color: [112,48,160]}
+        },
+        parameters: {
+          signalThresh: { //SymSelectField
+            region: 'signal',
+            label: "Activation Brightness <br> [in % of maximum brightness]",
+            color: '#C55A11',
+            initialValue: { base: 20, delta: 0 }, //'signal_2',
+            min: 0,
+            max: 100,
+            steps: 20,
+            min_width: '210px',
+            maxValue: 1, //This value is also in percent of brightness
+            varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
+            options: {'signal_2': 'very low', 'signal_25': 'low', 'signal_50': 'medium', 'signal_75': 'high', 'signal_100': 'very high'},
+            description: 'Set the brightness of light at which the Rhodopsin get activated to emit a signal.'
+          },
+          signalAdapt: { //SelectField
+            region: 'signal',
+            label: "Adapt Activation Brightness?",
+            color: '#C55A11',
+            initialValue: 'adapt_0',
+            min_width: '210px',
+            options: {'adapt_0': 'No', 'adapt_1': 'Yes'},
+            description: 'Decide whether or not to adapt the level of activation to the general brightness.'
+          },
+          signalAdaptSpeed: { //SymSelectField
+            region: 'signal',
+            label: "Adaptation Speed <br> [in seconds]",
+            color: '#C55A11',
+            min_width: '210px',
+            initialValue: { base: 5, delta: 0 }, //'speed_25',
+            min: 0,
+            max: 60,
+            steps: 12,
+            maxValue: 100, //This value is also in percent of brightness
+            varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
+            options: {'speed_2': 'very slowly', 'speed_25': 'slowly', 'speed_50': 'at medium speed', 'speed_75': 'quickly', 'speed_100': 'very quickly'},
+            description: 'Set the speed (in seconds) at which the rhodopsin adapts to the background light.'
+          },
+          signalRandom: { //SelectField
+            region: 'signal',
+            label: "Random Release of Molecules",
+            color: '#C55A11',
+            initialValue: 'sigrandom_25',
+            min_width: '210px',
+            options: {'sigrandom_0': 'no random release', 'sigrandom_2': 'very low', 'sigrandom_25': 'low', 'sigrandom_50': 'medium', 'sigrandom_75': 'high'}, // the numbers after the label are percentages of randomness. Basically triggering the random angles in the computation.
+            description: 'Set the probability for a Rhodopsin to randomly create a signal.'
+          },
+          turnAmount: { //SelectField
+            region: 'behavior',
+            label: "How much will it turn?",
+            color: '#2F5597',
+            initialValue: 'amount_1',
+            min_width: '210px',
+            options: {'amount_1': 'Constant speed', 'amount_2': 'proportional to num molecules'},
+            description: 'Set the way it will turn when it receives a molecule.'
+          },
+          reactionStrength: { //SymSelectField
+            region: 'behavior',
+            label: 'Reaction Strength',
+            color: '#2F5597',
+            initialValue: { base: 1, delta: 0.5 }, //'reaction_25',
+            min: 0,
+            max: 2,
+            steps: 10,
+            maxValue: 2,
+            varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
+            options: {'turn_25': 'slow', 'turn_50': 'medium', 'turn_75': 'fast'},
+            description: 'Set the intensity at which the model is responding to light, if it is programmed to respond. The percentage refers to the maximum possible intensity for any model. See how the blue arrows change when you change the value.'
+          },
+          turnForward: { //SelectField
+            region: 'behavior',
+            label: 'How will it turn?',
+            color: '#2F5597',
+            initialValue: 'forward_0',
+            min_width: '210px',
+            options: {'forward_0': 'by moving the body', 'forward_1': 'by moving the flagellum'},
+            description: 'Write text.'
+          },
+          turnDirection: { //SelectField
+            region: 'behavior',
+            label: 'Turning Direction',
+            color: '#2F5597',
+            initialValue: 'turn_towards',
+            min_width: '210px',
+            options: {'turn_towards': 'towards the (weaker) sensor or eyespot', 'turn_away': 'away from the (weaker) sensor / eyespot'},
+            description: 'Decide whether to turn away from the sensor / eyespot or towards it when receiving a molecule1.'
+          }
+        }
        }
       };
     </script>

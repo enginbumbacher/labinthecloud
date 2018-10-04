@@ -113,17 +113,17 @@ intensity *= net_yaw > 0 ? 1 : -1;
     }
 */
     /* TO DO WITH INTRODUCTION OF BLOCKLY CODE
-   Calculate the averaging window for prevLight, which depends on both EugBody.defaults.memory_duration
+   Calculate the averaging window for prevLight, which depends on both EugBody.defaults.adapt_memory
    and the rotation speed:
    Set the window such that it spans every value the Euglena has seen within a rotation of Math.PI.
    So, if there is a rotation set, then the window has to be calculated anew. Otherwise, if there is no
-   rotation set, we choose the standard window size defaults.memory_duration.
+   rotation set, we choose the standard window size defaults.adapt_memory.
     */
 
     // Store the sensorIntensities in prevIntensities
     // Average for 2 sensors, or actual value for 1 sensor
     // Alternatively choose the max of 2 sensors
-//    if (prevIntensities.length == EugBody.defaults.memory_duration) {
+//    if (prevIntensities.length == EugBody.defaults.adapt_memory) {
 //      prevIntensities.splice(0,1);
 //    }
 //    var sensorIntensitiesAvg = sensorIntensities.reduce(function(a, b) { return a + b });
@@ -156,7 +156,7 @@ intensity *= net_yaw > 0 ? 1 : -1;
     // Translate forward in head direction *** REMINDER: local z axis is pointing "forward", i.e. in getWorldDirection()
     tmp_euglena.translateZ(config.track.blockly.v * dT);
 
-  //  if (lightInfo.diffNowToAdaptLevel > (customLightThreshold? customLightThreshold : EugBody.defaults.sensitivity_threshold)) {
+  //  if (lightInfo.diffNowToAdaptLevel > (customLightThreshold? customLightThreshold : EugBody.defaults.activation_threshold)) {
 //    var delta_yaw = (config.track.blockly.k * lightInfo.diffNowToAdaptLevel) * dT;
     var delta_yaw = (config.track.blockly.k * intensity) * dT;
 

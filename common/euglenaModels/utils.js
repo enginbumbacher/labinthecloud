@@ -102,7 +102,6 @@ module.exports = {
       let cos_field = Math.cos(sensor.getField() / 2);
       if (sensorDirWorld.length) {
         cos_light_sensor = -v_light.dot(sensorDirWorld);
-
         if (cos_light_sensor >= cos_field ) { calc_light = true; }
       } else {
         calc_light = true;

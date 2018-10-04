@@ -156,7 +156,7 @@ module.exports = {
     var rotationDir = 0;
     if (EugBody.lightSensors.length) {
       if (EugBody.lightSensors[0].field == 2*Math.PI) {
-        rotationDir = EugBody.lightSensors[0].position.y;
+        rotationDir = EugBody.lightSensors[0].position.y ? EugBody.lightSensors[0].position.y : [-1,1][Math.random()*2|0]; // turn in random direction if sensor in middle
       } else {
         rotationDir = EugBody.lightSensors[0].orientation.y;
       }
@@ -192,21 +192,21 @@ module.exports = {
     // Turn randomly left or right
     current_delta_yaw += EugBody.turn_random * [-1,1][Math.random()*2|0]*Math.random() * config.resetRandom * dT;
 
-    if (Math.abs(current_delta_yaw)<EugBody.defaults.yaw_min * dT) {
-      tmp_euglena.translateZ(fw_speed * dT);
-    }
+    //if (Math.abs(current_delta_yaw)<EugBody.defaults.yaw_min * dT) {
+    tmp_euglena.translateZ(fw_speed * dT);
+    //}
 
     // Create a wiggle if there is 1 sensor, and otherwise just do the normal roll
-    if (sensorIntensities.length == 1) {
-      if (Math.abs(current_delta_yaw)<EugBody.defaults.yaw_min * dT) { // Create wiggle by rotation on a cone
-        var rot_axis = new THREE.Vector3(0, Math.sin(config.wiggleRandom), Math.cos(config.wiggleRandom));
-        tmp_euglena.rotateOnAxis(rot_axis, roll_speed * dT);
-      } else { // Roll around the local z-axis (i.e. head)
-        var test = 0//tmp_euglena.rotateZ(roll_speed * dT);
-      }
-    } else {
+    //if (sensorIntensities.length == 1) {
+    if (Math.abs(current_delta_yaw)<EugBody.defaults.yaw_min * dT) { // Create wiggle by rotation on a cone
+      var rot_axis = new THREE.Vector3(0, Math.sin(config.wiggleRandom), Math.cos(config.wiggleRandom));
+      tmp_euglena.rotateOnAxis(rot_axis, roll_speed * dT);
+    } else { // Roll around the local z-axis (i.e. head)
       tmp_euglena.rotateZ(roll_speed * dT);
     }
+    //} else {
+    //  tmp_euglena.rotateZ(roll_speed * dT);
+    //}
 
     // NEXT STEPS:
     // 1. Create the block that calculates by how much the Euglena will yaw.

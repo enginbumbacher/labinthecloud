@@ -24,7 +24,7 @@ module.exports = (app) => {
   app.get('/admin/labs', (req, res) => {
     let ctx = req.getCurrentContext();
     let user = ctx.get('currentUser');
-    if (!user) res.sendStatus(403);
+    if (!user) return res.sendStatus(403);
 
     let perPage = parseInt(req.query.perPage) || 20;
     let page = parseInt(req.query.page) || 1;
@@ -135,7 +135,7 @@ module.exports = (app) => {
   app.get('/admin/lab/create', (req, res) => {
     let ctx = req.getCurrentContext();
     let user = ctx.get('currentUser');
-    if (!user) res.sendStatus(403);
+    if (!user) return res.sendStatus(403);
 
     let uuid = uuidv4();
     console.log(uuid);
@@ -165,7 +165,7 @@ module.exports = (app) => {
   app.get('/admin/lab/check-path', (req, res) => {
     let ctx = req.getCurrentContext();
     let user = ctx.get('currentUser');
-    if (!user) res.sendStatus(403);
+    if (!user) return res.sendStatus(403);
 
     Lab.find({ where: { path: req.body.path }}).then((lab) => {
       if (lab.length) res.send(`{ "isAvailable": false }`);
@@ -177,7 +177,7 @@ module.exports = (app) => {
   app.post('/admin/lab/create', (req, res) => {
     let ctx = req.getCurrentContext();
     let user = ctx.get('currentUser');
-    if (!user) res.sendStatus(403);
+    if (!user) return res.sendStatus(403);
 
     Lab.create(req.body).then((lab) => {
       req.session.messages.push({
@@ -201,10 +201,10 @@ module.exports = (app) => {
   app.get('/admin/lab/:labId', (req, res) => {
     let ctx = req.getCurrentContext();
     let user = ctx.get('currentUser');
-    if (!user) res.sendStatus(403);
+    if (!user) return res.sendStatus(403);
 
     Lab.findOne({ where: { id: req.params.labId }}).then((lab) => {
-      if (user.id != lab.userId && !ctx.get('currentUserRoles').includes('admin')) res.sendStatus(403);
+      if (user.id != lab.labUserId && !ctx.get('currentUserRoles').includes('admin')) return res.sendStatus(403);
       User.findOne({ where: { id: lab.labUserId }}).then((owner) => {
         res.render('pages/lab/single', {
           title: `Edit lab: ${lab.title}`,
@@ -231,7 +231,7 @@ module.exports = (app) => {
   app.post('/admin/lab/:labId', (req, res) => {
     let ctx = req.getCurrentContext();
     let user = ctx.get('currentUser');
-    if (!user) res.sendStatus(403);
+    if (!user) return res.sendStatus(403);
 
   })
 
@@ -239,11 +239,11 @@ module.exports = (app) => {
   app.get('/admin/lab/:labId/delete', (req, res) => {
     let ctx = req.getCurrentContext();
     let user = ctx.get('currentUser');
-    if (!user) res.sendStatus(403);
+    if (!user) return res.sendStatus(403);
 
     Lab.findOne({ where: { id: req.params.labId }}).then((lab) => {
       if (!lab) res.sendStatus(404);
-      if (user.id != lab.labUserId && !ctx.get('currentUserRoles').includes('admin')) res.sendStatus(403);
+      if (user.id != lab.labUserId && !ctx.get('currentUserRoles').includes('admin')) return res.sendStatus(403);
 
       res.render('pages/lab/delete', {
         lab: lab
@@ -255,11 +255,11 @@ module.exports = (app) => {
   app.post('/admin/lab/:labId/delete', (req, res) => {
     let ctx = req.getCurrentContext();
     let user = ctx.get('currentUser');
-    if (!user) res.sendStatus(403);
+    if (!user) return res.sendStatus(403);
 
     Lab.findOne({ where: { id: req.params.labId }}).then((lab) => {
       if (!lab) res.sendStatus(404);
-      if (user.id != lab.labUserId && !ctx.get('currentUserRoles').includes('admin')) res.sendStatus(403);
+      if (user.id != lab.labUserId && !ctx.get('currentUserRoles').includes('admin')) return res.sendStatus(403);
 
       if (req.body.deleteConfirmation) {
         Lab.destroyById(req.params.labId).then(() => {

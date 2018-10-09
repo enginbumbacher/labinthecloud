@@ -160,7 +160,7 @@ intensity *= net_yaw > 0 ? 1 : -1;
 //    var delta_yaw = (config.track.blockly.k * lightInfo.diffNowToAdaptLevel) * dT;
     var delta_yaw = (config.track.blockly.k * intensity) * dT;
 
-    const delta_roll = config.track.blockly.omega * dT;
+    const delta_roll = config.track.blockly.roll * dT;
 
     const yaw_min = 0.3 * dT; //config.params.k / 20.0; // restrict the minimum possible yaw rotation to 0.01 instead of 0
     if (Math.abs(delta_yaw)<yaw_min) {

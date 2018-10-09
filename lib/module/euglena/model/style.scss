@@ -14,7 +14,7 @@
 
     .component {
       &__field {
-        margin: 1rem 0;
+        margin: 0.5rem 0;
 
         .selectfield__select {
           margin-left: 0.5rem;
@@ -25,7 +25,7 @@
         display: flex;
         width: 100%;
         justify-content: flex-end;
-        margin: 1.5rem 0;
+        margin: 1.5rem 0 0 0;
 
         .field__label {
           display: inline-block;

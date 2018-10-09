@@ -9,7 +9,7 @@ module.exports = {
     config.track.oneEye = {
       k: config.model.configuration.k + (Math.random() * 2 - 1) * config.model.configuration.k_delta,
       v: config.model.configuration.v + (Math.random() * 2 - 1) * config.model.configuration.v_delta,
-      omega: config.model.configuration.omega + (Math.random() * 2 - 1) * config.model.configuration.omega_delta,
+      roll: config.model.configuration.roll + (Math.random() * 2 - 1) * config.model.configuration.roll_delta,
     }
   },
 
@@ -68,7 +68,7 @@ module.exports = {
     const dT = 1 / config.result.fps;
 
     var delta_yaw = (config.track.oneEye.k * intensity) * dT;
-    const delta_roll = config.track.oneEye.omega * dT;
+    const delta_roll = config.track.oneEye.roll * dT;
 
     // Translate forward in head direction *** REMINDER: local z axis is pointing "forward", i.e. in getWorldDirection()
     //tmp_euglena.translateZ(config.track.oneEye.v * dT);

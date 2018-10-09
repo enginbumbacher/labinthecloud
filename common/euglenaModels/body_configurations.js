@@ -1,8 +1,7 @@
 var THREE = require('./three.min.js');
 
 const defaults = {
-  yaw_min: 0.1,
-  shock_threshold: 0,
+  yaw_min: 0.5,
 
   opacity_factor: 2,
   opacity: 0.6,
@@ -13,31 +12,57 @@ const defaults = {
   ellipseDim: {z: 4.0, y: 2.0},
   ellipseOffset: {z: 0.25, y: 0.5},
 
-  bodySize: 14, //in micro-meters
+  signalDuration: 1.5, //in seconds
   sensorPosition: 'position_50', // in percent of body Size
 
   bodyType: 'ellipse', //'box'
 
-  activation_threshold: 3, // in percent of maximum light
+  activationThreshold_default: 0.1, // in percent of maximum light
+  activation_min: 0.03,
 
   fw_speed: 100,
   fw_conversion: 25, // factor by which to convert the chosen value to an internally used value.
   motion_type: 'motion_spiral',
-  roll_strength: 60, // in percent of fw_speed
+  roll_strength: 0.6, // in percent of fw_speed
 
-  reaction_strength_numeric: 2,
-  reaction_strength_variation: 0,
-  turn_amount: 'amount_2', // 'amount_1' - 'constant, 'amount_2' - proportional to light diff
-  turn_forward: 'forward_1', // 'forward_0' - turn on spot, 'forward_1' - turn while moving forward
-  turn_random: 'sigrandom_0', // number is percentage of turn_random_max for random turns
-  turn_random_max: 1.3,
-  turn_direction: 'away', // -1 - towards the sensor, 1 - away from the sensor
+  reactionStrength_numeric: 2,
+  reactionStrength_variation: 0,
 
-  adapt: 'adapt_0', // 'adapt_0' - no
-  adapt_memory: 80, // defined in number of frames; this is modified by adaptSpeed: the shorter the adapt_memory, the quicker it adapts // COMBINE ADAPT_MEMORY AND ADAPT_SPEED
-  adapt_speed: 0,
+  turn: {
+    amount: 'amount_proportional', // 'amount_constant' - 'constant, 'amount_proportional' - proportional to light diff
+    forward: 'forward_1', // 'forward_0' - turn on spot, 'forward_1' - turn while moving forward
+    random: 'sigrandom_20', // number is percentage of random_max for random turns
+    random_max: 1.3,
+    direction_default: 'away'
+  }, // -1 - towards the sensor, 1 - away from the sensor
+
+  light: {
+    memoryFactor: 1, // factor that determines over how many rotations of a Euglena the memory should last; translated into number of frames
+    memory: 20, // in seconds
+    aggregationType: 'max'
+  },
+
+  adapt: {
+    mode: 'adapt_null', // 'adapt_continuous' - Euglena is always functional, and activation threshold adapts continuously; 'adapt_shock' - continuous adaptation for small changes, but shock adaptation for big changes
+    speed: 10, // in seconds. The smaller the faster.
+    acceleration: 5, // factor by which adaptation is accelerated
+    deceleration: 0.1,
+    adaptedRange: 0, //0.3,
+    thresholdMin: 0.1,
+    thresholdSwitch: 0.5,
+    reactionStrengthSwitch: 10
+  },
+
+  shock: {
+    mode: null,
+    startThreshold: 0.5, // threshold for difference between incoming light and activation_threshold to trigger shock behavior
+    stopThreshold: -0.4, // threshold for difference between incoming light and activation_threshold to stop shock behavior
+    durationFactor: 30, // proportional to the difference of incoming light and activation_threshold; translated into number of frames; should be at most as big as adapt_speed
+    reactionStrength: 10, // intensity of turning reaction during shock
+    turnDirection: 1, // direction of turning during shock; values same definition as turning_direction
+    resetDuration: Math.ceil(20 + (Math.random() * 2 - 1) * 10) // in number of frames
   }
-;
+};
 
 // ALSO SPECIFY PARAMETERS FOR RANDOM TURNS, FOR MOLECULES, AND FOR TYPE OF TURNING.
 
@@ -130,6 +155,8 @@ class EuglenaBody {
     */
     this.bodyConfiguration = bodyConfig;
 
+    this.activation_min = defaults.activation_min;
+
     // for each sensor in the bodyConfiguration, create the corresponding Euglenasensor instantiation.
     this.lightSensors = [];
     Object.keys(this.bodyConfiguration).map((sensor,ind) => {
@@ -173,47 +200,56 @@ class EuglenaBody {
       else { this.fw_speed = this.defaults.fw_speed; }
     }
 
-    // either load roll speed (omega) or calculated it from forward speed
-    if (config.omega_numeric >= 0) {
-      this.roll_speed = Math.abs(config.omega_numeric + (Math.random() * 2 - 1) * config.omega_variation * config.omega_numeric);
+    // either load roll speed (roll) or calculated it from forward speed
+    if (config.roll_numeric >= 0) {
+      this.roll_speed = 2 * Math.PI * Math.abs(config.roll_numeric + (Math.random() * 2 - 1) * config.roll_variation);
+      // roll_speed is defined in rotations per second. So, convert this.roll_speed to
+      // 2*PI*this.roll_speed / config.frame angle per frame
     } else if (config.motion != null) {
       this.motion_type = config.motion.match('spiral') ? 1 : 0;
-      this.roll_speed = this.motion_type * this.defaults.roll_strength / 100 * this.fw_speed;
+      this.roll_speed = this.motion_type * this.defaults.roll_strength * this.fw_speed;
     } else {
       this.motion_type = this.defaults.motion.match('spiral') ? 1 : 0;
-      this.roll_speed = this.motion_type * this.defaults.roll_strength / 100 * this.fw_speed;
+      this.roll_speed = this.motion_type * this.defaults.roll_strength * this.fw_speed;
     }
+
+    this.light = this.defaults.light;
+    this.light.memory = this.roll_speed ? this.light.memoryFactor * 2 * Math.PI / this.roll_speed : this.defaults.light.memory; // To be multiplied by config.fps in calculation
+    this.light.aggregationType = this.defaults.light.aggregationType
 
     /* Turning parameters */
     var tmp_numeric = config.reactionStrength_numeric != null ? config.reactionStrength_numeric : this.defaults.reactionStrength_numeric;
     var tmp_variation = config.reactionStrength_variation != null ? config.reactionStrength_variation : this.defaults.reactionStrength_variation;
-    this.reaction_strength = tmp_numeric + (Math.random() * 2 - 1) * tmp_variation;
-    this.turn_amount = config.turnAmount != null ? config.turnAmount : this.defaults.turn_amount;
-    this.turn_forward = config.turnForward!= null ? config.turnForward : this.defaults.turn_forward;
-    this.turn_forward = this.turn_forward.match('_1') ? 1 : 0;
-    this.turn_random = ( config.signalRandom != null ? parseInt(config.signalRandom.substr(config.signalRandom.indexOf('_')+1)): parseInt(this.defaults.turn_random.substr(this.defaults.turn_random.indexOf('_')+1)) ) / 100 * this.defaults.turn_random_max;
+    this.reactionStrength = tmp_numeric + (Math.random() * 2 - 1) * tmp_variation;
+    this.turn = {};
+    this.turn.amount = config.signalReleaseAmount != null ? config.signalReleaseAmount : this.defaults.turn.amount;
+    this.turn.forward = config.turnForward!= null ? config.turnForward : this.defaults.turn.forward;
+    this.turn.forward = this.turn.forward.match('_1') ? 1 : 0;
+    this.turn.random = ( config.signalRandom != null ? parseInt(config.signalRandom.substr(config.signalRandom.indexOf('_')+1)): parseInt(this.defaults.turn.random.substr(this.defaults.turn.random.indexOf('_')+1)) ) / 100 * this.defaults.turn.random_max;
 
     /* Activation Thresholds and turning direction - depends also on the number of eyes! */
-    this.activation_threshold = (config.signalThresh != null ? config.signalThresh_numeric : this.defaults.activation_threshold) / 100;
-    var tmp_turnDir = config.turnDirection != null ? config.turnDirection : this.defaults.turn_direction;
-    this.turn_direction = tmp_turnDir.match('towards') ? 1 : -1;
+    this.activationThreshold_default = config.signalThresh != null ? config.signalThresh_numeric / 100: this.defaults.activationThreshold_default;
+    var tmp_turnDir = config.turnDirection != null ? config.turnDirection : this.defaults.turn.direction_default;
+    this.turn.direction_default = tmp_turnDir.match('towards') ? 1 : -1;
 
     /* Adaptation */
-    this.adapt = config.signalAdapt != null ? parseInt(config.signalAdapt.substr(config.signalAdapt.indexOf('_')+1)) : parseInt(this.defaults.adapt.substr(this.defaults.adapt.indexOf('_')+1));
-    this.adapt_speed = config.signalAdaptSpeed_numeric != null ? config.signalAdaptSpeed_numeric + (Math.random() * 2 - 1) * config.signalAdaptSpeed_variation : this.defaults.adapt_speed;
-    this.adapt_threshold = this.activation_threshold
+    this.adapt = this.defaults.adapt;
+    this.adapt.mode = config.signalAdapt != null ? config.signalAdapt : this.defaults.adapt.mode;
+    this.adapt.speed = config.signalAdaptSpeed_numeric != null ? config.signalAdaptSpeed_numeric + (Math.random() * 2 - 1) * config.signalAdaptSpeed_variation : this.defaults.adapt.speed;
 
-    // signalPathLength, depending on the position of the Sensor. It determines the number of frames by which the reaction is delayed. If it is 0, there is no delay.
-    this.signalPathLength = (config.sensorPosition ? config.sensorPosition.substr(config.sensorPosition.indexOf('_')+1) : this.defaults.sensorPosition.substr(this.defaults.sensorPosition.indexOf('_')+1));
-    if (config.fps) {
-      if (this.roll_speed) {
-//        this.signalPathLength = parseInt(this.signalPathLength) / 100 * Math.round( Math.PI / (this.roll_speed * (1 / config.fps)) ); // this.defaults.roll_strength / 100 * (this.defaults.fw_speed / this.defaults.fw_conversion) // Use this if you want to couple delay in response to rotation speed
-        this.signalPathLength = parseInt(this.signalPathLength) / 100 * this.defaults.bodySize;
-      } else {
-        this.signalPathLength = parseInt(this.signalPathLength) / 100 * this.defaults.bodySize;
-      }
+    // shock
+    this.shock = this.defaults.shock;
+    this.shock.mode = config.signalAdapt === 'adapt_shock' ? true : false;
+    this.shock.startThreshold = config.signalShockThresh_numeric ? (config.signalShockThresh_numeric + (Math.random() * 2 - 1) * config.signalShockThresh_variation ) / 100 : this.shock.startThreshold;
+
+
+    // signalDuration, depending on the position of the Sensor. It determines the number of frames by which the reaction is delayed. If it is 0, there is no delay.
+    var signalPath = config.sensorPosition ? config.sensorPosition.substr(config.sensorPosition.indexOf('_')+1) : this.defaults.sensorPosition.substr(this.defaults.sensorPosition.indexOf('_')+1);
+    if (this.roll_speed) {
+//        this.signalDuration = parseInt(this.signalDuration) / 100 * Math.PI / this.roll_speed; // this.defaults.roll_strength / 100 * (this.defaults.fw_speed / this.defaults.fw_conversion) // Use this if you want to couple delay in response to rotation speed
+      this.signalDuration = parseInt(signalPath) / 100 * this.defaults.signalDuration;
     } else {
-      this.signalPathLength = parseInt(this.signalPathLength) / 100 * this.defaults.bodySize;
+      this.signalDuration = parseInt(signalPath) / 100 * this.defaults.signalDuration;
     }
   }
 

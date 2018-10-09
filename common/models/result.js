@@ -256,7 +256,7 @@ const _createModelResults = (app, result, model) => {
     }
 
     // Parameters for "memory" i.e. for values of light detected and of parameter changes
-    
+
     // Parameters for smooth randomization
     var resetMin = basicParameters.randomSmoothWindow; //Math.floor(0.25 * result.fps);
     var resetMax = Math.ceil(1.5 * result.fps);
@@ -266,16 +266,6 @@ const _createModelResults = (app, result, model) => {
     var resetAngleMax = 15;
     var randomnessFactor = model.modelType.match('blockly|mech') ? basicParameters.randomnessFactor : model.configuration.randomness;
     var resetRandomAngle = EuglenaUtils.setRandomAngleMatrix(model.configuration.count, basicParameters.randomSmoothWindow, resetAngleMax, resetAngleMin, randomnessFactor);
-
-    /*
-    Pseud-Code for generating a delay in reaction:
-    Create an array of the light information required.
-    Each time, pass the light information of the current instance to that array (from mech.js to here).
-    Depending on the distance of the eye to the flagellum, use a fixed offset in the light array for the value of light to be passed to the update function in mech.js
-    If the distance of the flagellum to the eye is 0, then do the processing immediately within the update function.
-    */
-
-
 
     for (let frame = 1; frame <= duration * result.fps; frame++) {
       for (let euglenaId = 0; euglenaId < model.configuration.count; euglenaId++) {
@@ -316,7 +306,7 @@ const _createModelResults = (app, result, model) => {
           result: result,
           frame: frame,
           resetRandom: resetRandomNow, // CURRENTLY NOT BEING USED
-          wiggleRandom: 0.4
+          wiggleRandom: 0.2
         }))
       }
     }

@@ -5,6 +5,12 @@
   .app {
     display: block;
     position: relative;
+
+    .field__errors {
+      color: #dc3545;
+      font-size: 1rem;
+      font-weight: bold;
+    }
   }
   .component__fieldgroup {
     &.fieldgroup__collapsible {

@@ -167,9 +167,22 @@ module.exports = (app) => {
     let user = ctx.get('currentUser');
     if (!user) return res.sendStatus(403);
 
-    Lab.find({ where: { and: [{ labUserId: user.id }, { path: req.body.path }] }}).then((lab) => {
-      if (lab.length) res.send(`{ "isAvailable": false }`);
-      else res.send(`{ "isAvailable": true }`);
+    Lab.find({
+      where: {
+        and: [
+          { labUserId: user.id },
+          { path: req.query.path }
+        ]
+      }
+    }).then((lab) => {
+      if (lab.length) res.send({
+        isAvailable: false,
+        usedBy: lab[0].id
+      });
+      else res.send({
+        isAvailable: true,
+        usedBy: null
+      });
     });
   })
 

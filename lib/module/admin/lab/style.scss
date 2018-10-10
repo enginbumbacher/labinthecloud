@@ -145,18 +145,22 @@
   }
 }
 
-body > .component__localmodal .localmodal__content {
-  height: calc(100% - 4rem);
+body > .component__localmodal {
+  position: fixed;
+  
+  .localmodal__content {
+    height: calc(100% - 4rem);
 
-  font-size: $font__size;
-  font-family: $font__default;
-  background: $palette__white;
-  h1, h2, h3, h4, h5, h6 {
-    font-family: $font__title;
-    font-weight: $font__title__weight;
-  }
-  *, *:before, *:after {
-    box-sizing: inherit;
+    font-size: $font__size;
+    font-family: $font__default;
+    background: $palette__white;
+    h1, h2, h3, h4, h5, h6 {
+      font-family: $font__title;
+      font-weight: $font__title__weight;
+    }
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
   }
 }
 

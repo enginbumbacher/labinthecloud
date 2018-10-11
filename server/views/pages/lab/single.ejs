@@ -35,11 +35,14 @@ scripts = scripts.concat([
 %>
 <script>
   window.EditLabConfig = {
+<% if (context.get('currentUserRoles').includes('admin')) { %>
+    isAdmin: true,
+<% } %>
     title: "<%= title %>",
     data: <%- JSON.stringify(lab) %>,
     user: {
       uuid: "<%- owner.uuid %>",
-      domain: "<%- owner.domain %>"
+      domain: "<%- owner.domain %>",
     }
   }
 </script>

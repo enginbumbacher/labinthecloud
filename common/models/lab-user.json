@@ -21,6 +21,11 @@
       "type": "hasMany",
       "model": "Lab",
       "foreignKey": "labUserId"
+    },
+    "studentGroups": {
+      "type": "hasMany",
+      "model": "StudentGroup",
+      "foreignKey": "labUserId"
     }
   },
   "acls": [

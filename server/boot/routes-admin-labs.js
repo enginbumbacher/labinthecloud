@@ -93,7 +93,7 @@ module.exports = (app) => {
           paginationLinks.push({
             active: i + 1 == page,
             label: i + 1,
-            url: `/admin/labs?page=${i + 1}${perPage == 20 ? '' : `&perPage=${perPage}`}`
+            url: `/admin/user/${req.params.userId}/labs?page=${i + 1}${perPage == 20 ? '' : `&perPage=${perPage}`}`
           })
         }
 
@@ -123,8 +123,8 @@ module.exports = (app) => {
             label: "lab list navigation",
             links: paginationLinks,
 
-            previous: page == 1 ? null : `/admin/labs?page=${page - 1}${perPage == 20 ? '' : `&perPage=${perPage}`}`,
-            next: page == pageCount ? null : `/admin/labs?page=${page + 1}${perPage == 20 ? '' : `&perPage=${perPage}`}`
+            previous: page == 1 ? null : `/admin/user/${req.params.userId}/labs?page=${page - 1}${perPage == 20 ? '' : `&perPage=${perPage}`}`,
+            next: page == pageCount ? null : `/admin/user/${req.params.userId}/labs?page=${page + 1}${perPage == 20 ? '' : `&perPage=${perPage}`}`
           }
         })
       })

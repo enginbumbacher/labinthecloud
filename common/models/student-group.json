@@ -22,6 +22,10 @@
     "uuid": {
       "type": "string",
       "defaultFn": "uuidv4"
+    },
+    "access": {
+      "type": "object",
+      "required": false
     }
   },
   "validations": [],

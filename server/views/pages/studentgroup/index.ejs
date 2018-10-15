@@ -1,0 +1,24 @@
+<% include ../../partials/head %>
+<div class="d-flex align-items-center">
+  <h1><%= title %></h1>
+  <% if (allowCreate) { %>
+  <div class="ml-auto">
+    <a href="/admin/studentgroup/create" class="btn btn-primary">Create new Class</a>
+  </div>
+  <% } %>
+</div>
+<div class="container paginated-list">
+  <div class="row">
+    <div class="col">
+      <div class="list-group">
+      <% studentGroups.forEach((group) => { %>
+        <a class="list-group-item list-group-item-action" href="/admin/studentgroup/<%= group.id %>">
+          <%= group.title %>
+        </a>
+      <% }) %>
+      </div>
+    </div>
+  </div>
+<%- include('../../partials/pagination', pagination) %>
+</div>
+<% include ../../partials/foot %>

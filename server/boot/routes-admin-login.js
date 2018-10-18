@@ -111,7 +111,7 @@ module.exports = (app) => {
       user.labs.create({
         title: 'Example Lab',
         config: baselineLab,
-        path: 'example'
+        path: 'baselab'
       })
 
       let baseUrl = req.hostname == "localhost" ? app.get('url') : `${req.protocol}://${req.hostname}/`;

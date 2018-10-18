@@ -6,3 +6,13 @@
 
 .litc-admin .paginated-list .row {
   margin-top: 1rem; }
+
+.litc-admin .component__field {
+  margin: 1rem 0; }
+
+.litc-admin .field__label {
+  display: block; }
+
+.litc-admin .field__help {
+  display: block;
+  font-size: 0.8em; }

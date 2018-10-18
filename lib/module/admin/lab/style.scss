@@ -1,0 +1,83 @@
+.edit-lab-form__container {
+
+  .component__fieldgroup {
+    &.fieldgroup__collapsible {
+      border: 1px solid rgba(0,0,0,0.25);
+      padding: 1rem;
+      margin: 1rem 0;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      & > .field__label {
+        background: rgba(0,0,0,0.25);
+        margin: -1rem -1rem 0 -1rem;
+        padding: 1rem;
+        cursor: pointer;
+      }
+    }
+    &.fieldgroup__collapsed {
+      & > .fieldgroup__fields,
+      & > .field__errors,
+      & > .field__help {
+        display: none;
+      } 
+      & > .field__label {
+        margin-bottom: -1rem;
+      }
+    }
+  }
+
+  .component__symselectfield {
+    display: block;
+    .symselectfield__label {
+      display: block;
+    }
+    .symselectfield__select {
+      max-width: 35%;
+    }
+  }
+
+  .form__buttons {
+    display: flex;
+    .component__button {
+      .button {
+        font-weight: normal;
+        font-size: 1rem;
+      }
+      &.field__id__delete {
+        margin-left: auto;
+        .button {
+          color: #FFF;
+          background: #dc3545;
+          border-color: #dc3545;
+
+          &:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+          }
+        }
+      }
+      &.field__id__submit {
+        .button {
+          color: #FFF;
+          background: #007bff;
+          border-color: #007bff;
+
+          &:hover {
+            background-color: #0069d9;
+            border-color: #0062cc
+          }
+        }
+      }
+      // .button {
+      //   background: inherit;
+      //   border: inherit;
+      //   font-weight: inherit;
+      //   font-size: inherit;
+      //   border-radius: inherit;
+      // }
+    }
+  }
+}

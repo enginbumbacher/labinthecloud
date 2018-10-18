@@ -1,0 +1,16 @@
+<% include ../../partials/head %>
+<div class="edit-lab-form__container"></div>
+<%
+scripts.push('/cslib/admin/lab/form.js');
+%>
+<script>
+  window.AppConfig = {
+    title: "<%= title %>",
+    data: <%- JSON.stringify(lab) %>,
+    user: {
+      uuid: "<%- owner.uuid %>",
+      domain: "<%- owner.domain %>"
+    }
+  }
+</script>
+<% include ../../partials/foot %>

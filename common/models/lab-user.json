@@ -5,20 +5,30 @@
   "options": {
     "validateUpsert": true
   },
+  "restrictResetPasswordTokenScope": true,
   "properties": {
     "domain": {
       "type": "string"
+    },
+    "uuid": {
+      "type": "string",
+      "defaultFn": "uuidv4"
     }
   },
-  "restrictResetPasswordTokenScope": true,
   "validations": [],
-  "relations": {},
+  "relations": {
+    "labs": {
+      "type": "hasMany",
+      "model": "Lab",
+      "foreignKey": "labUserId"
+    }
+  },
   "acls": [
     {
-      "principalType": "ROLE",
-      "principleId": "$everyone",
       "accessType": "READ",
-      "permission": "ALLOW"
+      "principalType": "ROLE",
+      "permission": "ALLOW",
+      "principleId": "$everyone"
     }
   ],
   "methods": {}

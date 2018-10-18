@@ -1,0 +1,40 @@
+{
+  "name": "Lab",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "date_created": {
+      "type": "date",
+      "required": true,
+      "default": "$now"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "path": {
+      "type": "string",
+      "required": true
+    },
+    "config": {
+      "type": "object",
+      "required": true
+    },
+    "uuid": {
+      "type": "string",
+      "defaultFn": "uuidv4"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "user": {
+      "type": "belongsTo",
+      "model": "LabUser"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

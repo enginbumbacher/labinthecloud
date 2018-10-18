@@ -76,5 +76,9 @@
   },
   "Email": {
     "dataSource": "emailDs"
+  },
+  "Lab": {
+    "dataSource": "mysql",
+    "public": true
   }
 }

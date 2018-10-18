@@ -2,21 +2,42 @@ const path = require('path');
 
 module.exports = {
   mode: 'production',
-  entry: './lib-admin/style.scss',
+  entry: {
+    'lab/form': './lib/edit-lab-form.js'
+  },
   output: {
-    filename: 'admin.css',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'client/cslib/admin')
   },
   cache: true,
   devtool: 'source-map',
   resolve: {
-    modules: ['node_modules', 'lib-admin/module']
+    modules: ['node_modules', 'lib/module']
   },
   module: {
     rules: [
       {
         test: /\.scss$/,
-        use: ['css-loader', 'sass-loader']
+        use: ['style-loader', 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['babel-preset-env']
+          }
+        }
+      },
+      {
+        test: /\.html$/,
+        use: {
+          loader: 'html-loader',
+          options: {
+            exportAsEs6Default: true
+          }
+        }
       },
       {
         test: /\.(png|jpg|svg|gif)$/,
@@ -42,4 +63,4 @@ module.exports = {
       }
     ]
   }
-};;
+};

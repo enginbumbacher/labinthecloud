@@ -2,9 +2,11 @@ const path = require('path');
 
 module.exports = {
   mode: 'production',
-  entry: './lib/index.js',
+  entry: {
+    'litc-main': './lib/index.js'
+  },
   output: {
-    filename: 'litc-main.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'client/cslib')
   },
   cache: true,
@@ -44,7 +46,7 @@ module.exports = {
           options: {
             limit: 100,
             name: 'images/[hash]-[name].[ext]',
-            publicPath: "cslib/"
+            publicPath: "/cslib/"
           }
         }]
       },
@@ -55,7 +57,7 @@ module.exports = {
           options: {
             limit: 8000,
             name: 'fonts/[name].[ext]',
-            publicPath: 'cslib/'
+            publicPath: '/cslib/'
           }
         }
       }

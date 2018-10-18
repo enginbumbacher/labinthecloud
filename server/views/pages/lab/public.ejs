@@ -68,57 +68,18 @@
     </style>
   </head>
   <body>
-    <div class="loader">Loading..</div>
+    <div class="litc-lab">
+      <div class="loader">Loading..</div>
+    </div>
+
 <% if (lab.model.blocks) { %>
     <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
-      <category name="Turning" colour="#2F5596">
-  <% if (lab.model.blocks.turning.turn_at_1sensor.allow) { %>
-        <block type="turn_at_1sensor" id="turn_at_1sensor" disabled='false' max_use='<%= lab.model.blocks.turning.turn_at_1sensor.maxUse %>' sensors='one' equivalence='turn_at_2sensors'>
-          <field name="DIRECTION">TOWARDS</field>
-        </block>
-  <% } %>
-  <% if (lab.model.blocks.turning.turn_at_2sensor.allow) { %>
-        <block type="turn_at_2sensors" id="turn_at_2sensors" disabled='false' max_use='<%= lab.model.blocks.turning.turn_at_2sensor.maxUse %>' sensors='two' equivalence='turn_at_1sensor'>
-          <field name="DIRECTION">TOWARDS</field>
-        </block>
-  <% } %>
-  <% if (lab.model.blocks.turning.turn_randomly.allow) { %>
-        <block type="turn_randomly" id="turn_randomly" disabled='false' max_use='<%= lab.model.blocks.turning.turn_randomly.maxUse %>' sensors='both'></block>
-  <% } %>
-  <% if (lab.model.blocks.turning.turn_change.allow) { %>
-        <block type="turn_change" id='turn_change' disabled='false' max_use='<%= lab.model.blocks.turning.turn_change.maxUse %>' sensors='both'>
-          <field name="SPEED">CHANGE_20</field>
-        </block>
-      </category>
-      <category name="Forward" colour="#805ba5">
-  <% } %>
-  <% if (lab.model.blocks.forward.move_normal.allow) { %>
-        <block type="move_normal" id="move_normal" disabled='false' max_use='<%= lab.model.blocks.forward.move_normal.maxUse %>' sensors='both'></block>
-  <% } %>
-  <% if (lab.model.blocks.forward.move_change.allow) { %>
-        <block type="move_change" id='move_change' disabled='false' max_use='<%= lab.model.blocks.forward.move_change.maxUse %>' sensors='both'>
-          <field name="SPEED">CHANGE_20</field>
-        </block>
-      </category>
-      <category name="Rotation" colour="#C55A11">
-  <% } %>
-  <% if (lab.model.blocks.rotation.roll_normal.allow) { %>
-        <block type="roll_normal" id="roll_normal" disabled='false' max_use='<%= lab.model.blocks.rotation.roll_normal.maxUse %>' sensors='both'></block>
-  <% } %>
-  <% if (lab.model.blocks.rotation.roll_change.allow) { %>
-        <block type="roll_change" id='roll_change' disabled='false' max_use='<%= lab.model.blocks.rotation.roll_change.maxUse %>' sensors='both'>
-          <field name="SPEED">CHANGE_20</field>
-        </block>
-      </category>
-      <category name="Additional Blocks" colour="#00A407">
-  <% } %>
-  <% if (lab.model.blocks.additional.see_light_quantity.allow) { %>
-        <block class='sensing' type="see_light_quantity" id="see_light_quantity" disabled='false' max_use='<%= lab.model.blocks.additional.see_light_quantity.maxUse %>' sensors='both'>
-          <field name='THRESHOLD'>THRESH_20</field>
-        </block>
-  <% } %>
-      </category>
+      <category name="Turning" colour="#2F5596"></category>
+      <category name="Forward" colour="#805ba5"></category>
+      <category name="Rotation" colour="#C55A11"></category>
+      <category name="Additional Blocks" colour="#00A407"></category>
     </xml>
+
     <xml xmlns="http://www.w3.org/1999/xhtml" id="defaultWorkspaceBlocks" style="display:none">
       <variables></variables>
       <block type="master_block" id="master_block" x="5" y="63" max_use='0' sensors='both'>

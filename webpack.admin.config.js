@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'production',
@@ -46,7 +47,7 @@ module.exports = {
           options: {
             limit: 100,
             name: 'images/[hash]-[name].[ext]',
-            publicPath: "cslib/"
+            publicPath: "/cslib/"
           }
         }]
       },
@@ -57,10 +58,15 @@ module.exports = {
           options: {
             limit: 8000,
             name: 'fonts/[name].[ext]',
-            publicPath: 'cslib/'
+            publicPath: '/cslib/'
           }
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      Blockly: 'google-blockly/blockly-compressed'
+    })
+  ]
 };

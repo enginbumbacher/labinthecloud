@@ -14,4 +14,51 @@ module.exports = function(Lab) {
     });
     next();
   });
+
+  Lab.clearTemporaryData = (uuid, cb) => {
+    const Experiment = Lab.app.models.Experiment;
+    const EuglenaModel = Lab.app.models.EuglenaModel;
+    const Student = Lab.app.models.Student;
+    //clear out any experiments or models created in the admin lab preview
+    Student.findOne({
+      where: {
+        source_id: '_student'
+      }
+    }).then((editorStudent) => {
+      let expClear = Experiment.find({
+        where: {
+          lab: uuid,
+          studentId: editorStudent.id
+        }
+      }).then((exps) => {
+        return Promise.all(exps.map((exp) => exp.destroy()));
+      })
+
+      let modelClear = EuglenaModel.find({
+        where: {
+          lab: uuid,
+          studentId: editorStudent.id
+        }
+      }).then((mods) => {
+        return Promise.all(mods.map((mod) => mod.destroy()))
+      })
+
+      Promise.all([expClear, modelClear]).then(() => {
+        cb(null, true);
+      }, () => {
+        cb(null, false);
+      })
+    })
+  }
+
+  Lab.remoteMethod('clearTemporaryData', {
+    accepts: {
+      arg: 'uuid',
+      type: 'string'
+    },
+    returns: {
+      arg: 'success',
+      type: 'boolean'
+    }
+  })
 };

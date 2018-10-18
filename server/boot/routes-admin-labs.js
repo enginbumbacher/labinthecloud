@@ -3,6 +3,7 @@
 module.exports = (app) => {
   const User = app.models.LabUser;
   const Lab = app.models.Lab;
+  const uuidv4 = require('uuid/v4');
 
   app.get('/lab/:userPath/:labPath', (req, res) => {
     User.findOne({ where: { or: [{ uuid: req.params.userPath }, { domain: req.params.userPath }]}}).then((user) => {
@@ -136,9 +137,14 @@ module.exports = (app) => {
     let user = ctx.get('currentUser');
     if (!user) return res.sendStatus(403);
 
+    let uuid = uuidv4();
+    console.log(uuid);
+
     res.render('pages/lab/single', {
       title: 'Create new lab',
-      lab: null,
+      lab: {
+        uuid: uuid
+      },
       breadcrumb: [
         {
           label: 'Home',
@@ -161,9 +167,22 @@ module.exports = (app) => {
     let user = ctx.get('currentUser');
     if (!user) return res.sendStatus(403);
 
-    Lab.find({ where: { path: req.body.path }}).then((lab) => {
-      if (lab.length) res.send(`{ "isAvailable": false }`);
-      else res.send(`{ "isAvailable": true }`);
+    Lab.find({
+      where: {
+        and: [
+          { labUserId: user.id },
+          { path: req.query.path }
+        ]
+      }
+    }).then((lab) => {
+      if (lab.length) res.send({
+        isAvailable: false,
+        usedBy: lab[0].id
+      });
+      else res.send({
+        isAvailable: true,
+        usedBy: null
+      });
     });
   })
 

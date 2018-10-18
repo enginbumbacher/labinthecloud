@@ -13,7 +13,7 @@ $bulb-display__bar-width: 4rem;
     position: absolute;
   }
   &__top {
-    background: url(bulbs_h_bright.png) center center no-repeat;
+    background: url(./bulbs_h_bright.png) center center no-repeat;
     background-size: contain;
     -webkit-transform: rotate(180deg);
     transform: rotate(180deg);
@@ -23,7 +23,7 @@ $bulb-display__bar-width: 4rem;
     height: $bulb-display__bar-width;
   }
   &__top__fix {
-  background: url(bulbs_h_dark.png) center center no-repeat;
+  background: url(./bulbs_h_dark.png) center center no-repeat;
   background-size: contain;
   -webkit-transform: rotate(180deg);
   transform: rotate(180deg);
@@ -33,7 +33,7 @@ $bulb-display__bar-width: 4rem;
   height: $bulb-display__bar-width;
   }
   &__bottom {
-    background: url(bulbs_h_bright.png) center center no-repeat;
+    background: url(./bulbs_h_bright.png) center center no-repeat;
     background-size: contain;
     bottom: 0;
     left: 5%;
@@ -41,7 +41,7 @@ $bulb-display__bar-width: 4rem;
     height: $bulb-display__bar-width;
   }
   &__bottom__fix {
-  background: url(bulbs_h_dark.png) center center no-repeat;
+  background: url(./bulbs_h_dark.png) center center no-repeat;
   background-size: contain;
   bottom: 0;
   left: 5%;
@@ -49,7 +49,7 @@ $bulb-display__bar-width: 4rem;
   height: $bulb-display__bar-width;
   }
   &__left {
-    background: url(bulbs_v_bright.png) center center no-repeat;
+    background: url(./bulbs_v_bright.png) center center no-repeat;
     background-size: contain;
     top: 5%;
     left: 0;
@@ -57,7 +57,7 @@ $bulb-display__bar-width: 4rem;
     width: $bulb-display__bar-width;
   }
   &__left__fix {
-    background: url(bulbs_v_dark.png) center center no-repeat;
+    background: url(./bulbs_v_dark.png) center center no-repeat;
     background-size: contain;
     top: 5%;
     left: 0;
@@ -65,7 +65,7 @@ $bulb-display__bar-width: 4rem;
     width: $bulb-display__bar-width;
   }
   &__right {
-    background: url(bulbs_v_bright.png) center center no-repeat;
+    background: url(./bulbs_v_bright.png) center center no-repeat;
     background-size: contain;
     -webkit-transform: rotate(180deg);
     transform: rotate(180deg);
@@ -75,7 +75,7 @@ $bulb-display__bar-width: 4rem;
     width: $bulb-display__bar-width;
   }
   &__right__fix {
-    background: url(bulbs_v_dark.png) center center no-repeat;
+    background: url(./bulbs_v_dark.png) center center no-repeat;
     background-size: contain;
     -webkit-transform: rotate(180deg);
     transform: rotate(180deg);

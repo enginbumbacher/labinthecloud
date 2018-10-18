@@ -15,6 +15,21 @@ module.exports = function(Lab) {
     next();
   });
 
+  Lab.observe('before delete', (ctx, next) => {
+    // remove any lab relationships
+    Lab.find({ where: ctx.where }).then((toGo) => {
+      Promise.all(toGo.map((lab) => {
+        return lab.studentGroups.find({}).then((studentGroups) => {
+          return Promise.all(studentGroups.map((group) => lab.studentGroups.remove(group)));
+        });
+      })).then(() => {
+        next();
+      }, (err) => {
+        next(err);
+      })
+    })
+  })
+
   Lab.clearTemporaryData = (uuid, cb) => {
     const Experiment = Lab.app.models.Experiment;
     const EuglenaModel = Lab.app.models.EuglenaModel;

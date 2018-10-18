@@ -35,7 +35,7 @@
       "model": "LabUser"
     },
     "labs": {
-      "type": "hasMany",
+      "type": "hasAndBelongsToMany",
       "model": "Lab"
     }
   },

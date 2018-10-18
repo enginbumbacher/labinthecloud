@@ -12,7 +12,8 @@ module.exports = function(app, cb) {
     'RoleMapping',
     'Role',
     'Lab',
-    'StudentGroup'
+    'StudentGroup',
+    'StudentGroupLab'
   ], () => {
     process.nextTick(cb);
   });

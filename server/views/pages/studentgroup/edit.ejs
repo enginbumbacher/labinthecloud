@@ -1,0 +1,42 @@
+<% include ../../partials/head %>
+<h1><%= title %></h1>
+<div class="container">
+  <form method="post" action="<%= form.action %>">
+    <div class="form-group">
+      <label for="name">Project Name</label>
+      <input type="text" class="form-control" id="name" name="name" required value="<%= studentGroup.name %>"/>
+    </div>
+    <div class="form-group">
+      <label for="path">URL</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><%= urlBase %></span>
+        </div>
+        <input type="text" class="form-control" id="path" name="path" required value="<%= studentGroup.path %>"/>
+      </div>
+      <small class="form-text text-muted">All labs will be accessed under the project's URL</small>
+    </div>
+    <div class="form-group">
+      <label for="labs">Labs</label>
+<% labs.forEach((lab) => { %>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <input type="checkbox" name="labs[]" value="<%= lab.id %>"<%= studentGroup.labs && studentGroup.labs.map((lab) => lab.id).includes(lab.id) ? ' checked' : '' %>/>
+          </div>
+        </div>
+        <input class="form-control" type="text" disabled value="<%= lab.title %>"/>
+      </div>
+<% }) %>
+    </div>
+    <div class="form-group">
+      <label for="access">Allowed Logins</label>
+      <textarea id="access" name="access" class="form-control"><%= studentGroup.access ? studentGroup.access.join('\n') : '' %></textarea>
+      <small class="form-text text-muted">Add each login name on a new line. Leave blank to allow any login.</small>
+    </div>
+    <div class="d-flex">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
+<% include ../../partials/foot %>

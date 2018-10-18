@@ -34,8 +34,8 @@
       "type": "belongsTo",
       "model": "LabUser"
     },
-    "studentGroup": {
-      "type": "belongsTo",
+    "studentGroups": {
+      "type": "hasAndBelongsToMany",
       "model": "StudentGroup"
     }
   },

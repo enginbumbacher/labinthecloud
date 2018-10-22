@@ -151,7 +151,8 @@ module.exports = function(Experiment) {
           date_created: exp.date_created,
           demo: exp.demo,
           id: exp.id,
-          studentId: exp.studentId
+          studentId: exp.studentId,
+          name: exp.name
         }
       })
       cb(null, out);

@@ -10,13 +10,27 @@ module.exports = (app) => {
     User.findOne({ where: { or: [{ uuid: req.params.userPath }, { domain: req.params.userPath }]}}).then((user) => {
       return Promise.all([
         user.labs.findOne({ where: { path: req.params.labPath } }),
-        user.studentGroups.findOne({ where: { path: req.params.studentGroupPath }})
+        user.studentGroups.findOne({
+          where: {
+            path: req.params.studentGroupPath
+          },
+          include: [{
+            relation: "labs",
+            scope: {
+              fields: ["id"]
+            }
+          }]
+        })
       ]);
     }).then((data) => {
       let lab = data[0];
       let group = data[1];
+      let groupData = null;
+      if (group) {
+        groupData = group.toJSON();
+      }
 
-      if (lab && group) {
+      if (lab && group && groupData.labs.map((l) => l.id ).includes(lab.id)) {
         let conf = lab.config;
         conf.lab = lab.uuid;
         conf.studentGroup = {

@@ -80,5 +80,9 @@
   "Lab": {
     "dataSource": "mysql",
     "public": true
+  },
+  "StudentGroup": {
+    "dataSource": "mysql",
+    "public": true
   }
 }

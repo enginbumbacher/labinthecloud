@@ -33,6 +33,10 @@
     "user": {
       "type": "belongsTo",
       "model": "LabUser"
+    },
+    "studentGroups": {
+      "type": "hasAndBelongsToMany",
+      "model": "StudentGroup"
     }
   },
   "acls": [],

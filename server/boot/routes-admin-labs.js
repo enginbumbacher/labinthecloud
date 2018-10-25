@@ -4,14 +4,39 @@ module.exports = (app) => {
   const User = app.models.LabUser;
   const Lab = app.models.Lab;
   const uuidv4 = require('uuid/v4');
+  const StudentGroup = app.models.StudentGroup;
 
-  app.get('/lab/:userPath/:labPath', (req, res) => {
+  app.get('/lab/:userPath/:studentGroupPath/:labPath', (req, res) => {
     User.findOne({ where: { or: [{ uuid: req.params.userPath }, { domain: req.params.userPath }]}}).then((user) => {
-      return user.labs.findOne({ where: { path: req.params.labPath } });
-    }).then((lab) => {
-      if (lab) {
+      return Promise.all([
+        user.labs.findOne({ where: { path: req.params.labPath } }),
+        user.studentGroups.findOne({
+          where: {
+            path: req.params.studentGroupPath
+          },
+          include: [{
+            relation: "labs",
+            scope: {
+              fields: ["id"]
+            }
+          }]
+        })
+      ]);
+    }).then((data) => {
+      let lab = data[0];
+      let group = data[1];
+      let groupData = null;
+      if (group) {
+        groupData = group.toJSON();
+      }
+
+      if (lab && group && groupData.labs.map((l) => l.id ).includes(lab.id)) {
         let conf = lab.config;
         conf.lab = lab.uuid;
+        conf.studentGroup = {
+          uuid: group.uuid,
+          name: group.path
+        };
         res.render('pages/lab/public', {
           lab: conf
         })
@@ -19,6 +44,22 @@ module.exports = (app) => {
         res.sendStatus(404);
       }
     })
+  })
+
+  app.post('/lab/:userPath/:studentGroupPath/:labPath/access', (req, res) => {
+    User.findOne({ where: { or: [{ uuid: req.params.userPath }, { domain: req.params.userPath }]}}).then((user) => {
+      return user.studentGroups.findOne({ where: { path: req.params.studentGroupPath }});
+    }).then((group) => {
+      if (!group) return res.send({ access: false});
+
+      if (group.access && group.access.length) {
+        return group.access.includes(req.body.email) ? res.send({ access: true }) : res.send({ access: false});
+      } else {
+        return req.body.email.indexOf('@') < 0 ? res.send({ access: false}) : res.send({ access: true });
+      }
+    }).catch((err) => {
+      res.sendStatus(500);
+    });
   })
 
   app.get('/admin/labs', (req, res) => {
@@ -93,7 +134,7 @@ module.exports = (app) => {
           paginationLinks.push({
             active: i + 1 == page,
             label: i + 1,
-            url: `/admin/labs?page=${i + 1}${perPage == 20 ? '' : `&perPage=${perPage}`}`
+            url: `/admin/user/${req.params.userId}/labs?page=${i + 1}${perPage == 20 ? '' : `&perPage=${perPage}`}`
           })
         }
 
@@ -123,8 +164,8 @@ module.exports = (app) => {
             label: "lab list navigation",
             links: paginationLinks,
 
-            previous: page == 1 ? null : `/admin/labs?page=${page - 1}${perPage == 20 ? '' : `&perPage=${perPage}`}`,
-            next: page == pageCount ? null : `/admin/labs?page=${page + 1}${perPage == 20 ? '' : `&perPage=${perPage}`}`
+            previous: page == 1 ? null : `/admin/user/${req.params.userId}/labs?page=${page - 1}${perPage == 20 ? '' : `&perPage=${perPage}`}`,
+            next: page == pageCount ? null : `/admin/user/${req.params.userId}/labs?page=${page + 1}${perPage == 20 ? '' : `&perPage=${perPage}`}`
           }
         })
       })

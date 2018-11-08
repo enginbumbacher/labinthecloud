@@ -26,12 +26,24 @@ const downloadBasePath = `${process.env.BIOLAB_URL}/account/joinlabwithdata/down
 // const downloadBasePath = 'http://euglena.stanford.edu/account/joinlabwithdata/downloadFile';
 
 const createBpuResults = (app, context) => {
+  console.log('now we are here')
+
+  let downloadPath = context.args.data.downloadPath || downloadBasePath;
+  let reportFileURL = context.args.data.override_reportFile || `${downloadPath}/${context.args.data.bpu_api_id}/${context.args.data.bpu_api_id}.json`;
+  let trackFileURL = context.args.data.override_trackFile || `${downloadPath}/${context.args.data.bpu_api_id}/tracks.json`;
+  let videoURL = context.args.data.override_video || `${downloadPath}/${context.args.data.bpu_api_id}/movie.mp4`;
+
+  console.log(downloadPath)
+  console.log(reportFileURL)
+  console.log(trackFileURL)
+  console.log(videoURL)
+
   return Promise.all([
-      rp(`${downloadBasePath}/${context.args.data.bpu_api_id}/${context.args.data.bpu_api_id}.json`),
-      rp(`${downloadBasePath}/${context.args.data.bpu_api_id}/tracks.json`),
-      ffprobe(`${downloadBasePath}/${context.args.data.bpu_api_id}/movie.mp4`, { path: ffprobeStatic.path }),
+      rp(reportFileURL),
+      rp(trackFileURL),
+      ffprobe(videoURL, { path: ffprobeStatic.path }),
       rp({
-        uri: `${downloadBasePath}/${context.args.data.bpu_api_id}/movie.mp4`,
+        uri: videoURL,
         resolveWithFullResponse: true,
         encoding: null
       })
@@ -102,12 +114,12 @@ const createBpuResults = (app, context) => {
       context.args.data.runTime = report.exp_metaData.runTime / 1000;
       context.args.data.numFrames = report.exp_metaData.numFrames;
       context.args.data.magnification = report.exp_metaData.magnification;
-      context.args.data.video = `${downloadBasePath}/${context.args.data.bpu_api_id}/movie.mp4`
+      context.args.data.video = context.args.data.override_video || `${downloadPath}/${context.args.data.bpu_api_id}/movie.mp4`
 
       if (process.env.S3_BUCKET) {
         const s3 = new AWS.S3()
         context.args.data.trackFile = `https://s3.us-east-2.amazonaws.com/${process.env.S3_BUCKET}/${fileName}`
-        context.args.data.video = `https://s3.us-east-2.amazonaws.com/${process.env.S3_BUCKET}/experiments/${context.args.data.bpu_api_id}/movie.mp4`
+
         let promises = [];
         // push the track file to S3
         promises.push(new Promise((resolve, reject) => {
@@ -126,23 +138,26 @@ const createBpuResults = (app, context) => {
           })
         }));
         // push the video file to S3
-        promises.push(new Promise((resolve, reject) => {
-          s3.putObject({
-            Bucket: process.env.S3_BUCKET,
-            Key: `experiments/${context.args.data.bpu_api_id}/movie.mp4`,
-            Body: videoFile.body,
-            ContentType: videoFile.headers['content-type'],
-            ContentLength: videoFile.headers['content-length'],
-            ACL: 'public-read'
-          }, (err, data) => {
-            if (err) {
-              reject(err);
-            } else {
-              // console.log('Video file uploaded:', data);
-              resolve(true);
-            }
-          })
-        }));
+        if (!context.args.data.override_video) {
+          context.args.data.video = `https://s3.us-east-2.amazonaws.com/${process.env.S3_BUCKET}/experiments/${context.args.data.bpu_api_id}/movie.mp4`
+          promises.push(new Promise((resolve, reject) => {
+            s3.putObject({
+              Bucket: process.env.S3_BUCKET,
+              Key: `experiments/${context.args.data.bpu_api_id}/movie.mp4`,
+              Body: videoFile.body,
+              ContentType: videoFile.headers['content-type'],
+              ContentLength: videoFile.headers['content-length'],
+              ACL: 'public-read'
+            }, (err, data) => {
+              if (err) {
+                reject(err);
+              } else {
+                // console.log('Video file uploaded:', data);
+                resolve(true);
+              }
+            })
+          }));
+        }
         return Promise.all(promises);
       } else {
         context.args.data.trackFile = `/${fileName}`
@@ -432,10 +447,20 @@ const loadMeta = (context) => {
 
 module.exports = (Result) => {
   Result.beforeRemote('create', (context, instances, next) => {
+    console.log('things get started')
+    console.log(context.args.data)
     if (context.args.data.demo) {
       return next();
     }
-    if (context.args.data.bpu_api_id && !context.args.data.trackFile) {
+    if (context.args.data.baseExp) {
+      createBpuResults(Result.app, context).then(() => {
+        next();
+      }).catch((err) => {
+        console.error(err);
+        console.error(err.stack);
+        next();
+      })
+    } else if (context.args.data.bpu_api_id && !context.args.data.trackFile) {
       createBpuResults(Result.app, context).then(() => {
         next();
       }).catch((err) => {

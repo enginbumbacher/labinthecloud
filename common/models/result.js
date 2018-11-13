@@ -21,22 +21,19 @@ const basicParameters = {
   randomnessFactor: 1.0
 }
 
-const downloadBasePath = `${process.env.BIOLAB_URL}/account/joinlabwithdata/downloadFile`;
+const downloadBiolabPath = `${process.env.BIOLAB_URL}/account/joinlabwithdata/downloadFile`;
+const downloadS3Path = 'https://s3.us-east-2.amazonaws.com/euglena-dev/baseExperiments'
 
 // const downloadBasePath = 'http://euglena.stanford.edu/account/joinlabwithdata/downloadFile';
 
 const createBpuResults = (app, context) => {
-  console.log('now we are here')
-
-  let downloadPath = context.args.data.downloadPath || downloadBasePath;
+  let downloadPath = context.args.data.downloadPath || downloadBiolabPath;
+  if (process.env.S3_BUCKET) {
+    downloadPath = context.args.data.downloadPath || downloadS3Path;
+  }
   let reportFileURL = context.args.data.override_reportFile || `${downloadPath}/${context.args.data.bpu_api_id}/${context.args.data.bpu_api_id}.json`;
   let trackFileURL = context.args.data.override_trackFile || `${downloadPath}/${context.args.data.bpu_api_id}/tracks.json`;
   let videoURL = context.args.data.override_video || `${downloadPath}/${context.args.data.bpu_api_id}/movie.mp4`;
-
-  console.log(downloadPath)
-  console.log(reportFileURL)
-  console.log(trackFileURL)
-  console.log(videoURL)
 
   return Promise.all([
       rp(reportFileURL),
@@ -56,110 +53,184 @@ const createBpuResults = (app, context) => {
       exif = exif.streams.filter((a) => a.codec_type == "video")[0];
       let fps = report.exp_metaData.numFrames / (report.exp_metaData.runTime / 1000);
       let magnification = report.exp_metaData.magnification;
-      let parsedTracks = [];
-      let maxWidth = 0;
-      for (let track of tracks) {
-        let ptrack = {
-          startTime: track.startFrame / fps,
-          lastTime: track.lastFrame / fps,
-          samples: []
-        }
-        let lastPos = null;
-        let lastSample = null;
-        track.samples.forEach((sample, ind) => {
-          let psample = {
-            time: sample.frame / fps,
-            x: sample.rect[0],
-            y: sample.rect[1],
-            yaw: sample.rect[4]
-          }
-          maxWidth = Math.max(sample.rect[2] / magnification, sample.rect[3] / magnification, maxWidth);
-
-          // place (0,0) at center, rather than top left of video
-          psample.x = psample.x - exif.width / 2;
-          psample.y = psample.y - exif.height / 2;
-
-          // adjust position for magnification level
-          psample.x = psample.x / magnification;
-          psample.y = psample.y / magnification;
-
-          // convert degrees to radians
-          psample.yaw = psample.yaw * Math.PI / 180;
-
-          //invert y axis, which also requires inverting yaw
-          psample.y = -psample.y;
-          psample.yaw = -psample.yaw;
-
-          // ensure positive yaw
-          while (psample.yaw < 0) {
-            psample.yaw += 2 * Math.PI;
-          }
-
-          //validate yaw by velocity
-          if (lastSample) {
-            if ((psample.x - lastSample.x < 0 && Math.cos(psample.yaw) > 0) || (psample.x - lastSample.x > 0 && Math.cos(psample.yaw) < 0)) {
-              psample.yaw = (psample.yaw + Math.PI) % (2 * Math.PI);
-            }
-          }
-          lastSample = psample;
-
-          ptrack.samples.push(psample);
-        })
-        parsedTracks.push(ptrack);
-      }
-
-      const storageDir = `results/${context.args.data.experimentId}/live`
-      const fileName = `${storageDir}/${context.args.data.bpu_api_id}.json`
 
       context.args.data.runTime = report.exp_metaData.runTime / 1000;
       context.args.data.numFrames = report.exp_metaData.numFrames;
       context.args.data.magnification = report.exp_metaData.magnification;
-      context.args.data.video = context.args.data.override_video || `${downloadPath}/${context.args.data.bpu_api_id}/movie.mp4`
+      context.args.data.video = videoURL;
 
       if (process.env.S3_BUCKET) {
-        const s3 = new AWS.S3()
-        context.args.data.trackFile = `https://s3.us-east-2.amazonaws.com/${process.env.S3_BUCKET}/${fileName}`
+        const s3 = new AWS.S3();
+        let s3Bucket = process.env.S3_BUCKET;
+        let storageDir = `results/${context.args.data.experimentId}/live`;
+        let fileName = `${storageDir}/${context.args.data.bpu_api_id}.json`;
 
-        let promises = [];
-        // push the track file to S3
-        promises.push(new Promise((resolve, reject) => {
-          s3.putObject({
-            Bucket: process.env.S3_BUCKET,
-            Key: fileName,
-            Body: JSON.stringify(parsedTracks),
-            ACL: 'public-read'
-          }, (err, data) => {
-            if (err) {
-              reject(err);
-            } else {
-              // console.log('Track file uploaded:', data);
-              resolve(true);
+        if (context.args.data.baseExp>0) {
+          s3Bucket = 'euglena-dev';
+          storageDir = `baseExperiments/${context.args.data.bpu_api_id}`;
+          fileName = `${storageDir}/${context.args.data.bpu_api_id}_tracks.json`;
+        }
+
+        context.args.data.trackFile = `https://s3.us-east-2.amazonaws.com/${s3Bucket}/${fileName}`;
+
+        s3.getObject({
+          Bucket: s3Bucket,
+          Key: fileName
+        }).promise().then((data) => {
+          // The modified track file exists. We just have to assign its file path to the results trackFile.
+          context.args.data.trackFile = fileName;
+        }).catch((err) => {
+          // The modified track file does not exist and has to be generated.
+          let parsedTracks = [];
+          let maxWidth = 0;
+          for (let track of tracks) {
+            let ptrack = {
+              startTime: track.startFrame / fps,
+              lastTime: track.lastFrame / fps,
+              samples: []
             }
-          })
-        }));
-        // push the video file to S3
-        if (!context.args.data.override_video) {
-          context.args.data.video = `https://s3.us-east-2.amazonaws.com/${process.env.S3_BUCKET}/experiments/${context.args.data.bpu_api_id}/movie.mp4`
+            let lastPos = null;
+            let lastSample = null;
+            track.samples.forEach((sample, ind) => {
+              let psample = {
+                time: sample.frame / fps,
+                x: sample.rect[0],
+                y: sample.rect[1],
+                yaw: sample.rect[4]
+              }
+              maxWidth = Math.max(sample.rect[2] / magnification, sample.rect[3] / magnification, maxWidth);
+
+              // place (0,0) at center, rather than top left of video
+              psample.x = psample.x - exif.width / 2;
+              psample.y = psample.y - exif.height / 2;
+
+              // adjust position for magnification level
+              psample.x = psample.x / magnification;
+              psample.y = psample.y / magnification;
+
+              // convert degrees to radians
+              psample.yaw = psample.yaw * Math.PI / 180;
+
+              //invert y axis, which also requires inverting yaw
+              psample.y = -psample.y;
+              psample.yaw = -psample.yaw;
+
+              // ensure positive yaw
+              while (psample.yaw < 0) {
+                psample.yaw += 2 * Math.PI;
+              }
+
+              //validate yaw by velocity
+              if (lastSample) {
+                if ((psample.x - lastSample.x < 0 && Math.cos(psample.yaw) > 0) || (psample.x - lastSample.x > 0 && Math.cos(psample.yaw) < 0)) {
+                  psample.yaw = (psample.yaw + Math.PI) % (2 * Math.PI);
+                }
+              }
+              lastSample = psample;
+
+              ptrack.samples.push(psample);
+            })
+            parsedTracks.push(ptrack);
+          }
+
+          let promises = [];
+          // push the track file to S3
           promises.push(new Promise((resolve, reject) => {
             s3.putObject({
-              Bucket: process.env.S3_BUCKET,
-              Key: `experiments/${context.args.data.bpu_api_id}/movie.mp4`,
-              Body: videoFile.body,
-              ContentType: videoFile.headers['content-type'],
-              ContentLength: videoFile.headers['content-length'],
+              Bucket: s3Bucket,
+              Key: fileName,
+              Body: JSON.stringify(parsedTracks),
               ACL: 'public-read'
             }, (err, data) => {
               if (err) {
                 reject(err);
               } else {
-                // console.log('Video file uploaded:', data);
+                //console.log('Track file uploaded:', data);
                 resolve(true);
               }
             })
           }));
+          // push the video file to S3
+          if (!context.args.data.baseExp) {
+            context.args.data.video = `https://s3.us-east-2.amazonaws.com/${s3Bucket}/experiments/${context.args.data.bpu_api_id}/movie.mp4`
+            promises.push(new Promise((resolve, reject) => {
+              s3.putObject({
+                Bucket: s3Bucket,
+                Key: `experiments/${context.args.data.bpu_api_id}/movie.mp4`,
+                Body: videoFile.body,
+                ContentType: videoFile.headers['content-type'],
+                ContentLength: videoFile.headers['content-length'],
+                ACL: 'public-read'
+              }, (err, data) => {
+                if (err) {
+                  err.message = 'experiment track file has to be generated'
+                  reject(err);
+                } else {
+                  // console.log('Video file uploaded:', data);
+                  resolve(true);
+                }
+              })
+            }));
+          }
+          return Promise.all(promises);
+        });
+
+      } else { // IF NO S3 BUCKET IS USED
+        let parsedTracks = [];
+        let maxWidth = 0;
+        for (let track of tracks) {
+          let ptrack = {
+            startTime: track.startFrame / fps,
+            lastTime: track.lastFrame / fps,
+            samples: []
+          }
+          let lastPos = null;
+          let lastSample = null;
+          track.samples.forEach((sample, ind) => {
+            let psample = {
+              time: sample.frame / fps,
+              x: sample.rect[0],
+              y: sample.rect[1],
+              yaw: sample.rect[4]
+            }
+            maxWidth = Math.max(sample.rect[2] / magnification, sample.rect[3] / magnification, maxWidth);
+
+            // place (0,0) at center, rather than top left of video
+            psample.x = psample.x - exif.width / 2;
+            psample.y = psample.y - exif.height / 2;
+
+            // adjust position for magnification level
+            psample.x = psample.x / magnification;
+            psample.y = psample.y / magnification;
+
+            // convert degrees to radians
+            psample.yaw = psample.yaw * Math.PI / 180;
+
+            //invert y axis, which also requires inverting yaw
+            psample.y = -psample.y;
+            psample.yaw = -psample.yaw;
+
+            // ensure positive yaw
+            while (psample.yaw < 0) {
+              psample.yaw += 2 * Math.PI;
+            }
+
+            //validate yaw by velocity
+            if (lastSample) {
+              if ((psample.x - lastSample.x < 0 && Math.cos(psample.yaw) > 0) || (psample.x - lastSample.x > 0 && Math.cos(psample.yaw) < 0)) {
+                psample.yaw = (psample.yaw + Math.PI) % (2 * Math.PI);
+              }
+            }
+            lastSample = psample;
+
+            ptrack.samples.push(psample);
+          })
+          parsedTracks.push(ptrack);
         }
-        return Promise.all(promises);
-      } else {
+
+        const storageDir = `results/${context.args.data.experimentId}/live`
+        const fileName = `${storageDir}/${context.args.data.bpu_api_id}.json`
+
         context.args.data.trackFile = `/${fileName}`
         return new Promise((resolve, reject) => {
           mkdirp(`${process.cwd()}/client/${storageDir}`, (err) => {
@@ -173,7 +244,8 @@ const createBpuResults = (app, context) => {
             }
           });
         });
-      }
+      } // ELSE END OF S3 BUCKET IF ELSE
+
     }).catch((err) => {
       console.log(err);
     });
@@ -373,9 +445,17 @@ const _createModelResults = (app, result, model) => {
 }
 
 const loadMeta = (context) => {
-  // console.log("loading meta");
-  // console.log(context);
+//  console.log("loading meta");
+//  console.log(context.data);
+
   // console.log(context.data.bpu_api_id, context.data.runTime);
+  let downloadBasePath = downloadBiolabPath;
+  if(!context.data.euglenaModelId) {
+    if (context.data.trackFile && context.data.trackFile.match(/^http/)) {
+      let tmpPath = context.data.trackFile.match(context.data.bpu_api_id)
+      downloadBasePath = context.data.trackFile.substring(0,tmpPath.index-1);
+    }
+  }
   const backFill = (context.data.bpu_api_id && !context.data.runTime
     ? rp(`${downloadBasePath}/${context.data.bpu_api_id}/${context.data.bpu_api_id}.json`)
       .then((data) => {
@@ -394,7 +474,6 @@ const loadMeta = (context) => {
       let s3Path = context.data.trackFile.split('/');
       let bucket = s3Path[3];
       let filePath = s3Path.slice(4).join('/');
-
       trackLoad = new Promise((resolve, reject) => {
         s3.getObject({
           Bucket: bucket,
@@ -437,7 +516,7 @@ const loadMeta = (context) => {
   }
   return Promise.all([backFill, trackLoad]).then(() => {
     if (context.data.bpu_api_id && !context.data.video) {
-      context.data.video = `${downloadBasePath}/${context.data.bpu_api_id}/movie.mp4`;
+      context.data.video = `${downloadBiolabPath}/${context.data.bpu_api_id}/movie.mp4`;
     }
     return context;
   }).catch((err) => {
@@ -447,20 +526,11 @@ const loadMeta = (context) => {
 
 module.exports = (Result) => {
   Result.beforeRemote('create', (context, instances, next) => {
-    console.log('things get started')
-    console.log(context.args.data)
+
     if (context.args.data.demo) {
       return next();
     }
-    if (context.args.data.baseExp) {
-      createBpuResults(Result.app, context).then(() => {
-        next();
-      }).catch((err) => {
-        console.error(err);
-        console.error(err.stack);
-        next();
-      })
-    } else if (context.args.data.bpu_api_id && !context.args.data.trackFile) {
+    if (context.args.data.bpu_api_id && !context.args.data.trackFile) {
       createBpuResults(Result.app, context).then(() => {
         next();
       }).catch((err) => {
@@ -488,6 +558,23 @@ module.exports = (Result) => {
       })
     }
   });
+
+  Result.observe('before save', (context, next) => {
+
+    if (!context.instance.euglenaModelId && context.isNewInstance) {
+      context['args'] = {'data': context.instance}
+
+      createBpuResults(Result.app, context).then(() => {
+        next();
+      }).catch((err) => {
+        console.error(err);
+        console.error(err.stack);
+        next();
+      })
+    } else {
+      next()
+    }
+  })
 
   Result.observe('loaded', (ctx, next) => {
     if (ctx.options && ctx.options.skipTrackData) {

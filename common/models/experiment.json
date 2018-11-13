@@ -27,9 +27,9 @@
       "default": false
     },
     "baseExp": {
-      "type": "boolean",
+      "type": "number",
       "required": true,
-      "default": false
+      "default": 0
     },
     "lab": {
       "type": "string",

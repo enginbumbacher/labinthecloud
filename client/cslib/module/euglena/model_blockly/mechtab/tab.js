@@ -8,7 +8,7 @@ import ModelForm from './form/form';
 import $ from 'jquery';
 
 const defaults = {
-  signalReleaseAmount: 'amount_constant',
+  channelOpeningAmount: 'amount_constant',
   turnForward: 'forward_0'
 }
 
@@ -68,8 +68,8 @@ class ModelingDataTab extends Component {
     this._importAllImages();
     this.activeImgs = {
       'imgs_signal-generation_default': 'signal-generation_default',
-      'imgs_signal-activation_signalReleaseAmount': 'signal-activation_' + defaults['signalReleaseAmount'],
-      'imgs_signal-processing_signalReleaseAmount': 'signal-processing_default_' + defaults['signalReleaseAmount'],
+      'imgs_signal-activation_channelOpeningAmount': 'signal-activation_' + defaults['channelOpeningAmount'],
+      'imgs_signal-processing_channelOpeningAmount': 'signal-processing_default_' + defaults['channelOpeningAmount'],
       'imgs_behavior-generation_turnForward': 'behavior-generation_' + defaults['turnForward']
     }
 
@@ -198,7 +198,7 @@ class ModelingDataTab extends Component {
         Globals.set('mechLoaded',true);
 
         this._updateSignalText(this._model.get('parameters'), 'constructor', ['signalThresh','signalAdaptSpeed','signalThreshPosNeg','reactionStrength'])
-        this._updateImages(this._model.get('parameters'), 'constructor', ['signalReleaseAmount','turnForward'])
+        this._updateImages(this._model.get('parameters'), 'constructor', ['channelOpeningAmount','turnForward'])
 
       }
     }
@@ -210,7 +210,7 @@ class ModelingDataTab extends Component {
     Globals.get('Relay').dispatchEvent('ModelSideTab.Changed', {evtData: evt, modelType: 'mech'});
     var updateImgs = {}
     updateImgs[evt.data.field._model._data.id] = evt.data.delta.value
-    this._updateImages(updateImgs, 'configChange', ['signalReleaseAmount','turnForward'])
+    this._updateImages(updateImgs, 'configChange', ['channelOpeningAmount','turnForward'])
 
     // UPDATE THE EXPLANATORY TEXT
     if (document.getElementById(evt.data.field._model._data.id)) {
@@ -242,8 +242,8 @@ class ModelingDataTab extends Component {
        this._behaviorForm.addEventListener('Form.FieldChanged', this._onConfigChange)
      })
 
-     this._updateSignalText(evt.data.config,'modelLoad', ['signalThresh','signalAdaptSpeed','signalThreshPosNeg','signalReleaseAmount','reactionStrength'])
-     this._updateImages(evt.data.config,'modelLoad', ['signalReleaseAmount','turnForward'])
+     this._updateSignalText(evt.data.config,'modelLoad', ['signalThresh','signalAdaptSpeed','signalThreshPosNeg','channelOpeningAmount','reactionStrength'])
+     this._updateImages(evt.data.config,'modelLoad', ['channelOpeningAmount','turnForward'])
     }
   }
 
@@ -258,16 +258,16 @@ class ModelingDataTab extends Component {
         divId: 'imgs_signal-generation_default',
         imgId: 'signal-generation_default'
       },{
-        divId: 'imgs_signal-activation_signalReleaseAmount',
+        divId: 'imgs_signal-activation_channelOpeningAmount',
         imgId: 'signal-activation_amount_proportional'
       }, {
-        divId: 'imgs_signal-activation_signalReleaseAmount',
+        divId: 'imgs_signal-activation_channelOpeningAmount',
         imgId: 'signal-activation_amount_constant'
       },{
-        divId: 'imgs_signal-processing_signalReleaseAmount',
+        divId: 'imgs_signal-processing_channelOpeningAmount',
         imgId: 'signal-processing_default_amount_proportional'
       },{
-        divId: 'imgs_signal-processing_signalReleaseAmount',
+        divId: 'imgs_signal-processing_channelOpeningAmount',
         imgId: 'signal-processing_default_amount_constant'
       },{
         divId: 'imgs_behavior-generation_turnForward',
@@ -310,10 +310,10 @@ class ModelingDataTab extends Component {
         }
 
         switch(paramName) {
-          case 'signalReleaseAmount':
+          case 'channelOpeningAmount':
             // hide the current images
-            this.hideImg(this.imgPath + this.activeImgs['imgs_signal-activation_signalReleaseAmount'] + '.png')
-            this.hideImg(this.imgPath + this.activeImgs['imgs_signal-processing_signalReleaseAmount'] + '.png')
+            this.hideImg(this.imgPath + this.activeImgs['imgs_signal-activation_channelOpeningAmount'] + '.png')
+            this.hideImg(this.imgPath + this.activeImgs['imgs_signal-processing_channelOpeningAmount'] + '.png')
 
             // show new images
             let imgName2 = imgName;
@@ -465,11 +465,11 @@ class ModelingDataTab extends Component {
           } else {
             textField.innerHTML = fieldText;
           }
-        } else if (fieldId.match('signalReleaseAmount')) {
+        } else if (fieldId.match('channelOpeningAmount')) {
           if (fieldVal.match('constant')) {
-            document.getElementById("signal-processing__baselineText__signalReleaseAmount").innerHTML = "So, here I will say sth about how the gates are opened. <span class='modeling__interface__textInserts' id='signalReleaseAmount'> Opened in a constant manner </span>. If not, it won't release them."
+            document.getElementById("signal-processing__baselineText__channelOpeningAmount").innerHTML = "So, here I will say sth about how the gates are opened. <span class='modeling__interface__textInserts' id='channelOpeningAmount'> Opened in a constant manner </span>. If not, it won't release them."
           } else {
-            document.getElementById("signal-processing__baselineText__signalReleaseAmount").innerHTML = "So, here I will say sth about how the gates are opened.  <span class='modeling__interface__textInserts' id='signalReleaseAmount'> Opened in a proportional manner </span>. If not, it won't release them."
+            document.getElementById("signal-processing__baselineText__channelOpeningAmount").innerHTML = "So, here I will say sth about how the gates are opened.  <span class='modeling__interface__textInserts' id='channelOpeningAmount'> Opened in a proportional manner </span>. If not, it won't release them."
           }
         } else if (fieldId.match('reactionStrength')) {
           document.getElementById("signal-processing__baselineText__reactionStrength").style.display='inline';

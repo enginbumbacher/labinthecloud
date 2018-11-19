@@ -156,18 +156,18 @@ class ModelForm extends Form {
       }
     }
 
-    if (settings.modelData.config.signalReleaseAmount) {
+    if (settings.modelData.config.channelOpeningAmount) {
       fields.push(SelectField.create({
-        id: "signalReleaseAmount",
+        id: "channelOpeningAmount",
         inverse_order: true,
         standardizeFormat: true,
-        color: settings.modelData.config.signalReleaseAmount.color ? settings.modelData.config.signalReleaseAmount.color : null,
-        label: settings.modelData.config.signalReleaseAmount.label,
-        value: settings.modelData.config.signalReleaseAmount.initialValue,
-        min_width: settings.modelData.config.signalReleaseAmount.min_width,
-        description: settings.modelData.config.signalReleaseAmount.description,
-        region: settings.modelData.config.signalReleaseAmount.region ? settings.modelData.config.signalReleaseAmount.region : null,
-        options: settings.modelData.config.signalReleaseAmount.options
+        color: settings.modelData.config.channelOpeningAmount.color ? settings.modelData.config.channelOpeningAmount.color : null,
+        label: settings.modelData.config.channelOpeningAmount.label,
+        value: settings.modelData.config.channelOpeningAmount.initialValue,
+        min_width: settings.modelData.config.channelOpeningAmount.min_width,
+        description: settings.modelData.config.channelOpeningAmount.description,
+        region: settings.modelData.config.channelOpeningAmount.region ? settings.modelData.config.channelOpeningAmount.region : null,
+        options: settings.modelData.config.channelOpeningAmount.options
       }))
     }
 

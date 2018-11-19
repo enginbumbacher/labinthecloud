@@ -311,26 +311,26 @@ module.exports = {
 
     // Turn randomly left or right
     current_delta_yaw += EugBody.turn.random * [-1,1][Math.random()*2|0]*Math.random() * config.resetRandom * dT;
-
-    if (EugBody.turn.forward || Math.abs(current_delta_yaw)<EugBody.defaults.yaw_min * dT) { // MAKE IT BASED ON WHAT THEY SEE, NOT THE DELTA_YAW
+    var thresh_factor = 5;
+    if (EugBody.turn.forward || Math.abs(current_delta_yaw)<thresh_factor*EugBody.defaults.yaw_min * dT) { // MAKE IT BASED ON WHAT THEY SEE, NOT THE DELTA_YAW
       tmp_euglena.translateZ(fw_speed * dT);
-    } else if (!EugBody.turn.forward && Math.abs(current_delta_yaw)>EugBody.defaults.yaw_min * dT){
+    } else if (!EugBody.turn.forward && Math.abs(current_delta_yaw)>thresh_factor*EugBody.defaults.yaw_min * dT){
       tmp_euglena.translateZ(fw_speed/10 * dT);
     }
 
     //console.log('frame ' + config.frame + ' delta_yaw ' + current_delta_yaw.toFixed(2) + ' signal ' + signal_intensity.toFixed(2) + ' threshold ' + activationThreshold_current.toFixed(2))
 
     // Create a wiggle if there is 1 sensor, and otherwise just do the normal roll
-    //if (sensorIntensities.length == 1) {
-    if (Math.abs(current_delta_yaw)<EugBody.defaults.yaw_min * dT) { // Create wiggle by rotation on a cone // MAKE IT BASED ON WHAT THEY SEE, NOT THE DELTA_YAW
-      var rot_axis = new THREE.Vector3(0, Math.sin(config.wiggleRandom), Math.cos(config.wiggleRandom));
-      tmp_euglena.rotateOnAxis(rot_axis, roll_speed * dT);
-    } else { // Roll around the local z-axis (i.e. head)
-      tmp_euglena.rotateZ(roll_speed * dT);
+    if (sensorIntensities.length == 1) {
+      if (Math.abs(current_delta_yaw)<EugBody.defaults.yaw_min * dT) { // Create wiggle by rotation on a cone // MAKE IT BASED ON WHAT THEY SEE, NOT THE DELTA_YAW
+        var rot_axis = new THREE.Vector3(0, Math.sin(config.wiggleRandom), Math.cos(config.wiggleRandom));
+        tmp_euglena.rotateOnAxis(rot_axis, roll_speed * dT);
+      } else { // Roll around the local z-axis (i.e. head)
+        tmp_euglena.rotateZ(roll_speed * dT);
+      }
+    } else {
+     tmp_euglena.rotateZ(roll_speed * dT);
     }
-    //} else {
-    //  tmp_euglena.rotateZ(roll_speed * dT);
-    //}
 
     // NEXT STEPS:
     // 1. Create the block that calculates by how much the Euglena will yaw.

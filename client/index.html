@@ -127,8 +127,8 @@
         system: {
           maxLoginTime: 0,
           experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
-          modelModality: 'create', // 'observe','explore','create'
-          expModelModality: 'simultaneous', //'simultaneous','sequential', 'justmodel' - for seeing model and live not together
+          modelModality: 'create', // 'observe','explore','create', 'createBody', 'createSignalProcessing' - 'createSignalProcessing' is for having the body configuration parameters fixed, but being able to change the singal processing parameters.
+          expModelModality: 'simultaneous', //'simultaneous','sequential', 'justmodel', 'justbody' - for seeing model and live not together
           enableDirectComparison: false, // false: cannot do direct comparison between models
         },
         experiment: {
@@ -137,7 +137,7 @@
           maxDuration: 60,
           // bpuId: "eug16", //["eug5","eug7"], //"eug1","eug4","eug5","eug6","eug7","eug8","eug15","eug16"
           euglenaServerMode:"historical", // 'simulate', 'demo', 'historical'
-          formOptions: 'complete', // 'complete' with alldirections and diagonal; 'partial': without alldirections and diagonal
+          formOptions: ['no_light','fix_dir','simple_seq'] // Decide, which experiment categories are available; if empty: all; Options: 'no_light', 'fix_dir', 'simple_seq', 'complex_seq'
           //experimentHistory: [14]
         },
         model: {
@@ -147,6 +147,7 @@
             modelType: "mech",
             modelForm: 'mechanistic', // 'mechanistic' or 'functional'
             parameterForm: 'quantitative', //'qualitative' or 'quantitative'
+            variationLimitation: null, //'fixVar_PERCENTAGE' - variation fixed, no variation if PERCENTAGE = 0, null (variation possible)
             color: 0x2222ff,
             regionNames: {
               sensor: {label: 'Sensor Geometry', color: [192,0,0]},
@@ -203,21 +204,21 @@
                 region: 'motor',
                 label: "Forward Speed <br> [micrometers / second]", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
                 color: '#7030A0',
-                initialValue: { base: 80,delta: 10 }, //'motor_25',
+                initialValue: { base: 80, delta: 10 }, //'motor_25',
                 min_width: '130px',
                 maxValue: 2,
                 varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
                 options: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'fast'},
                 description: 'Set the speed at which the model moves forward, if it is programmed to move. The percentage refers to the maximum possible intensity for any model. See how the red arrow changes when you change the value.',
                 min: 50,
-                max: 200,
-                steps: 10
+                max: 250,
+                steps: 15
                 // If mechanistic: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'strong', 'motor_100': 'very strong'}
                 // If functional: {'motor_25': 'slow', 'motor_50': 'medium', 'motor_75': 'fast', 'motor_100': 'very fast'}
               },
               roll: {
                 region: 'motor',
-                label: "Default Rotation <br> [rotations / second]", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
+                label: "Rotation Speed <br> [rotations / second]", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
                 color: '#7030A0',
                 initialValue: { base: 2,delta: 1 }, //'motor_25',
                 min_width: '130px',
@@ -311,10 +312,13 @@
        modeling: {
         timeWindow: 2,
         regionNames: {
-          signalActivate: {label: 'Light triggers sensors to release Signal Molecules', color: [192,0,0]},
-          signalProcessing: {label: 'Signal Molecules open Calcium channels', color: [14,137,209]},
-          behavior: {label: 'Calcium ions change Flagellum movement', color: [112,48,160]}
+          signalActivate: {label: '2. Photoreceptors release Signal Molecules', color: [192,0,0]},
+          signalProcessing: {label: '3. Signal Molecules open Calcium channels', color: [14,137,209]},
+          behavior: {label: '4. Calcium ions change Flagellum movement', color: [112,48,160]}
         },
+        variationLimitation: 'fixVar_20', //'fixVar_PERCENTAGE' - variation fixed, no variation if PERCENTAGE = 0, null (variation possible),
+        explanationOn: false,
+        mechanism: 'simple', // 'simple','complex'
         parameters: {
           signalThresh: { //SymSelectField
             region: 'signalActivate',
@@ -339,20 +343,20 @@
             options: { 'adapt_0': 'No adaptation' , 'adapt_continuous': 'Gradually', 'adapt_shock': 'Abruptly'},
             description: 'Decide whether or not to adapt the level of activation to the general brightness.'
           },
-          signalShockThresh: { //SymSelectField
-            region: 'signalActivate',
-            label: "Brightness activating shock <br> [in % of maximum brightness]",
-            color: '#C55A11',
-            min_width: '210px',
-            initialValue: { base: 50, delta: 0 }, //'signal_2',
-            min: 0,
-            max: 100,
-            steps: 20,
-            maxValue: 100, //This value is also in percent of brightness
-            varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
-            options: {'signalShock_2': 'very low', 'signalShock_25': 'low', 'signalShock_50': 'medium', 'signalShock_75': 'high', 'signalShock_100': 'very high'},
-            description: 'Set the speed (in seconds) at which the rhodopsin adapts to the background light.'
-          },
+          // signalShockThresh: { //SymSelectField
+          //   region: 'signalActivate',
+          //   label: "Brightness activating shock <br> [in % of maximum brightness]",
+          //   color: '#C55A11',
+          //   min_width: '210px',
+          //   initialValue: { base: 50, delta: 0 }, //'signal_2',
+          //   min: 0,
+          //   max: 100,
+          //   steps: 20,
+          //   maxValue: 100, //This value is also in percent of brightness
+          //   varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
+          //   options: {'signalShock_2': 'very low', 'signalShock_25': 'low', 'signalShock_50': 'medium', 'signalShock_75': 'high', 'signalShock_100': 'very high'},
+          //   description: 'Set the speed (in seconds) at which the rhodopsin adapts to the background light.'
+          // },
           signalAdaptSpeed: { //SymSelectField
             region: 'signalActivate',
             label: "Adaptation Speed <br> [in seconds]",
@@ -377,24 +381,24 @@
           //   options: {'sigrandom_0': 'no random release', 'sigrandom_2': 'very low', 'sigrandom_25': 'low', 'sigrandom_50': 'medium', 'sigrandom_75': 'high'}, // the numbers after the label are percentages of randomness. Basically triggering the random angles in the computation.
           //   description: 'Set the probability for a Rhodopsin to randomly create a signal.'
           // },
-          signalReleaseAmount: { //SelectField
+          channelOpeningAmount: { //SelectField
             region: 'signalProcessing',
-            label: "What type of signal?",
+            label: "How many channels?",
             color: '#0e89d1',
             initialValue: 'amount_proportional',
             min_width: '210px',
-            options: {'amount_constant': 'Constant speed', 'amount_proportional': 'proportional to num molecules'},
+            options: {'amount_constant': 'all or none', 'amount_proportional': 'proportional to number of Signal Mol.'},
             description: 'Set the way it will turn when it receives a molecule.'
           },
           reactionStrength: { //SymSelectField
             region: 'signalProcessing',
-            label: 'Inflowing Molecules <br> [some unit]',
+            label: 'Inflowing Calcium Ions per Channel <br>',
             color: '#0e89d1',
             initialValue: { base: 1, delta: 0.5 }, //'reaction_25',
             min: 0,
-            max: 4,
+            max: 10,
             steps: 20,
-            maxValue: 4,
+            maxValue: 10,
             varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
             options: {'turn_25': 'slow', 'turn_50': 'medium', 'turn_75': 'fast'},
             description: 'Set the intensity at which the model is responding to light, if it is programmed to respond. The percentage refers to the maximum possible intensity for any model. See how the blue arrows change when you change the value.'
@@ -405,17 +409,17 @@
             color: '#2F5597',
             initialValue: 'forward_0',
             min_width: '210px',
-            options: {'forward_1': 'by moving the body', 'forward_0': 'by moving the flagellum'},
+            options: {'forward_1': 'Flagellum tilts in one direction, continues spiraling', 'forward_0': 'Flagellum beats in one direction, stops spiraling'},
             description: 'Write text.'
           },
           turnDirection: { //SelectField
             region: 'behavior',
             label: 'Turning Direction',
             color: '#2F5597',
-            initialValue: 'turn_towards',
+            initialValue: 'beat_towards',
             min_width: '210px',
-            options: {'turn_towards': 'towards the (weaker) sensor or eyespot', 'turn_away': 'away from the (weaker) sensor / eyespot'},
-            description: 'Decide whether to turn away from the sensor / eyespot or towards it when receiving a molecule1.'
+            options: {'beat_towards': 'towards the (weaker) sensor or eyespot', 'beat_away': 'away from the (weaker) sensor / eyespot'},
+            description: 'This determines what direction the Flagellum will move towards.'
           }
         }
        }

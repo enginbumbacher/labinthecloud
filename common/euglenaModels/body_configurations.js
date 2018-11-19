@@ -22,10 +22,10 @@ const defaults = {
 
   fw_speed: 100,
   fw_conversion: 25, // factor by which to convert the chosen value to an internally used value.
-  motion_type: 'motion_spiral',
-  roll_strength: 0.6, // in percent of fw_speed
+  motion: 'motion_spiral',
+  roll_strength: 0.5, // in percent of fw_speed
 
-  reactionStrength_numeric: 2,
+  reactionStrength_numeric: 4,
   reactionStrength_variation: 0,
 
   turn: {
@@ -222,7 +222,7 @@ class EuglenaBody {
     var tmp_variation = config.reactionStrength_variation != null ? config.reactionStrength_variation : this.defaults.reactionStrength_variation;
     this.reactionStrength = tmp_numeric + (Math.random() * 2 - 1) * tmp_variation;
     this.turn = {};
-    this.turn.amount = config.signalReleaseAmount != null ? config.signalReleaseAmount : this.defaults.turn.amount;
+    this.turn.amount = config.channelOpeningAmount != null ? config.channelOpeningAmount : this.defaults.turn.amount;
     this.turn.forward = config.turnForward!= null ? config.turnForward : this.defaults.turn.forward;
     this.turn.forward = this.turn.forward.match('_1') ? 1 : 0;
     this.turn.random = ( config.signalRandom != null ? parseInt(config.signalRandom.substr(config.signalRandom.indexOf('_')+1)): parseInt(this.defaults.turn.random.substr(this.defaults.turn.random.indexOf('_')+1)) ) / 100 * this.defaults.turn.random_max;

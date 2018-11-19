@@ -1,13 +1,71 @@
 <div class="modeling">
   <div class="modeling__tab"> <img id='selectModeling' class = 'notflippedY' src="/cslib/module/euglena/model_blockly/blocklytab/arrow.png"> Modeling</div>
   <div class="modeling__content">
-    <h2 class="modeling__title">Signal Processing</h2>
+    <h2 class="modeling__title">Reaction to Light</h2>
     <div class="modeling__interface">
       <div class="modeling__interface__visualizations" id="model_images">
         <!-- <div class="modeling__interface__signal-generation__viz" id='imgs_signal-generation_default'></div>
-        <div class="modeling__interface__signal-activation__viz" id='imgs_signal-activation_signalReleaseAmount'></div>
-        <div class="modeling__interface__signal-processing__viz" id='imgs_signal-processing_signalReleaseAmount'></div>
+        <div class="modeling__interface__signal-activation__viz" id='imgs_signal-activation_channelOpeningAmount'></div>
+        <div class="modeling__interface__signal-processing__viz" id='imgs_signal-processing_channelOpeningAmount'></div>
         <div class="modeling__interface__behavior-generation__viz" id='imgs_behavior-generation_turnForward'></div> -->
+      </div>
+      <div class="modeling__interface__parameters">
+        <button class="modeling__interface__accordion"><strong>Click here to see explanation.</strong></button>
+        <div class="modeling__interface__panel">
+          <div class="modeling__interface__signal-generation__text">
+            <span id="one-eye"> 1. Light hits the sensor. Dim light hits the sensor less strong than bright light. </span>
+            <span id="two-eyes"> 1. Light hits the sensors. Dim light hits the sensor less strong than bright light. </span>
+         </div>
+          <div class="modeling__interface__signal-activation__text" style="background-color: rgba(192, 0, 0, 0.3)">
+            <span id='signal-activation__baselineText'> 2. When light hits one of the photoreceptors: Only when this light is brigher than <span class="modeling__interface__textInserts" id="signalThresh"> a certain amount of the maximum brightness </span>, the photoreceptor releases Signal Molecules. <span class='modeling__interface__textInserts' id='signalRelease' style="display:none"> </span>
+            </span>
+            <span class="modeling__interface__paragraphInserts" id="signalRandom" style="display:none">
+              Once in a while, with low probability, the photoreceptors release randomly Signal Molecules, even if the receptors do not detect any light.
+            </span>
+            <span class="modeling__interface__paragraphInserts" id="signalAdapt" style="display:none">
+              <span class = "modeling__interface__textInserts" id="signalShockThresh" style="display:none"> </span>
+            </span>
+            <span class="modeling__interface__paragraphInserts" id="signalAdaptSpeed" style="display:none"> They change their activation brightness  <span class="modeling__interface__textInserts" id="signalAdaptSpeed_val"> over multiple seconds </span>. The bigger the difference of the activation brightness and the general brightness, the longer it takes the photoreceptors to adapt their activation brightness to the general brightness. </span>
+          </div>
+          <div class="modeling__interface__signal-processing__text" style="background-color: rgba(14, 137, 209, 0.3)">
+            <span id='signal-processing__baselineText__channelOpeningAmount'> 3. s soon as enough Signal Molecules reach a Calcium Channel, the Channel opens up and Calcium ions flow into the connection piece.
+              <span class="modeling__interface__paragraphInserts" id="channelOpeningAmount" style="display:none"></span>
+            </span>
+            <span id='signal-processing__baselineText__reactionStrength' style="display:none"> While a Calcium Channel is open, it lets in <span class="modeling__interface__textInserts" id="reactionStrength"> a certain amount of </span> Calcium ions.
+            </span>
+            <span class="modeling__interface__textInserts" id="reactionStrength" style="display:none"></span>
+          </div>
+          <div class="modeling__interface__behavior-generation__text" style="background-color: rgba(112, 48, 160, 0.3)">
+            <span id="behavior-generation__baselineText__turnForward"> 4. When the Calcium ions reach the base of the flagellum, they trigger a change in how the flagellum moves, which changes the direction the Euglena is pointing in.
+              <span class="modeling__interface__paragraphInserts" id="turnForward" style="display:none"></span>
+              4. When too few or no Calcium ions arrive at the base, the flagellum resumes normal behavior.
+            </span>
+          </div>
+      </div>
+        <div class="modeling__interface__signal-generation__model">
+          <div class="modeling__interface__signal-generation__params"></div>
+        </div>
+          <div class="modeling__interface__signal-activation__model">
+            <div class="modeling__interface__signal-activation__params"></div>
+          </div>
+        <div class="modeling__interface__signal-processing__model">
+          <div class="modeling__interface__signal-processing__params"></div>
+        </div>
+        <div class="modeling__interface__behavior-generation__model">
+          <div class="modeling__interface__behavior-generation__params"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="modeling">
+  <div class="modeling__tab"> <img id='selectModeling' class = 'notflippedY' src="/cslib/module/euglena/model_blockly/blocklytab/arrow.png"> Modeling</div>
+  <div class="modeling__content">
+    <h2 class="modeling__title">Signal Processing</h2>
+    <div class="modeling__interface">
+      <div class="modeling__interface__visualizations" id="model_images">
       </div>
       <div class="modeling__interface__parameters">
         <div class="modeling__interface__signal-generation">
@@ -21,45 +79,48 @@
         </div>
         <div class="modeling__interface__signal-activation">
           <div class="modeling__interface__signal-activation__model">
-              <div class="modeling__interface__signal-activation__text" style="background-color: rgba(192, 0, 0, 0.3)">
+            <div class="modeling__interface__signal-activation__params"></div>
+            <div class="modeling__interface__signal-activation__text" style="background-color: rgba(192, 0, 0, 0.3)">
               <span id='signal-activation__baselineText'> 2. When light hits one of the photoreceptors: Only when this light is brigher than <span class="modeling__interface__textInserts" id="signalThresh"> a certain amount of the maximum brightness </span>, the photoreceptor releases Signal Molecules. <span class='modeling__interface__textInserts' id='signalRelease' style="display:none"> </span>
               </span>
               <span class="modeling__interface__paragraphInserts" id="signalRandom" style="display:none">
-                Once in a while, with low probability, the Rhodopsin releases the molecule randomly, even if it does not detect any light.
+                Once in a while, with low probability, the photoreceptors release randomly Signal Molecules, even if the receptors do not detect any light.
               </span>
               <span class="modeling__interface__paragraphInserts" id="signalAdapt" style="display:none">
                 <span class = "modeling__interface__textInserts" id="signalShockThresh" style="display:none"> </span>
               </span>
-              <span class="modeling__interface__paragraphInserts" id="signalAdaptSpeed" style="display:none"> They change their activation brightness  <span class="modeling__interface__textInserts" id="signalAdaptSpeed_val"> over multiple seconds </span>. The bigger the difference of the activation brightness and the general brightness, the longer it takes the Rhodopsins to adapt their activation brightness to the general brightness. </span>
+              <span class="modeling__interface__paragraphInserts" id="signalAdaptSpeed" style="display:none"> They change their activation brightness  <span class="modeling__interface__textInserts" id="signalAdaptSpeed_val"> over multiple seconds </span>. The bigger the difference of the activation brightness and the general brightness, the longer it takes the photoreceptors to adapt their activation brightness to the general brightness. </span>
             </div>
-            <div class="modeling__interface__signal-activation__params"></div>
           </div>
         </div>
         <div class="modeling__interface__signal-processing">
           <div class="modeling__interface__signal-processing__model">
+            <div class="modeling__interface__signal-processing__params"></div>
             <div class="modeling__interface__signal-processing__text" style="background-color: rgba(14, 137, 209, 0.3)">
-              <span id='signal-processing__baselineText__signalReleaseAmount'> 3. The signalling molecules travel from the photosensor to the flagellum base. In the meantime, the rhodopsins are regenerating the molecules they released.
-                <span class="modeling__interface__paragraphInserts" id="signalReleaseAmount" style="display:none"></span>
+              <span id='signal-processing__baselineText__channelOpeningAmount'> 3. The Signal Molecules travel from the Sensor to the flagellum base. In the meantime, the rhodopsins are regenerating the molecules they released.
+                <span class="modeling__interface__paragraphInserts" id="channelOpeningAmount" style="display:none"></span>
               </span>
-              <span id='signal-processing__baselineText__reactionStrength' style="display:none"> For each gate that is open for a certain duration, <span class="modeling__interface__textInserts" id="reactionStrength"> X </span> signaling molecules per second come in.
+              <span id='signal-processing__baselineText__reactionStrength' style="display:none"> While a Calcium Channel is open, it lets in <span class="modeling__interface__textInserts" id="reactionStrength"> a certain amount of </span> Calcium ions.
               </span>
               <span class="modeling__interface__textInserts" id="reactionStrength" style="display:none"></span>
             </div>
-            <div class="modeling__interface__signal-processing__params"></div>
           </div>
         </div>
         <div class="modeling__interface__behavior-generation">
           <div class="modeling__interface__behavior-generation__model">
-            <div class="modeling__interface__behavior-generation__text" style="background-color: rgba(112, 48, 160, 0.3)"> 4. When signalling molecules reach the base of the flagellum, they trigger a change in how the flagellum moves. This change leads to a change in direction of movement, for as long as signalling molecules arrive at the base.
-              When there are no incoming signalling molecules anymore, the flagellum resumes normal behavior.
-            </div>
             <div class="modeling__interface__behavior-generation__params"></div>
+            <div class="modeling__interface__behavior-generation__text" style="background-color: rgba(112, 48, 160, 0.3)">
+              <span id="behavior-generation__baselineText__turnForward"> 4. When the Calcium ions reach the base of the flagellum, they trigger a change in how the flagellum moves, which changes the direction the Euglena is pointing in.
+                <span class="modeling__interface__paragraphInserts" id="turnForward" style="display:none"></span>
+                When too few or no Calcium ions arrive at the base, the flagellum resumes normal behavior.
+              </span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 
 

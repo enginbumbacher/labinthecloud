@@ -137,8 +137,8 @@
           maxDuration: 60,
           // bpuId: "eug16", //["eug5","eug7"], //"eug1","eug4","eug5","eug6","eug7","eug8","eug15","eug16"
           euglenaServerMode:"historical", // 'simulate', 'demo', 'historical'
-          formOptions: ['no_light','fix_dir','simple_seq'] // Decide, which experiment categories are available; if empty: all; Options: 'no_light', 'fix_dir', 'simple_seq', 'complex_seq'
-          //experimentHistory: [14]
+          formOptions: ['no_light','fix_dir','simple_seq'], // Decide, which experiment categories are available; if empty: all; Options: 'no_light', 'fix_dir', 'simple_seq', 'complex_seq'
+          experimentHistory: [609]
         },
         model: {
           modelName: "Body Components",
@@ -204,15 +204,15 @@
                 region: 'motor',
                 label: "Forward Speed <br> [micrometers / second]", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
                 color: '#7030A0',
-                initialValue: { base: 80, delta: 10 }, //'motor_25',
+                initialValue: { base: 120, delta: 10 }, //'motor_25',
                 min_width: '130px',
                 maxValue: 2,
                 varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
                 options: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'fast'},
                 description: 'Set the speed at which the model moves forward, if it is programmed to move. The percentage refers to the maximum possible intensity for any model. See how the red arrow changes when you change the value.',
                 min: 50,
-                max: 250,
-                steps: 15
+                max: 400,
+                steps: 35
                 // If mechanistic: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'strong', 'motor_100': 'very strong'}
                 // If functional: {'motor_25': 'slow', 'motor_50': 'medium', 'motor_75': 'fast', 'motor_100': 'very fast'}
               },
@@ -258,12 +258,12 @@
           }],
           euglenaCount: {
             range: [10, 50],
-            options: {1: 1, 2: 2, 20: 20},
+            options: {1:1, 2:2, 5:5, 10:10, 20:20},
             initialValue: 1,
             region: 'settings',
           },
           euglenaInit: {
-            options: {"1": 'random', "2": 'all point to right'},
+            options: {"1": 'random', "2": 'all point to right', "3": 'all point downwards', "4": 'all point to the left', "5": 'all point upwards'},
             initialValue: "1",
             region: 'settings',
           },
@@ -316,7 +316,7 @@
           signalProcessing: {label: '3. Signal Molecules open Calcium channels', color: [14,137,209]},
           behavior: {label: '4. Calcium ions change Flagellum movement', color: [112,48,160]}
         },
-        variationLimitation: 'fixVar_20', //'fixVar_PERCENTAGE' - variation fixed, no variation if PERCENTAGE = 0, null (variation possible),
+        variationLimitation: null, //'fixVar_PERCENTAGE' - variation fixed, no variation if PERCENTAGE = 0, null (variation possible),
         explanationOn: false,
         mechanism: 'simple', // 'simple','complex'
         parameters: {
@@ -365,7 +365,7 @@
             initialValue: { base: 5, delta: 0 }, //'speed_25',
             min: 0,
             max: 60,
-            steps: 12,
+            steps: 60,
             maxValue: 100, //This value is also in percent of brightness
             varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
             options: {'speed_2': 'very slowly', 'speed_25': 'slowly', 'speed_50': 'at medium speed', 'speed_75': 'quickly', 'speed_100': 'very quickly'},

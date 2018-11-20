@@ -49,11 +49,14 @@ module.exports = {
       }
 
       // In first frame, orientation is in XY plane
-      let v_head = new THREE.Vector3(1,0,0);
-      v_head.applyAxisAngle(new THREE.Vector3(0,0,1), config.last.yaw);
-      EuglenaUtils.setDirection(v_head,tmp_euglena);
-      tmp_euglena.rotateZ(config.last.roll);
-      tmp_euglena.position.set(config.track.x, config.track.y, config.track.z);
+      // let v_head = new THREE.Vector3(1,0,0);
+      // v_head.applyAxisAngle(new THREE.Vector3(0,0,1), config.last.yaw);
+      // EuglenaUtils.setDirection(v_head,tmp_euglena);
+      // tmp_euglena.rotateZ(config.last.roll);
+      // tmp_euglena.position.set(config.track.x, config.track.y, config.track.z);
+
+      let prev_Euler = new THREE.Euler(config.last.roll,config.last.pitch,config.last.yaw,'XYZ');
+      tmp_euglena.setRotationFromEuler(prev_Euler);
 
       activationThreshold_prev = EugBody.activationThreshold_default;
       if (EugBody.adapt.mode.match('shock')) {
@@ -280,6 +283,8 @@ module.exports = {
       if (lightDiff == 0) { lightDiff = 0.2 * reactionStrength }
       delta_yaw += rotationDir * turnDirection * Math.abs(lightDiff) * dT;
     }
+
+    // console.log('frame ' + config.frame + ' lights ltrb ' + config.lights['left'] + '_' + config.lights['top'] + '_' + config.lights['right'] + '_' + config.lights['bottom'] + ' activation signal ' + activation_signal.toFixed(2) + ' lightDiff ' + lightDiff.toFixed(2))
 
     //console.log('frame ' + config.frame + ' signal ' + signal_intensity.toFixed(2) + ' bckgrnd avg ' + backgroundLight['average'].toFixed(2)  + ' bckgrnd max ' + backgroundLight['max'].toFixed(2) + ' diff ' + (backgroundLight['average']  - backgroundLight['max']).toFixed(2) + ' threshold ' + activationThreshold_current.toFixed(2) + ' direction ' + adapt.direction)
 

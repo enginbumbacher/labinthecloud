@@ -312,7 +312,7 @@ const _createModelResults = (app, result, model) => {
           roll: 0,
           pitch: Math.random() * 2 * Math.PI
         };
-      else {
+      else if (model.configuration.initialization === '2') { // right
         var initialization = {
           x: (Math.random() * 2 - 1) * 640 / (2 * liveResult.magnification),
           y: (Math.random() * 2 - 1) * 480 / (2 * liveResult.magnification),
@@ -320,6 +320,33 @@ const _createModelResults = (app, result, model) => {
           yaw: 0,
           roll: 0.1,
           pitch: Math.PI / 2
+        };
+      } else if (model.configuration.initialization === '3') { //down
+        var initialization = {
+          x: (Math.random() * 2 - 1) * 640 / (2 * liveResult.magnification),
+          y: (Math.random() * 2 - 1) * 480 / (2 * liveResult.magnification),
+          z: 0,
+          yaw: -Math.PI / 2,
+          roll: Math.PI / 2 - 0.1,
+          pitch: 0.05
+        };
+      } else if (model.configuration.initialization == '4') { //left
+        var initialization = {
+          x: (Math.random() * 2 - 1) * 640 / (2 * liveResult.magnification),
+          y: (Math.random() * 2 - 1) * 480 / (2 * liveResult.magnification),
+          z: 0,
+          yaw: 0,
+          roll: Math.PI - 0.1,
+          pitch: 3 * Math.PI / 2
+        };
+      } else if (model.configuration.initialization == '5') { //up
+        var initialization = {
+          x: (Math.random() * 2 - 1) * 640 / (2 * liveResult.magnification),
+          y: (Math.random() * 2 - 1) * 480 / (2 * liveResult.magnification),
+          z: 0,
+          yaw: -Math.PI / 2,
+          roll: Math.PI / 2 + 0.1,
+          pitch: Math.PI + 0.05
         };
       }
       if (result.initialization && result.initialization.length > euglenaId) {
@@ -393,7 +420,7 @@ const _createModelResults = (app, result, model) => {
           result: result,
           frame: frame,
           resetRandom: resetRandomNow, // CURRENTLY NOT BEING USED
-          wiggleRandom: 0.2
+          wiggleRandom: 0.3
         }))
       }
     }
@@ -561,7 +588,7 @@ module.exports = (Result) => {
 
   Result.observe('before save', (context, next) => {
 
-    if (!context.instance.euglenaModelId && context.isNewInstance) {
+    if (!context.instance.euglenaModelId && context.isNewInstance && !context.instance.trackFile) {
       context['args'] = {'data': context.instance}
 
       createBpuResults(Result.app, context).then(() => {

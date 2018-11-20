@@ -2,6 +2,7 @@
 @import "../../../../scss_includes/variables";
 
 $bulb-display__bar-width: 4rem;
+$bulb-display__bar-halfwidth: 2rem;
 
 .bulb-display {
   padding: $bulb-display__bar-width;
@@ -23,14 +24,14 @@ $bulb-display__bar-width: 4rem;
     height: $bulb-display__bar-width;
   }
   &__top__fix {
-  background: url(bulbs_h_dark.png) center center no-repeat;
-  background-size: contain;
-  -webkit-transform: rotate(180deg);
-  transform: rotate(180deg);
-  top: 0;
-  left: 5%;
-  width: 90%;
-  height: $bulb-display__bar-width;
+    background: url(bulbs_h_dark.png) center center no-repeat;
+    background-size: contain;
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    top: 0;
+    left: 5%;
+    width: 90%;
+    height: $bulb-display__bar-width;
   }
   &__bottom {
     background: url(bulbs_h_bright.png) center center no-repeat;
@@ -41,12 +42,12 @@ $bulb-display__bar-width: 4rem;
     height: $bulb-display__bar-width;
   }
   &__bottom__fix {
-  background: url(bulbs_h_dark.png) center center no-repeat;
-  background-size: contain;
-  bottom: 0;
-  left: 5%;
-  width: 90%;
-  height: $bulb-display__bar-width;
+    background: url(bulbs_h_dark.png) center center no-repeat;
+    background-size: contain;
+    bottom: 0;
+    left: 5%;
+    width: 90%;
+    height: $bulb-display__bar-width;
   }
   &__left {
     background: url(bulbs_v_bright.png) center center no-repeat;
@@ -83,5 +84,44 @@ $bulb-display__bar-width: 4rem;
     right: 0;
     height: 90%;
     width: $bulb-display__bar-width;
+  }
+}
+
+.bulb-text {
+  &__left {
+    position: absolute;
+    transform: rotate(-90deg);
+    top: 85%;
+    left: 0;
+    width: 100%;
+    height: $bulb-display__bar-width;
+  }
+
+  &__top {
+    position: absolute;
+    transform: rotate(180deg);
+    text-align: left;
+    top: 0;
+    left: -5%;
+    width: 100%;
+    height: $bulb-display__bar-width;
+  }
+
+  &__right {
+    position: absolute;
+    transform: rotate(-90deg);
+    top: 85%;
+    right: 0;
+    height: $bulb-display__bar-width;
+    width: 100%;
+  }
+
+  &__bottom {
+    position: absolute;
+    text-align: left;
+    bottom: -$bulb-display__bar-halfwidth;
+    left: 5%;
+    width: 100%;
+    height: $bulb-display__bar-width;
   }
 }

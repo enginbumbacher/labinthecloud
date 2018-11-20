@@ -37,17 +37,17 @@ module.exports = {
           }
         }
       },
-      {
-        test: /\.(png|jpg|svg|gif)$/,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            limit: 100,
-            name: 'images/[hash]-[name].[ext]',
-            publicPath: "cslib/"
-          }
-        }]
-      },
+      // {
+      //   test: /\.(png|jpg|svg|gif)$/,
+      //   use: [{
+      //     loader: 'url-loader',
+      //     options: {
+      //       limit: 100,
+      //       name: 'images/[hash]-[name].[ext]',
+      //       publicPath: "cslib/"
+      //     }
+      //   }]
+      // },
       {
         test: /\.([ot]tf|woff2|woff|eot)$/,
         use: {

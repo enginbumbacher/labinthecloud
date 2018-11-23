@@ -76,8 +76,7 @@ module.exports = (app, cb) => {
   var sequence_approach = true;
   if (sequence_approach) {
 
-    var i = 22;
-    var tmpConfigs = baseExperimentConfigs.slice(300,Math.min(baseExperimentConfigs.length, 630))
+    var tmpConfigs = baseExperimentConfigs.slice(0,Math.min(baseExperimentConfigs.length, 630))
     one_by_one(tmpConfigs, processExpConfig, app).then(() => {
       cb();
       console.log('we are here')

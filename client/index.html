@@ -152,7 +152,7 @@
             color: 0x2222ff,
             regionNames: {
               sensor: {label: 'Sensor Geometry', color: [192,0,0]},
-              motor: {label: 'Flagellum Forward Motion', color: [112,48,160]},
+              motor: {label: 'Flagellum Motion', color: [112,48,160]},
               settings: {label: 'Model Settings', color: [184,184,184]}
               //order: ['sensor','motor','settings']
             },
@@ -211,8 +211,8 @@
                 varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
                 options: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'fast'},
                 description: 'Set the speed at which the model moves forward, if it is programmed to move. The percentage refers to the maximum possible intensity for any model. See how the red arrow changes when you change the value.',
-                min: 50,
-                max: 400,
+                min: 25,
+                max: 200,
                 steps: 35
                 // If mechanistic: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'strong', 'motor_100': 'very strong'}
                 // If functional: {'motor_25': 'slow', 'motor_50': 'medium', 'motor_75': 'fast', 'motor_100': 'very fast'}
@@ -285,7 +285,7 @@
            },
            {
             id: "timeseries",
-            label: "Total Speed",
+            label: "Forward Speed",
             settings: {
               vRange: null,
               mode: 'total',
@@ -315,7 +315,7 @@
         regionNames: {
           signalActivate: {label: '2. Photoreceptors release Signal Molecules', color: [192,0,0]},
           signalProcessing: {label: '3. Signal Molecules open Calcium channels', color: [14,137,209]},
-          behavior: {label: '4. Calcium ions change Flagellum movement', color: [112,48,160]}
+          behavior: {label: '4. Calcium particles change Flagellum movement', color: [112,48,160]}
         },
         variationLimitation: null, //'fixVar_PERCENTAGE' - variation fixed, no variation if PERCENTAGE = 0, null (variation possible),
         explanationOn: false,
@@ -333,7 +333,7 @@
             maxValue: 1, //This value is also in percent of brightness
             varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
             options: {'signal_2': 'very low', 'signal_25': 'low', 'signal_50': 'medium', 'signal_75': 'high', 'signal_100': 'very high'},
-            description: 'Set the brightness of light at which the Rhodopsin get activated to emit a signal.'
+            description: 'Set the brightness of light at which the receptors get activated to emit a signal.'
           },
           signalAdapt: { //SelectField // Mode of adaptation
             region: 'signalActivate',
@@ -370,7 +370,7 @@
             maxValue: 100, //This value is also in percent of brightness
             varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
             options: {'speed_2': 'very slowly', 'speed_25': 'slowly', 'speed_50': 'at medium speed', 'speed_75': 'quickly', 'speed_100': 'very quickly'},
-            description: 'Set the speed (in seconds) at which the rhodopsin adapts to the background light.'
+            description: 'Set the speed (in seconds) at which the receptors adapt to the background light.'
           },
 
           // signalRandom: { //SelectField
@@ -389,11 +389,11 @@
             initialValue: 'amount_proportional',
             min_width: '210px',
             options: {'amount_constant': 'all or none', 'amount_proportional': 'proportional to number of Signal Mol.'},
-            description: 'Set the way it will turn when it receives a molecule.'
+            description: 'Set the way it will turn when activated by a signal molecule.'
           },
           reactionStrength: { //SymSelectField
             region: 'signalProcessing',
-            label: 'Inflowing Calcium Ions per Channel <br>',
+            label: 'Amount of Calcium Particle Inflow Channel <br> [in thousands]',
             color: '#0e89d1',
             initialValue: { base: 1, delta: 0.5 }, //'reaction_25',
             min: 0,
@@ -402,7 +402,7 @@
             maxValue: 10,
             varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
             options: {'turn_25': 'slow', 'turn_50': 'medium', 'turn_75': 'fast'},
-            description: 'Set the intensity at which the model is responding to light, if it is programmed to respond. The percentage refers to the maximum possible intensity for any model. See how the blue arrows change when you change the value.'
+            description: 'Set the amount of calcium particle inflow in response to channels opening.'
           },
           turnForward: { //SelectField
             region: 'behavior',

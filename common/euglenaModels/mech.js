@@ -124,7 +124,7 @@ module.exports = {
       // sort sensors based on which one is where
       if(EugBody.lightSensors.length >2) console.log("there are more than 2 sensors.");
       // substract the righ from the left eye
-      var sensorOrder = ((EugBody.lightSensors[1].getPosition3D()).y - (EugBody.lightSensors[0].getPosition3D()).y) > 0 ? [1,0] : [0,1];
+      var sensorOrder = ((EugBody.lightSensors[1].getPosition3D()).y - (EugBody.lightSensors[0].getPosition3D()).y) > 0 ? [0,1] : [1,0];
       var sensorDiff = (sensorOrder.map((v,ind) => {return sensorIntensities[v]})).reduce(function(a, b) { return a - b });
       lightInfo['diffBtwSensors'] = sensorDiff;
     }
@@ -150,7 +150,7 @@ module.exports = {
         rotationDir = EugBody.lightSensors[0].orientation.y;
       }
       if (EugBody.lightSensors.length > 1) {
-        rotationDir = (sensorIntensities[1] - sensorIntensities[0]) < 0 ? EugBody.lightSensors[1].position.y : EugBody.lightSensors[0].position.y;
+        rotationDir = (sensorIntensities[1] - sensorIntensities[0]) < 0 ? EugBody.lightSensors[0].position.y : EugBody.lightSensors[1].position.y;
       }
     }
 
@@ -284,7 +284,9 @@ module.exports = {
       delta_yaw += rotationDir * turnDirection * Math.abs(lightDiff) * dT;
     }
 
-    // console.log('frame ' + config.frame + ' lights ltrb ' + config.lights['left'] + '_' + config.lights['top'] + '_' + config.lights['right'] + '_' + config.lights['bottom'] + ' activation signal ' + activation_signal.toFixed(2) + ' lightDiff ' + lightDiff.toFixed(2))
+    //console.log('frame ' + config.frame + ' lights ltrb ' + config.lights['left'] + '_' + config.lights['top'] + '_' + config.lights['right'] + '_' + config.lights['bottom'] + ' activation signal ' + activation_signal.toFixed(2) + ' lightDiff ' + lightDiff.toFixed(2))
+
+    //console.log('frame ' + config.frame + ' Reaction Strength ' + reactionStrength + ' Activation Threshold ' + activationThreshold_current + ' lightDiff ' + lightDiff.toFixed(2) + ' activation signal ' + activation_signal.toFixed(2))
 
     //console.log('frame ' + config.frame + ' signal ' + signal_intensity.toFixed(2) + ' bckgrnd avg ' + backgroundLight['average'].toFixed(2)  + ' bckgrnd max ' + backgroundLight['max'].toFixed(2) + ' diff ' + (backgroundLight['average']  - backgroundLight['max']).toFixed(2) + ' threshold ' + activationThreshold_current.toFixed(2) + ' direction ' + adapt.direction)
 
@@ -316,11 +318,11 @@ module.exports = {
 
     // Turn randomly left or right
     current_delta_yaw += EugBody.turn.random * [-1,1][Math.random()*2|0]*Math.random() * config.resetRandom * dT;
-    var thresh_factor = 5;
+    var thresh_factor = 1.5;
     if (EugBody.turn.forward || Math.abs(current_delta_yaw)<thresh_factor*EugBody.defaults.yaw_min * dT) { // MAKE IT BASED ON WHAT THEY SEE, NOT THE DELTA_YAW
       tmp_euglena.translateZ(fw_speed * dT);
     } else if (!EugBody.turn.forward && Math.abs(current_delta_yaw)>thresh_factor*EugBody.defaults.yaw_min * dT){
-      tmp_euglena.translateZ(fw_speed/10 * dT);
+      tmp_euglena.translateZ(fw_speed/5 * dT);
     }
 
     //console.log('frame ' + config.frame + ' delta_yaw ' + current_delta_yaw.toFixed(2) + ' signal ' + signal_intensity.toFixed(2) + ' threshold ' + activationThreshold_current.toFixed(2))

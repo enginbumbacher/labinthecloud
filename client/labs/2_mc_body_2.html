@@ -124,12 +124,12 @@
 
     <script type="text/javascript">
       window.EuglenaConfig = {
-        lab: "2_mc_body_1",
+        lab: "2_mc_body_2",
         system: {
           maxLoginTime: 0,
           experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
-          modelModality: 'create', // 'observe','explore','create'
-          expModelModality: 'justbody', //'simultaneous','sequential', 'justmodel' - for seeing model and live not together
+          modelModality: 'createSignalProcessing', // 'observe','explore','create'
+          expModelModality: 'simultaneous', //'simultaneous','sequential', 'justmodel' - for seeing model and live not together
           enableDirectComparison: false, // false: cannot do direct comparison between models
         },
         experiment: {
@@ -197,7 +197,7 @@
                 label: "Forward Motion",
                 color: '#7030A0',
                 min_width: '210px',
-                initialValue: 'motion_wave',
+                initialValue: 'motion_spiral',
                 options: {'motion_spiral': 'spiraling', 'motion_wave': 'waving'},
                 description: 'Set the mode in which the model moves forward. Spiraling means that the moving forward is rotating around its axis. Waving means that the model is moving forward without rotating.'
               },
@@ -205,7 +205,7 @@
                 region: 'motor',
                 label: "Forward Speed <br> [micrometers / second]", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
                 color: '#7030A0',
-                initialValue: 80, //'motor_25',
+                initialValue: 90, //'motor_25',
                 min_width: '130px',
                 maxValue: 2,
                 varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
@@ -274,8 +274,38 @@
               }
             }
           ]
+        },
+        modeling: {
+         timeWindow: 2,
+         regionNames: {
+           signalActivate: {label: '2. Photoreceptors release Signal Molecules', color: [192,0,0]},
+           signalProcessing: {label: '3. Signal Molecules open Calcium channels', color: [14,137,209]},
+           behavior: {label: 'What the Flagellum does in reaction to light', color: [112,48,160]}
+         },
+         variationLimitation: null, //'fixVar_PERCENTAGE' - variation fixed, no variation if PERCENTAGE = 0, null (variation possible),
+         explanationOn: false,
+         mechanism: 'simple', // 'simple','complex'
+         parameters: {
+           turnForward: { //SelectField
+             region: 'behavior',
+             label: 'How will it turn?',
+             color: '#7030A0',
+             initialValue: 'forward_1',
+             min_width: '210px',
+             options: {'forward_1': 'Flagellum tilts in one direction, continues spiraling', 'forward_0': 'Flagellum beats in one direction, stops spiraling'},
+             description: 'Changing this parameter changes how the Flagellum moves.'
+           },
+           turnDirection: { //SelectField
+             region: 'behavior',
+             label: 'Flagellum Direction',
+             color: '#7030A0',
+             initialValue: 'beat_towards',
+             min_width: '210px',
+             options: {'beat_towards': 'towards the sensor', 'beat_away': 'away from the sensor'},
+             description: 'This determines what direction that the Flagellum will move to - away from, or towards the sensor?.'
+           }
+         }
         }
-
       };
     </script>
     <!-- <script data-main="./cslib/init" src="./cslib/thirdparty/require/require.js"></script> -->

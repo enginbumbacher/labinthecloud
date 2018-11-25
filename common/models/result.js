@@ -302,6 +302,7 @@ const _createModelResults = (app, result, model) => {
     result.runTime = duration;
     result.numFrames = duration * result.fps;
     const tracks = [];
+    console.log(model.configuration)
     for (let euglenaId = 0; euglenaId < model.configuration.count; euglenaId++) {
       if (model.configuration.initialization === '1') // 1 is random
         var initialization = {

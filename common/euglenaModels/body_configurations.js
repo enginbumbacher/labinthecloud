@@ -13,19 +13,19 @@ const defaults = {
   ellipseOffset: {z: 0.25, y: 0.5},
 
   signalDuration: 1.5, //in seconds
-  sensorPosition: 'position_50', // in percent of body Size
+  sensorPosition: 'position_0', // in percent of body Size
 
   bodyType: 'ellipse', //'box'
 
-  activationThreshold_default: 0.1, // in percent of maximum light
+  activationThreshold_default: 0.15, // in percent of maximum light
   activation_min: 0.03,
 
   fw_speed: 100,
-  fw_conversion: 25, // factor by which to convert the chosen value to an internally used value.
+  fw_conversion: 15, // factor by which to convert the chosen value to an internally used value.
   motion: 'motion_spiral',
-  roll_strength: 0.5, // in percent of fw_speed
+  roll_strength: 0.6, // in percent of fw_speed
 
-  reactionStrength_numeric: 4,
+  reactionStrength_numeric: 3.2,
   reactionStrength_variation: 0,
 
   turn: {
@@ -37,7 +37,7 @@ const defaults = {
   }, // -1 - towards the sensor, 1 - away from the sensor
 
   light: {
-    memoryFactor: 1, // factor that determines over how many rotations of a Euglena the memory should last; translated into number of frames
+    memoryFactor: 5, // factor that determines over how many rotations of a Euglena the memory should last; translated into number of frames
     memory: 20, // in seconds
     aggregationType: 'max'
   },
@@ -58,7 +58,7 @@ const defaults = {
     startThreshold: 0.5, // threshold for difference between incoming light and activation_threshold to trigger shock behavior
     stopThreshold: -0.4, // threshold for difference between incoming light and activation_threshold to stop shock behavior
     durationFactor: 30, // proportional to the difference of incoming light and activation_threshold; translated into number of frames; should be at most as big as adapt_speed
-    reactionStrength: 10, // intensity of turning reaction during shock
+    reactionStrength: 5, // intensity of turning reaction during shock
     turnDirection: 1, // direction of turning during shock; values same definition as turning_direction
     resetDuration: Math.ceil(20 + (Math.random() * 2 - 1) * 10) // in number of frames
   }
@@ -218,8 +218,13 @@ class EuglenaBody {
     this.light.aggregationType = this.defaults.light.aggregationType
 
     /* Turning parameters */
-    var tmp_numeric = config.reactionStrength_numeric != null ? config.reactionStrength_numeric : this.defaults.reactionStrength_numeric;
-    var tmp_variation = config.reactionStrength_variation != null ? config.reactionStrength_variation : this.defaults.reactionStrength_variation;
+    if (config.reactionStrength_numeric != null) {
+      var tmp_numeric = config.reactionStrength_numeric;
+      var tmp_variation = config.reactionStrength_variation != null ? config.reactionStrength_variation : this.defaults.reactionStrength_variation;
+    } else {
+      var tmp_numeric = config.turnStrength_numeric != null ? config.turnStrength_numeric : this.defaults.reactionStrength_numeric;
+      var tmp_variation = config.turnStrength_variation != null ? config.turnStrength_variation : this.defaults.reactionStrength_variation;
+    }
     this.reactionStrength = tmp_numeric + (Math.random() * 2 - 1) * tmp_variation;
     this.turn = {};
     this.turn.amount = config.channelOpeningAmount != null ? config.channelOpeningAmount : this.defaults.turn.amount;
@@ -231,6 +236,13 @@ class EuglenaBody {
     this.activationThreshold_default = config.signalThresh != null ? config.signalThresh_numeric / 100: this.defaults.activationThreshold_default;
     var tmp_turnDir = config.turnDirection != null ? config.turnDirection : this.defaults.turn.direction_default;
     this.turn.direction_default = tmp_turnDir.match('towards') ? 1 : -1;
+    if (this.turn.forward == 0) {
+      if (!config.turnDirection) {
+        this.turn.direction_default = -1;
+      } else {
+        this.turn.direction_default = (-1) * this.turn.direction_default;
+      }
+    }
 
     /* Adaptation */
     this.adapt = this.defaults.adapt;

@@ -36,6 +36,7 @@ SENDGRID_USER = <SendGrid user to send automated emails>
 SENDGRID_PASSWORD = <SendGrid password to send automated emails>
 
 BIOLAB_URL = <BioLab server base url>
+NODE_MAX_MEM = <Maximum allowed RAM allowed for Node; suggested 8192>
 ```
 
 If you just wish to run the server by itself, use the following command.  

@@ -9,7 +9,8 @@
     "build": "webpack",
     "watch": "webpack --watch",
     "build-admin-js": "webpack --config webpack.admin.config.js",
-    "build-admin-style": "node-sass lib/module/admin/style.scss client/cslib/admin/admin.css"
+    "build-admin-style": "node-sass lib/module/admin/style.scss client/cslib/admin/admin.css",
+    "build-public-style": "node-sass lib/module/public/style.scss client/cslib/public/style.css"
   },
   "repository": {
     "type": "git",

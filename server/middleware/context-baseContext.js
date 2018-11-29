@@ -26,7 +26,7 @@ module.exports = () => {
     req.baseContext.set('originalUrl', req.originalUrl);
     req.baseContext.set('ip', req.ip);
     let port = req.app.settings.port;
-    req.baseContext.set('baseUrl', `${req.protocol}://${ req.get('host') }${(req.get('host').indexOf(':') != -1 || (port == 80 || port == 443) ? '' : `:${port}`)}`);
+    req.baseContext.set('baseUrl', `${req.protocol}://${ req.hostname }${(req.get('host').indexOf(':') != -1 || (port == 80 || port == 443) ? '' : `:${port}`)}`);
     req.getCurrentContext = function () {
       return req.baseContext;
     };

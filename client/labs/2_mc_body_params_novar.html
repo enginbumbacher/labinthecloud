@@ -124,10 +124,10 @@
 
     <script type="text/javascript">
       window.EuglenaConfig = {
-        lab: "2_pf_body_2",
+        lab: "2_pf_body_1",
         system: {
           maxLoginTime: 0,
-          experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
+          experimentModality: 'explore', // 'observe','explore','create', 'createAndHistory'
           modelModality: 'create', // 'observe','explore','create'
           expModelModality: 'simultaneous', //'simultaneous','sequential', 'justmodel' - for seeing model and live not together
           enableDirectComparison: false, // false: cannot do direct comparison between models
@@ -138,8 +138,8 @@
           maxDuration: 60,
           // bpuId: "eug16", //["eug5","eug7"], //"eug1","eug4","eug5","eug6","eug7","eug8","eug15","eug16"
           euglenaServerMode:"historical", // 'simulate', 'demo', 'historical'
-          formOptions: ['no_light','simple_seq'], // Decide, which experiment categories are available; if empty: all; Options: 'no_light', 'fix_dir', 'simple_seq', 'complex_seq'
-          experimentHistory: [6,7,8,10]
+          formOptions: ['no_light','fix_dir','simple_seq'], // Decide, which experiment categories are available; if empty: all; Options: 'no_light', 'fix_dir', 'simple_seq', 'complex_seq'
+          experimentHistory: [11, 151, 609, 153]
         },
         model: {
           modelName: "Body Components",
@@ -148,7 +148,7 @@
             modelType: "mech",
             modelForm: 'mechanistic', // 'mechanistic' or 'functional'
             parameterForm: 'quantitative', //'qualitative' or 'quantitative'
-            variationLimitation: null,
+            variationLimitation: 'fixVar_20',
             color: 0x2222ff,
             regionNames: {
               sensor: {label: 'Sensor Geometry', color: [192,0,0]},
@@ -170,7 +170,7 @@
                 region: 'motor',
                 label: "Forward Speed <br> [micrometers / second]", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
                 color: '#7030A0',
-                initialValue: { base: 80, delta: 10 }, //'motor_25',
+                initialValue: 80, //'motor_25',
                 min_width: '130px',
                 maxValue: 2,
                 varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
@@ -186,7 +186,7 @@
                 region: 'motor',
                 label: "Rotation Speed <br> [rotations / second]", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
                 color: '#7030A0',
-                initialValue: { base: 2, delta: 0.4 }, //'motor_25',
+                initialValue: 2, //'motor_25',
                 min_width: '130px',
                 maxValue: 3,
                 varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
@@ -202,8 +202,8 @@
           }],
           euglenaCount: {
             range: [10, 50],
-            options: {1:1, 2:2, 5:5, 10:10, 20:20},
-            initialValue: 5,
+            options: {5:5, 10:10, 20:20},
+            initialValue: 10,
             region: 'settings',
           },
           euglenaInit: {

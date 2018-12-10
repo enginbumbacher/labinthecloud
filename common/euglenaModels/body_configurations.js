@@ -33,7 +33,7 @@ const defaults = {
     forward: 'forward_1', // 'forward_0' - turn on spot, 'forward_1' - turn while moving forward
     random: 'sigrandom_20', // number is percentage of random_max for random turns
     random_max: 1.3,
-    direction_default: 'away'
+    direction_default: 'away' // away means away from the light; towards means towards the light.
   }, // -1 - towards the sensor, 1 - away from the sensor
 
   light: {
@@ -235,14 +235,13 @@ class EuglenaBody {
     /* Activation Thresholds and turning direction - depends also on the number of eyes! */
     this.activationThreshold_default = config.signalThresh != null ? config.signalThresh_numeric / 100: this.defaults.activationThreshold_default;
     var tmp_turnDir = config.turnDirection != null ? config.turnDirection : this.defaults.turn.direction_default;
-    this.turn.direction_default = tmp_turnDir.match('towards') ? 1 : -1;
-    if (this.turn.forward == 0) {
-      if (!config.turnDirection) {
-        this.turn.direction_default = -1;
-      } else {
-        this.turn.direction_default = (-1) * this.turn.direction_default;
-      }
+    this.turn.direction_default = tmp_turnDir.match('towards') ? -1 : 1;
+    if (!config.turnDirection) {
+      this.turn.direction_default = -1;
+    } else {
+      this.turn.direction_default = (-1) * this.turn.direction_default;
     }
+
 
     /* Adaptation */
     this.adapt = this.defaults.adapt;

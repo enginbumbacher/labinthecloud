@@ -139,7 +139,8 @@
           // bpuId: "eug16", //["eug5","eug7"], //"eug1","eug4","eug5","eug6","eug7","eug8","eug15","eug16"
           euglenaServerMode:"historical", // 'simulate', 'demo', 'historical'
           formOptions: {'exp_categories': ['no_light','fix_dir','simple_seq','complex_seq'], 'exp_times': [4,6]}, // Decide, which experiment categories are available; if empty: all; Options: 'no_light', 'fix_dir', 'simple_seq', 'complex_seq'
-          experimentHistory: [609]
+          experimentHistory: [609],
+          revertToLast: false
         },
         model: {
           modelName: "Body Components",
@@ -165,15 +166,6 @@
                 min_width: '210px',
                 options: {'type_1side': 'One sensor on side', 'type_1middle':'One sensor in middle', 'type_2sensors': '2 sensors', 'type_eyespot': 'One sensor in middle with shader'},
                 description: 'Select different types for the light sensor. You can change location and number of sensors.'
-              },
-              sensorPosition: {
-                region: 'sensor',
-                label: "Sensor Distance",
-                color: '#C00000',
-                initialValue: "position_0",
-                min_width: '210px',
-                options: {'position_0':'close', 'position_100': 'far'},
-                description: 'Select the distance from the sensor to the flagellum.'
               },
               // sensorShape: {
               //   region: 'sensor',
@@ -259,8 +251,8 @@
           }],
           euglenaCount: {
             range: [10, 50],
-            options: {1:1, 2:2, 5:5, 10:10, 20:20},
-            initialValue: 1,
+            options: {10:10, 20:20},
+            initialValue: 510,
             region: 'settings',
           },
           euglenaInit: {
@@ -313,13 +305,13 @@
        modeling: {
         timeWindow: 2,
         regionNames: {
-          signalActivate: {label: '2. Photoreceptors release Signal Molecules', color: [192,0,0]},
-          signalProcessing: {label: '3. Signal Molecules open Calcium channels', color: [14,137,209]},
-          behavior: {label: '4. Calcium particles change Flagellum movement', color: [112,48,160]}
+          signalActivate: {label: '1. Light activates Photoreceptors', color: [192,0,0]},
+          signalProcessing: {label: '2. Photoreceptors release Signal Molecules', color: [14,137,209]},
+          behavior: {label: '3. Signal Molecules change Flagellum movement', color: [112,48,160]}
         },
         variationLimitation: null, //'fixVar_PERCENTAGE' - variation fixed, no variation if PERCENTAGE = 0, null (variation possible),
         explanationOn: false,
-        mechanism: 'simple', // 'simple','complex'
+        mechanism: 'complex', // 'simple','complex'
         parameters: {
           signalThresh: { //SymSelectField
             region: 'signalActivate',
@@ -384,16 +376,16 @@
           // },
           channelOpeningAmount: { //SelectField
             region: 'signalProcessing',
-            label: "How many channels?",
+            label: "How many Signal Molecules?",
             color: '#0e89d1',
             initialValue: 'amount_proportional',
             min_width: '210px',
-            options: {'amount_constant': 'all or none', 'amount_proportional': 'proportional to number of Signal Mol.'},
+            options: {'amount_constant': 'all or none', 'amount_proportional': 'proportional to brightness'},
             description: 'Set the way it will turn when activated by a signal molecule.'
           },
           reactionStrength: { //SymSelectField
             region: 'signalProcessing',
-            label: 'Amount of Calcium Particle Inflow Channel <br> [in thousands]',
+            label: 'Strength of Signal per Photoreceptor <br> [qualitative scale; 10=very strong]',
             color: '#0e89d1',
             initialValue: { base: 1, delta: 0.5 }, //'reaction_25',
             min: 0,
@@ -419,7 +411,7 @@
             color: '#2F5597',
             initialValue: 'beat_towards',
             min_width: '210px',
-            options: {'beat_towards': 'towards the (weaker) sensor or eyespot', 'beat_away': 'away from the (weaker) sensor / eyespot'},
+            options: {'beat_towards': 'towards the light', 'beat_away': 'away from the light'},
             description: 'This determines what direction the Flagellum will move towards.'
           }
         }

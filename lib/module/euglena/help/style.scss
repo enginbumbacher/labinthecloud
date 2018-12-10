@@ -20,6 +20,7 @@
   &__content {
     padding: 2rem;
     overflow: auto;
+    max-height: 100%;
   }
 
   &__tab {
@@ -46,4 +47,58 @@
         transform: scaleY(1);
     }
   }
+
+  &__accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 1rem;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    transition: 0.4s;
+
+    strong {
+      font-size: 18px;
+      font-family: "Lora";
+    }
+  }
+
+  &__accordion:after {
+    content: '\02795'; /* Unicode character for "plus" sign (+) */
+    color: #777;
+    float: right;
+    margin-left: 5px;
+  }
+
+  &__accordion:hover {
+    background-color: #ccc;
+  }
+
+  &__panel {
+    padding: 0 10px;
+    background-color: white;
+    display: none;
+    overflow: hidden;
+
+    img {
+      max-width: 50%;
+    }
+
+    p {
+      font-size: 16px;
+      font-family: "Lora";
+    }
+  }
+}
+
+.active:after {
+    content: "\2796"; /* Unicode character for "minus" sign (-) */
+
+}
+
+.active{
+    background-color: #ccc;
 }

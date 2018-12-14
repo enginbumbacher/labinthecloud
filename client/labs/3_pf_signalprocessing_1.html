@@ -127,7 +127,7 @@
         lab: "2_pf_body_1",
         system: {
           maxLoginTime: 0,
-          experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
+          experimentModality: 'explore', // 'observe','explore','create', 'createAndHistory'
           modelModality: 'createSignalProcessing', // 'observe','explore','create'
           expModelModality: 'simultaneous', //'simultaneous','sequential', 'justmodel' - for seeing model and live not together
           enableDirectComparison: false, // false: cannot do direct comparison between models
@@ -138,8 +138,8 @@
           maxDuration: 60,
           // bpuId: "eug16", //["eug5","eug7"], //"eug1","eug4","eug5","eug6","eug7","eug8","eug15","eug16"
           euglenaServerMode:"historical", // 'simulate', 'demo', 'historical'
-          formOptions: ['no_light','fix_dir','simple_seq'], // Decide, which experiment categories are available; if empty: all; Options: 'no_light', 'fix_dir', 'simple_seq', 'complex_seq'
-          experimentHistory: [6,7,8,10]
+          formOptions: ['fix_dir','simple_seq'], // Decide, which experiment categories are available; if empty: all; Options: 'no_light', 'fix_dir', 'simple_seq', 'complex_seq'
+          experimentHistory: [7,9,11,12]
         },
         model: {
           modelName: "Body Components",
@@ -196,7 +196,7 @@
                 region: 'motor',
                 label: "Forward Speed <br> [micrometers / second]", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
                 color: '#7030A0',
-                initialValue: 90, //'motor_25',
+                initialValue: 80, //'motor_25',
                 min_width: '130px',
                 maxValue: 2,
                 varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
@@ -212,7 +212,7 @@
                 region: 'motor',
                 label: "Rotation Speed <br> [rotations / second]", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
                 color: '#7030A0',
-                initialValue: 1.4, //'motor_25',
+                initialValue: 1.2, //'motor_25',
                 min_width: '130px',
                 maxValue: 3,
                 varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
@@ -228,8 +228,8 @@
           }],
           euglenaCount: {
             range: [10, 50],
-            options: {1:1, 2:2, 5:5, 10:10, 20:20},
-            initialValue: 5,
+            options: {20:20},
+            initialValue: 20,
             region: 'settings',
           },
           euglenaInit: {
@@ -263,68 +263,34 @@
                 width: 500,
                 height: 400
               }
-            }, {
-              id: "componentspeed",
-              label: "Up/Down and Left/Right Speed",
-              settings: {
-                vRange: null,
-                mode: 'component',
-                stdBand: true,
-                dT: 1,
-
-                width: 450,
-                height: 250
-              }
             }
           ]
         },
         modeling: {
          timeWindow: 2,
          regionNames: {
-           signalActivate: {label: '1. Photoreceptors release Signal Molecules', color: [192,0,0]},
-           signalProcessing: {label: '2. Signal Molecules open Calcium channels', color: [14,137,209]},
-           behavior: {label: '3. Calcium particles change Flagellum movement', color: [112,48,160]}
+           signalActivate: {label: '1. Light activates Photoreceptors', color: [192,0,0]},
+           signalProcessing: {label: '2. Photoreceptors release Signal Molecules', color: [14,137,209]},
+           behavior: {label: '3. Signal Molecules Flagellum movement', color: [112,48,160]}
          },
          variationLimitation: 'fixVar_20', //'fixVar_PERCENTAGE' - variation fixed, no variation if PERCENTAGE = 0, null (variation possible),
          explanationOn: false,
          mechanism: 'complex', // 'simple','complex'
          parameters: {
-           signalThresh: { //SymSelectField
+           signalThreshAllNone: { //SymSelectField
              region: 'signalActivate',
-             label: "Activation Brightness <br> [in % of maximum brightness]",
+             label: "Critical Brightness <br> [in % of maximum brightness]",
              color: '#C55A11',
              initialValue: 20, //'signal_2',
-             min: 0,
+             min: 5,
              max: 100,
-             steps: 20,
+             steps: 19,
              min_width: '210px',
              maxValue: 1, //This value is also in percent of brightness
              varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
              options: {'signal_2': 'very low', 'signal_25': 'low', 'signal_50': 'medium', 'signal_75': 'high', 'signal_100': 'very high'},
-             description: 'Set the amount of calcium particle inflow in response to channels opening.'
+             description: 'Set the critical brightness at which all the photoreceptors get activated.'
            },
-           reactionStrength: { //SymSelectField
-             region: 'signalProcessing',
-             label: 'Amount of Calcium Particle Inflow Channel <br> [in thousands]',
-             color: '#0e89d1',
-             initialValue: 2, //'reaction_25',
-             min: 0,
-             max: 10,
-             steps: 20,
-             maxValue: 10,
-             varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
-             options: {'turn_25': 'slow', 'turn_50': 'medium', 'turn_75': 'fast'},
-             description: 'Set the amount of calcium particle inflow in response to channels opening.'
-           },
-           turnForward: { //SelectField
-             region: 'behavior',
-             label: 'How will it turn?',
-             color: '#7030A0',
-             initialValue: 'forward_0',
-             min_width: '210px',
-             options: {'forward_0': 'Flagellum beats in one direction, stops spiraling'},
-             description: 'Changing this parameter changes how the Flagellum moves.'
-           }
          }
         }
 

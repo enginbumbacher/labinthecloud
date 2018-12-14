@@ -277,7 +277,15 @@ module.exports = {
       if (shock.state) { lightDiff = reactionStrength; }
       else {
         if (EugBody.turn.amount === 'amount_proportional') { lightDiff = activation_signal * reactionStrength; } // If turn proportional to activation_signal
-        else if (EugBody.turn.amount === 'amount_constant') { lightDiff = reactionStrength; }
+        else if (EugBody.turn.amount === 'amount_constant') {
+
+          var critThresh = EugBody.criticalThreshold_default;
+          if (activation_signal > critThresh) {
+            lightDiff = reactionStrength;
+          } else {
+            lightDiff = activation_signal * reactionStrength;
+          }
+        }
         //console.log('frame ' + config.frame + ' proportional ' + (activation_signal*reactionStrength).toFixed(2) + ' constant ' + reactionStrength )
       }
       if (lightDiff == 0) { lightDiff = 0.2 * reactionStrength }

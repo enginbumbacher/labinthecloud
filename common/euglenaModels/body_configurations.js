@@ -17,8 +17,10 @@ const defaults = {
 
   bodyType: 'ellipse', //'box'
 
-  activationThreshold_default: 0.15, // in percent of maximum light
+  activationThreshold_default: 0.05, // in percent of maximum light
   activation_min: 0.03,
+
+  criticalThreshold: 0.2,
 
   fw_speed: 100,
   fw_conversion: 15, // factor by which to convert the chosen value to an internally used value.
@@ -29,8 +31,8 @@ const defaults = {
   reactionStrength_variation: 0,
 
   turn: {
-    amount: 'amount_proportional', // 'amount_constant' - 'constant, 'amount_proportional' - proportional to light diff
-    forward: 'forward_1', // 'forward_0' - turn on spot, 'forward_1' - turn while moving forward
+    amount: 'amount_constant', // 'amount_constant' - 'constant, 'amount_proportional' - proportional to light diff
+    forward: 'forward_0', // 'forward_0' - turn on spot, 'forward_1' - turn while moving forward
     random: 'sigrandom_20', // number is percentage of random_max for random turns
     random_max: 1.3,
     direction_default: 'away' // away means away from the light; towards means towards the light.
@@ -241,6 +243,10 @@ class EuglenaBody {
     } else {
       this.turn.direction_default = (-1) * this.turn.direction_default;
     }
+
+    /* Critical Brightness for differentiation between constand and proportional release of amount. */
+    this.criticalThreshold_default = config.signalThreshAllNone != null ? config.signalThreshAllNone_numeric / 100 : this.defaults.criticalThreshold;
+
 
 
     /* Adaptation */

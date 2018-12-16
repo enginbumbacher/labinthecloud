@@ -17,7 +17,7 @@ const defaults = {
 
   bodyType: 'ellipse', //'box'
 
-  activationThreshold_default: 0.05, // in percent of maximum light
+  activationThreshold_default: 0.00, // in percent of maximum light
   activation_min: 0.03,
 
   criticalThreshold: 0.2,

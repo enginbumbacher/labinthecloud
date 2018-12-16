@@ -281,7 +281,7 @@ module.exports = {
 
           var critThresh = EugBody.criticalThreshold_default;
           if (activation_signal > critThresh) {
-            lightDiff = reactionStrength;
+            lightDiff = 2 * reactionStrength;
           } else {
             lightDiff = activation_signal * reactionStrength;
           }

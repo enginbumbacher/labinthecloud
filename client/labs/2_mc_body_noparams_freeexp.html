@@ -124,12 +124,12 @@
 
     <script type="text/javascript">
       window.EuglenaConfig = {
-        lab: "2_pf_body_2",
+        lab: "2_mc_body_1",
         system: {
           maxLoginTime: 0,
-          experimentModality: 'explore', // 'observe','explore','create', 'createAndHistory'
-          modelModality: 'create', // 'observe','explore','create'
-          expModelModality: 'simultaneous', //'simultaneous','sequential', 'justmodel' - for seeing model and live not together
+          experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
+          modelModality: 'explore', // 'observe','explore','create'
+          expModelModality: 'justbody', //'simultaneous','sequential', 'justmodel' - for seeing model and live not together
           enableDirectComparison: false, // false: cannot do direct comparison between models
         },
         experiment: {
@@ -143,16 +143,17 @@
         },
         model: {
           modelName: "Body Components",
+          modelHistory: [2,3],
           //modelHistory: [1305,1311],
           tabs: [{
             modelType: "mech",
             modelForm: 'mechanistic', // 'mechanistic' or 'functional'
             parameterForm: 'quantitative', //'qualitative' or 'quantitative'
-            variationLimitation: null,
+            variationLimitation: 'fixVar_20', //'fixVar_PERCENTAGE' - variation fixed, no variation if PERCENTAGE = 0, null (variation possible)
             color: 0x2222ff,
             regionNames: {
               sensor: {label: 'Sensor Geometry', color: [192,0,0]},
-              motor: {label: 'Flagellum Forward Motion', color: [112,48,160]},
+              motor: {label: 'Flagellum Motion', color: [112,48,160]},
               settings: {label: 'Model Settings', color: [184,184,184]}
               //order: ['sensor','motor','settings']
             },
@@ -161,43 +162,62 @@
                 region: 'sensor',
                 label: "Sensor Type",
                 color: '#C00000',
-                initialValue: "type_eyespot",
+                initialValue: "type_1side",
                 min_width: '210px',
-                options: {'type_eyespot': 'One sensor with eyespot on side'},
+                options: {'type_1side': 'One sensor on side', 'type_2sensors': '2 sensors'},
                 description: 'Select different types for the light sensor. You can change location and number of sensors.'
               },
-              v: {
+              // sensorPosition: {
+              //   region: 'sensor',
+              //   label: "Sensor Distance",
+              //   color: '#C00000',
+              //   initialValue: "position_0",
+              //   min_width: '210px',
+              //   options: {'position_0':'close', 'position_100': 'far'},
+              //   description: 'Select the distance from the sensor to the flagellum.'
+              // },
+              // sensorShape: {
+              //   region: 'sensor',
+              //   label: "Field of View",
+              //   color: '#C00000',
+              //   initialValue: "shape_50",
+              //   min_width: '210px',
+              //   options: {'shape_50':'half', 'shape_100': 'full'},
+              //   description: 'Write text.'
+              // },
+              /*opacity: {
+                region: 'body',
+                label: "Body Opacity",
+                color: '#759364',
+                initialValue: 'opacity_20',
+                maxValue: 1.0,
+
+              },*/
+              motion: {
                 region: 'motor',
-                label: "Forward Speed <br> [micrometers / second]", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
+                label: "Forward Motion",
                 color: '#7030A0',
-                initialValue: { base: 80, delta: 10 }, //'motor_25',
-                min_width: '130px',
-                maxValue: 2,
-                varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
-                options: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'fast'},
-                description: 'Set the speed at which the model moves forward when not reacting to light.',
-                min: 25,
-                max: 200,
-                steps: 35
-                // If mechanistic: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'strong', 'motor_100': 'very strong'}
-                // If functional: {'motor_25': 'slow', 'motor_50': 'medium', 'motor_75': 'fast', 'motor_100': 'very fast'}
+                min_width: '210px',
+                initialValue: 'motion_wave',
+                options: {'motion_spiral': 'spiraling', 'motion_wave': 'waving'},
+                description: 'Set the mode in which the model moves forward. Spiraling means that the moving forward is rotating around its axis. Waving means that the model is moving forward without rotating.'
               },
-              roll: {
-                region: 'motor',
-                label: "Rotation Speed <br> [rotations / second]", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
-                color: '#7030A0',
-                initialValue: { base: 2, delta: 0.4 }, //'motor_25',
-                min_width: '130px',
-                maxValue: 3,
-                varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
-                options: {'roll_0': 'no rotation', 'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast'},
-                description: 'Set the speed at which the model rotates around its long body axis when moving forward.',
-                min: 0,
-                max: 3,
-                steps: 15
-                // If mechanistic: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'strong', 'motor_100': 'very strong'}
-                // If functional: {'motor_25': 'slow', 'motor_50': 'medium', 'motor_75': 'fast', 'motor_100': 'very fast'}
-              }
+              // roll: {
+              //   region: 'motor',
+              //   label: "Rotation Speed <br> [rotations / second]", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
+              //   color: '#7030A0',
+              //   initialValue: 2, //'motor_25',
+              //   min_width: '130px',
+              //   maxValue: 3,
+              //   varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
+              //   options: {'roll_0': 'no rotation', 'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast'},
+              //   description: 'Set the speed at which the model rotates around its long body axis normally, if it is programmed to rotate. The percentage refers to the maximum possible intensity for any model. See how the orange arrow changes when you change the value.',
+              //   min: 0,
+              //   max: 3,
+              //   steps: 15
+              //   // If mechanistic: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'strong', 'motor_100': 'very strong'}
+              //   // If functional: {'motor_25': 'slow', 'motor_50': 'medium', 'motor_75': 'fast', 'motor_100': 'very fast'}
+              // }
             }
           }],
           euglenaCount: {

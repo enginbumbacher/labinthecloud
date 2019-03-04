@@ -124,10 +124,10 @@
 
     <script type="text/javascript">
       window.EuglenaConfig = {
-        lab: "2_pf_body_2",
+        lab: "2_pf_body_1",
         system: {
           maxLoginTime: 0,
-          experimentModality: 'explore', // 'observe','explore','create', 'createAndHistory'
+          experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
           modelModality: 'create', // 'observe','explore','create'
           expModelModality: 'simultaneous', //'simultaneous','sequential', 'justmodel' - for seeing model and live not together
           enableDirectComparison: false, // false: cannot do direct comparison between models
@@ -138,72 +138,17 @@
           maxDuration: 60,
           // bpuId: "eug16", //["eug5","eug7"], //"eug1","eug4","eug5","eug6","eug7","eug8","eug15","eug16"
           euglenaServerMode:"historical", // 'simulate', 'demo', 'historical'
-          formOptions: ['no_light','simple_seq'], // Decide, which experiment categories are available; if empty: all; Options: 'no_light', 'fix_dir', 'simple_seq', 'complex_seq'
-          experimentHistory: [11, 151, 609, 153]
+          formOptions: ['no_light','complex_seq'], // Decide, which experiment categories are available; if empty: all; Options: 'no_light', 'fix_dir', 'simple_seq', 'complex_seq'
+          experimentHistory: [603,604,607]
         },
         model: {
           modelName: "Body Components",
           //modelHistory: [1305,1311],
-          tabs: [{
-            modelType: "mech",
-            modelForm: 'mechanistic', // 'mechanistic' or 'functional'
-            parameterForm: 'quantitative', //'qualitative' or 'quantitative'
-            variationLimitation: null,
-            color: 0x2222ff,
-            regionNames: {
-              sensor: {label: 'Sensor Geometry', color: [192,0,0]},
-              motor: {label: 'Flagellum Forward Motion', color: [112,48,160]},
-              settings: {label: 'Model Settings', color: [184,184,184]}
-              //order: ['sensor','motor','settings']
-            },
-            parameters: {
-              sensorType: {
-                region: 'sensor',
-                label: "Sensor Type",
-                color: '#C00000',
-                initialValue: "type_eyespot",
-                min_width: '210px',
-                options: {'type_eyespot': 'One sensor with eyespot on side'},
-                description: 'Select different types for the light sensor. You can change location and number of sensors.'
-              },
-              v: {
-                region: 'motor',
-                label: "Forward Speed <br> [micrometers / second]", // If mechanistic: "Motor Strength", if functional: "Motor Speed"
-                color: '#7030A0',
-                initialValue: { base: 80, delta: 10 }, //'motor_25',
-                min_width: '130px',
-                maxValue: 2,
-                varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
-                options: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'fast'},
-                description: 'Set the speed at which the model moves forward when not reacting to light.',
-                min: 25,
-                max: 200,
-                steps: 35
-                // If mechanistic: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'strong', 'motor_100': 'very strong'}
-                // If functional: {'motor_25': 'slow', 'motor_50': 'medium', 'motor_75': 'fast', 'motor_100': 'very fast'}
-              },
-              roll: {
-                region: 'motor',
-                label: "Rotation Speed <br> [rotations / second]", // If mechanistic: "Roll Strength", if functional: "Roll Speed"
-                color: '#7030A0',
-                initialValue: { base: 2, delta: 0.4 }, //'motor_25',
-                min_width: '130px',
-                maxValue: 3,
-                varOptions: {'variation_0': 'no', 'variation_10': 'small', 'variation_25': 'medium', 'variation_50': 'large'},
-                options: {'roll_0': 'no rotation', 'roll_25': 'slow', 'roll_50': 'medium', 'roll_75': 'fast'},
-                description: 'Set the speed at which the model rotates around its long body axis when moving forward.',
-                min: 0,
-                max: 3,
-                steps: 15
-                // If mechanistic: {'motor_25': 'weak', 'motor_50': 'medium', 'motor_75': 'strong', 'motor_100': 'very strong'}
-                // If functional: {'motor_25': 'slow', 'motor_50': 'medium', 'motor_75': 'fast', 'motor_100': 'very fast'}
-              }
-            }
-          }],
+          tabs: [],
           euglenaCount: {
             range: [10, 50],
-            options: {5:5, 10:10, 20:20},
-            initialValue: 10,
+            options: {1:1, 2:2, 5:5, 10:10, 20:20},
+            initialValue: 5,
             region: 'settings',
           },
           euglenaInit: {
@@ -237,10 +182,22 @@
                 width: 500,
                 height: 400
               }
+            }, {
+              id: "componentspeed",
+              label: "Up/Down and Left/Right Speed",
+              settings: {
+                vRange: null,
+                mode: 'component',
+                stdBand: true,
+                dT: 1,
+
+                width: 450,
+                height: 250
+              }
             }
           ]
-        }
-
+        },
+        modeling: {}
       };
     </script>
     <!-- <script data-main="./cslib/init" src="./cslib/thirdparty/require/require.js"></script> -->

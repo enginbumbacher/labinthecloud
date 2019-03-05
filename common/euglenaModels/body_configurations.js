@@ -27,14 +27,14 @@ const defaults = {
   motion: 'motion_spiral',
   roll_strength: 0.6, // in percent of fw_speed
 
-  reactionStrength_numeric: 3.2,
+  reactionStrength_numeric: 2.2, //3.2
   reactionStrength_variation: 0,
 
   turn: {
-    amount: 'amount_constant', // 'amount_constant' - 'constant, 'amount_proportional' - proportional to light diff
-    forward: 'forward_0', // 'forward_0' - turn on spot, 'forward_1' - turn while moving forward
+    amount: 'amount_proportional', // 'amount_constant' - 'constant, 'amount_proportional' - proportional to light diff
+    forward: 'forward_1', // 'forward_0' - turn on spot, 'forward_1' - turn while moving forward
     random: 'sigrandom_20', // number is percentage of random_max for random turns
-    random_max: 1.3,
+    random_max: 2.0,
     direction_default: 'away' // away means away from the light; towards means towards the light.
   }, // -1 - towards the sensor, 1 - away from the sensor
 
@@ -230,6 +230,7 @@ class EuglenaBody {
     this.reactionStrength = tmp_numeric + (Math.random() * 2 - 1) * tmp_variation;
     this.turn = {};
     this.turn.amount = config.channelOpeningAmount != null ? config.channelOpeningAmount : this.defaults.turn.amount;
+
     this.turn.forward = config.turnForward!= null ? config.turnForward : this.defaults.turn.forward;
     this.turn.forward = this.turn.forward.match('_1') ? 1 : 0;
     this.turn.random = ( config.signalRandom != null ? parseInt(config.signalRandom.substr(config.signalRandom.indexOf('_')+1)): parseInt(this.defaults.turn.random.substr(this.defaults.turn.random.indexOf('_')+1)) ) / 100 * this.defaults.turn.random_max;
@@ -246,8 +247,6 @@ class EuglenaBody {
 
     /* Critical Brightness for differentiation between constand and proportional release of amount. */
     this.criticalThreshold_default = config.signalThreshAllNone != null ? config.signalThreshAllNone_numeric / 100 : this.defaults.criticalThreshold;
-
-
 
     /* Adaptation */
     this.adapt = this.defaults.adapt;

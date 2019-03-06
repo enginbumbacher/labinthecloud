@@ -27,7 +27,7 @@ const defaults = {
   motion: 'motion_spiral',
   roll_strength: 0.6, // in percent of fw_speed
 
-  reactionStrength_numeric: 2.2, //3.2
+  reactionStrength_numeric: 2.5, //3.2
   reactionStrength_variation: 0,
 
   roll_speed_offset: 0.2,
@@ -176,8 +176,10 @@ class EuglenaBody {
     }
 
     this.spotPositions = [];
+    this.changeReactionStrength = 1.0;
     // modify the sensors based on the spots
     if (this.bodyConfiguration.spotPositions) {
+      this.changeReactionStrength = 2.0;
       this.bodyConfiguration.spotPositions.forEach(spotPosition => {
         this.lightSensors.forEach((lightSensor,ind) => {
           if (lightSensor.position.z == spotPosition.z) {
@@ -229,7 +231,7 @@ class EuglenaBody {
       var tmp_numeric = config.turnStrength_numeric != null ? config.turnStrength_numeric : this.defaults.reactionStrength_numeric;
       var tmp_variation = config.turnStrength_variation != null ? config.turnStrength_variation : this.defaults.reactionStrength_variation;
     }
-    this.reactionStrength = tmp_numeric + (Math.random() * 2 - 1) * tmp_variation;
+    this.reactionStrength = this.changeReactionStrength * (tmp_numeric + (Math.random() * 2 - 1) * tmp_variation);
     this.turn = {};
     this.turn.amount = config.channelOpeningAmount != null ? config.channelOpeningAmount : this.defaults.turn.amount;
 

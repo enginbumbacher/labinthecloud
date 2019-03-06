@@ -30,11 +30,13 @@ const defaults = {
   reactionStrength_numeric: 2.2, //3.2
   reactionStrength_variation: 0,
 
+  roll_speed_offset: 0.2,
+
   turn: {
     amount: 'amount_proportional', // 'amount_constant' - 'constant, 'amount_proportional' - proportional to light diff
     forward: 'forward_1', // 'forward_0' - turn on spot, 'forward_1' - turn while moving forward
     random: 'sigrandom_20', // number is percentage of random_max for random turns
-    random_max: 2.0,
+    random_max: 3.0,
     direction_default: 'away' // away means away from the light; towards means towards the light.
   }, // -1 - towards the sensor, 1 - away from the sensor
 
@@ -209,10 +211,10 @@ class EuglenaBody {
       // 2*PI*this.roll_speed / config.frame angle per frame
     } else if (config.motion != null) {
       this.motion_type = config.motion.match('spiral') ? 1 : 0;
-      this.roll_speed = this.motion_type * this.defaults.roll_strength * this.fw_speed;
+      this.roll_speed = this.defaults.roll_speed_offset + this.motion_type * this.defaults.roll_strength * this.fw_speed;
     } else {
       this.motion_type = this.defaults.motion.match('spiral') ? 1 : 0;
-      this.roll_speed = this.motion_type * this.defaults.roll_strength * this.fw_speed;
+      this.roll_speed = this.defaults.roll_speed_offset + this.motion_type * this.defaults.roll_strength * this.fw_speed;
     }
 
     this.light = this.defaults.light;

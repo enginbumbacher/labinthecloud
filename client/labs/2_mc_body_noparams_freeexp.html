@@ -128,7 +128,7 @@
         system: {
           maxLoginTime: 0,
           experimentModality: 'create', // 'observe','explore','create', 'createAndHistory'
-          modelModality: 'explore', // 'observe','explore','create'
+          modelModality: 'create', // 'observe','explore','create'
           expModelModality: 'justbody', //'simultaneous','sequential', 'justmodel' - for seeing model and live not together
           enableDirectComparison: false, // false: cannot do direct comparison between models
         },
@@ -259,6 +259,9 @@
               }
             }
           ]
+        },
+        aggregate: {
+          timeWindow: 2
         }
 
       };

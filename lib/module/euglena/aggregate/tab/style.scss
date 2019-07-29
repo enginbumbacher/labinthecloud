@@ -28,14 +28,23 @@
     border: 1px solid $palette__gray__dark;
     background: $palette__white;
     position: absolute;
-    top: calc(50% - 12rem);
-    left: calc(-11.2rem - 2px);
+    top: calc(45% - 13rem);
+    left: calc(-8.3rem);
     border-bottom: none;
     padding: 0.5rem 1rem;
     transform: rotate(-90deg);
     cursor: pointer;
-    width: 20rem;
+    width: 14rem;
     text-align: center;
+
+    #selectAggregate.flippedY {
+        height: 20px;
+        transform: scaleY(-1);
+    }
+    #selectAggregate.notflippedY {
+        height: 20px;
+        transform: scaleY(1);
+    }
   }
 
   &__display {

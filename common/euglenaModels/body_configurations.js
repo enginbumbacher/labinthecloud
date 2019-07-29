@@ -36,7 +36,7 @@ const defaults = {
     amount: 'amount_proportional', // 'amount_constant' - 'constant, 'amount_proportional' - proportional to light diff
     forward: 'forward_1', // 'forward_0' - turn on spot, 'forward_1' - turn while moving forward
     random: 'sigrandom_20', // number is percentage of random_max for random turns
-    random_max: 3.0,
+    random_max: 2.5,
     direction_default: 'away' // away means away from the light; towards means towards the light.
   }, // -1 - towards the sensor, 1 - away from the sensor
 

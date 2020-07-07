@@ -2,10 +2,11 @@
 var rp = require('request-promise'),
   fs = require('fs'),
   mkdirp = require('mkdirp'),
-  uuidV4 = require('uuid/v4'),
   ffprobe = require('ffprobe'),
   ffprobeStatic = require('ffprobe-static'),
   AWS = require('aws-sdk');
+
+const {v4: uuidV4} = require('uuid');
 
 const EuglenaUtils = require('../euglenaModels/utils.js');
 

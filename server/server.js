@@ -29,6 +29,7 @@ let sessionStore = new MySQLStore({
   password: process.env.RDS_PASSWORD,
   database: process.env.RDS_DB_NAME
 });
+
 app.use(session({
   store: sessionStore,
   saveUninitialized: true,

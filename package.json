@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A web app to let students generate various behavioral models for Euglena movement",
   "main": "server/server.js",
+  "engines": {
+  "node": "12.18.2"
+},
   "scripts": {
     "start": "node --max-old-space-size=${NODE_MAX_MEM} .",
     "posttest": "npm run lint && nsp check",

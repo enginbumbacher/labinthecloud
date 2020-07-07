@@ -4,8 +4,8 @@
   "description": "A web app to let students generate various behavioral models for Euglena movement",
   "main": "server/server.js",
   "engines": {
-  "node": "12.18.2"
-},
+    "node": "12.18.2"
+  },
   "scripts": {
     "start": "node --max-old-space-size=${NODE_MAX_MEM} .",
     "posttest": "npm run lint && nsp check",
@@ -20,6 +20,11 @@
   "author": "Radiant Llama LLC",
   "license": "ISC",
   "homepage": "https://bitbucket.org/radiantllama/tltl-euglena#readme",
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
   "dependencies": {
     "aws-sdk": "^2.709.0",
     "compression": "^1.7.4",
@@ -44,10 +49,13 @@
     "uuid": "^8.2.0"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
+    "@babel/cli": "^7.10.4",
+    "@babel/core": "^7.10.4",
+    "@babel/node": "^7.10.4",
+    "@babel/polyfill": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
     "babel-loader": "^8.1.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
     "css-loader": "^3.6.0",
     "d3": "^5.16.0",
     "dotenv": "^8.2.0",
@@ -55,19 +63,19 @@
     "eslint-config-loopback": "^13.1.0",
     "file-loader": "^6.0.0",
     "google-blockly": "^1.0.0",
-    "html-loader": "^1.1.0",
+    "html-loader": "^0.5.5",
     "jquery": "^3.5.1",
     "js-cookie": "^2.2.1",
     "node-sass": "^4.14.1",
     "nsp": "^3.2.1",
     "remarkable": "^2.0.1",
-    "sass-loader": "^9.0.1",
+    "sass-loader": "^7.1.0",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
     "style-loader": "^1.2.1",
     "three": "^0.118.3",
     "url-loader": "^4.1.0",
-    "webpack": "^4.43.0",
+    "webpack": "^4.16.5",
     "webpack-cli": "^3.3.12"
   }
 }

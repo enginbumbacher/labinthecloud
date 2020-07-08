@@ -3,7 +3,7 @@
 module.exports = (app) => {
   const User = app.models.LabUser;
   const Lab = app.models.Lab;
-  const uuidv4 = require('uuid/v4');
+  const { v4: uuidv4 } = require('uuid');
   const StudentGroup = app.models.StudentGroup;
 
   app.get('/lab/:userPath/:studentGroupPath/:labPath', (req, res) => {

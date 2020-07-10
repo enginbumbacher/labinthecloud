@@ -11,7 +11,9 @@
     "posttest": "npm run lint && nsp check",
     "build": "webpack",
     "watch": "webpack --watch",
-    "build-admin": "node-sass lib-admin/style.scss client/cslib/admin/admin.css"
+    "build-admin-js": "webpack --config webpack.admin.config.js",
+    "build-admin-style": "node-sass lib/module/admin/style.scss client/cslib/admin/admin.css",
+    "build-public-style": "node-sass lib/module/public/style.scss client/cslib/public/style.css"
   },
   "repository": {
     "type": "git",
@@ -26,7 +28,7 @@
     ]
   },
   "dependencies": {
-    "aws-sdk": "^2.709.0",
+    "aws-sdk": "^2.711.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -45,6 +47,7 @@
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
     "serve-favicon": "^2.5.0",
+    "slugify": "^1.4.4",
     "strong-error-handler": "^3.5.0",
     "uuid": "^8.2.0"
   },

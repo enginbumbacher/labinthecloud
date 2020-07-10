@@ -74,7 +74,7 @@ module.exports = {
     }
     return arr;
   },
-  calculateSensorIntensity(lights, defaults, eugBody, sensor, sensorDirWorld) { // CHANGE THIS FUNCTION TO ACCOUNT FOR FIELD OF VIEW LESS THAN 2*MATH.PI
+  calculateSensorIntensity(lights, defaults, eugBody, sensor, sensorDirWorld) {
 
     let intensity = 0;
 
@@ -99,10 +99,9 @@ module.exports = {
       v_light.normalize();
       let calc_light = false;
       var cos_light_sensor = null;
-      let cos_field = Math.cos(sensor.getField() / 2);
       if (sensorDirWorld.length) {
-        cos_light_sensor = -v_light.dot(sensorDirWorld);
-        if (cos_light_sensor >= cos_field ) { calc_light = true; }
+        cos_light_sensor = v_light.dot(sensorDirWorld);
+        if (cos_light_sensor >= 0 ) { calc_light = true; }
       } else {
         calc_light = true;
       }

@@ -1,0 +1,49 @@
+<% include ../../partials/head %>
+<div class="edit-lab-form__container"></div>
+<xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
+  <category name="Turning" colour="#2F5596"></category>
+  <category name="Forward" colour="#805ba5"></category>
+  <category name="Rotation" colour="#C55A11"></category>
+  <category name="Additional Blocks" colour="#00A407"></category>
+</xml>
+<xml xmlns="http://www.w3.org/1999/xhtml" id="defaultWorkspaceBlocks" style="display:none">
+  <variables></variables>
+  <block type="master_block" id="master_block" x="5" y="63" max_use='0' sensors='both'>
+    <statement name="CODE">
+      <block class='sensing' type="either_way" id="either_way" max_use='0' sensors='both'>
+        <next>
+          <block class='sensing' type="no_light" id="no_light" max_use='0' sensors='both'>
+            <next>
+              <block class='sensing' type="see_light" id="see_light" max_use='0' sensors='both'></block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>
+
+<%
+scripts = scripts.concat([
+  "/cslib/thirdparty/blockly/blockly_compressed.js",
+  "/cslib/thirdparty/blockly/blocks_compressed.js",
+  "/cslib/thirdparty/blockly/javascript_compressed.js",
+  "/cslib/thirdparty/blockly/msg/js/en.js",
+  "/cslib/module/euglena/model_blockly/modeling_blocks.js",
+  "/cslib/admin/lab/form.js"
+])
+%>
+<script>
+  window.EditLabConfig = {
+<% if (context.get('currentUserRoles').includes('admin')) { %>
+    isAdmin: true,
+<% } %>
+    title: "<%= title %>",
+    data: <%- JSON.stringify(lab) %>,
+    user: {
+      uuid: "<%- owner.uuid %>",
+      domain: "<%- owner.domain %>",
+    }
+  }
+</script>
+<% include ../../partials/foot %>

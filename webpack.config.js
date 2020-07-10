@@ -1,10 +1,13 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'production',
-  entry: './lib/index.js',
+  entry: {
+    'litc-main': './lib/index.js'
+  },
   output: {
-    filename: 'litc-main.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'client/cslib')
   },
   cache: true,
@@ -37,17 +40,17 @@ module.exports = {
           }
         }
       },
-      // {
-      //   test: /\.(png|jpg|svg|gif)$/,
-      //   use: [{
-      //     loader: 'url-loader',
-      //     options: {
-      //       limit: 100,
-      //       name: 'images/[hash]-[name].[ext]',
-      //       publicPath: "cslib/"
-      //     }
-      //   }]
-      // },
+      {
+        test: /\.(png|jpg|svg|gif)$/,
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 100,
+            name: 'images/[hash]-[name].[ext]',
+            publicPath: "/cslib/"
+          }
+        }]
+      },
       {
         test: /\.([ot]tf|woff2|woff|eot)$/,
         use: {
@@ -55,10 +58,15 @@ module.exports = {
           options: {
             limit: 8000,
             name: 'fonts/[name].[ext]',
-            publicPath: 'cslib/'
+            publicPath: '/cslib/'
           }
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      Blockly: 'google-blockly/blockly_compressed'
+    })
+  ]
 };;

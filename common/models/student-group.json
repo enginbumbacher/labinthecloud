@@ -1,0 +1,44 @@
+{
+  "name": "StudentGroup",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "date_created": {
+      "type": "date",
+      "required": true,
+      "default": "$now"
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "path": {
+      "type": "string",
+      "required": true
+    },
+    "uuid": {
+      "type": "string",
+      "defaultFn": "uuidv4"
+    },
+    "access": {
+      "type": "object",
+      "required": false
+    }
+  },
+  "validations": [],
+  "relations": {
+    "user": {
+      "type": "belongsTo",
+      "model": "LabUser"
+    },
+    "labs": {
+      "type": "hasAndBelongsToMany",
+      "model": "Lab"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

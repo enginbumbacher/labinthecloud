@@ -72,7 +72,7 @@
       <div class="loader">Loading..</div>
     </div>
 
-<% if (lab.model.blocks) { %>
+<% if ("model" in lab) { if (lab.model.blocks) { %>
     <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
       <category name="Turning" colour="#2F5596"></category>
       <category name="Forward" colour="#805ba5"></category>
@@ -101,7 +101,7 @@
     <script src="/cslib/thirdparty/blockly/javascript_compressed.js"></script>
     <script src="/cslib/thirdparty/blockly/msg/js/en.js"></script>
     <script src="/cslib/module/euglena/model_blockly/modeling_blocks.js"></script>
-<% } %>
+<% } } %>
 
     <script type="text/javascript">
       window.EuglenaConfig = <%- JSON.stringify(lab) %>;

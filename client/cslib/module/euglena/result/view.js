@@ -69,22 +69,24 @@ define(function (require) {
         };
       }
 
-      Globals.get('AppConfig.model.tabs').forEach(function (tabConf, ind) {
-        var id = Globals.get('AppConfig.model.tabs.length') == 1 ? '' : String.fromCharCode(97 + ind);
-        modelOpts[id] = 'Model ' + id.toUpperCase();
-      });
-      _this._modelSelect = SelectField.create({
-        id: 'model',
-        label: 'Model',
-        options: modelOpts,
-        initialValue: 'none',
-        description: 'Turn models on or off.'
-      });
-      _this._modelSelect.setValue('none');
+      if (Globals.get('AppConfig.model.tabs')) {
+        Globals.get('AppConfig.model.tabs').forEach((tabConf, ind) => {
+          let id = Globals.get('AppConfig.model.tabs.length')==1 ? '' : String.fromCharCode(97 + ind)
+          modelOpts[id] = `Model ${id.toUpperCase()}`;
+        });
+        this._modelSelect = SelectField.create({
+          id: 'model',
+          label: 'Model',
+          options: modelOpts,
+          initialValue: 'none',
+          description: 'Turn models on or off.'
+        });
+        this._modelSelect.setValue('none')
 
-      if (Globals.get('AppConfig.model.tabs').length) {
-        _this.addChild(_this._modelSelect.view(), '.results__controls__model');
-        _this._modelSelect.addEventListener('Field.Change', _this._onModelChange);
+        if (Globals.get('AppConfig.model.tabs').length) {
+          this.addChild(this._modelSelect.view(), '.results__controls__model');
+          this._modelSelect.addEventListener('Field.Change', this._onModelChange);
+        }
       }
 
       if (Globals.get('AppConfig.system.enableDirectComparison')) {

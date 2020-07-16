@@ -128,10 +128,11 @@ module.exports = (app) => {
         protocol: req.protocol
       }, (err, response, next) => {
         if (err) return next(err);
-        console.log("Verification email sent: " + response);
+        console.log("Verification email sent: ");
+        console.log(response)
         req.session.messages.push({
           type: "success",
-          text: "Your account has been created! Please check your email and click on the verificaiton link before logging in."
+          text: "Your account has been created! Please check your email and click on the verification link before logging in."
         });
         res.redirect('/admin/register');
       });

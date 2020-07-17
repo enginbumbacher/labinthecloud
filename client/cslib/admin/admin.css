@@ -1,25 +1,8 @@
-@import url("http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700");
-@import url("https://fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic");
-@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css");
-html, body {
-  font-size: 12px; }
-
-.admin-container {
-  font-size: 1.33rem; }
-  .admin-container .navbar-brand {
-    font-size: 1.25em; }
-
 .litc-admin .litc-navbar {
   background: #4e4e4e; }
 
 .litc-admin main {
   margin: 30px 0; }
-  .litc-admin main .paginated-list .row {
-    margin-top: 1rem; }
-  .litc-admin main .component__field {
-    margin: 1rem 0; }
-  .litc-admin main .field__label {
-    display: block; }
-  .litc-admin main .field__help {
-    display: block;
-    font-size: 0.8em; }
+
+.litc-admin .paginated-list .row {
+  margin-top: 1rem; }

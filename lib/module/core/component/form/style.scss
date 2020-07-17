@@ -14,6 +14,7 @@
 
   .form-fields {
     padding: 10px 20px;
+    margin: 2px 5px;
   }
   .form-errors {
     padding: 0 20px;
@@ -36,5 +37,11 @@
   .field-label {
     line-height: 1.8em;
     font-weight: bold;
+  }
+}
+.form-region {
+  padding: 10px 20px;
+  .form-regionTitle {
+    text-align: center;
   }
 }

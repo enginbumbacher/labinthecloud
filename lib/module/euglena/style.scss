@@ -1,88 +1,110 @@
 @import "../../scss_includes/mixins";
 @import "../../scss_includes/variables";
 
-.litc-lab {
-  .app {
-    display: flex;
+html, body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  font-size: $font__size;
+  overflow: hidden;
+}
+body {
+  font-family: $font__default;
+  background: $palette__white;
+}
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font__title;
+  font-weight: $font__title__weight;
+}
+
+.app {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  font-size: 1.4rem;
+}
+.panel {
+  position: relative;
+  padding: 1.5rem;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+
+  &__interactive {
+    flex: 1;
+    min-width: 37rem;
+    background: $palette__gray__light;
+    border-right: 1px solid $palette__gray__dark;
+  }
+  &__result {
+    flex: 4;
+  }
+}
+
+.component__textfield {
+  .textfield__field {
     width: 100%;
-    height: 100%;
-    font-size: 1.4rem;
+    padding: 4px;
+    line-height: 2rem;
+    font-size: 1.6rem;
   }
-  .panel {
-    position: relative;
-    padding: 1.5rem;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: hidden;
+}
 
-    &__interactive {
-      flex: 1;
-      min-width: 37rem;
-      background: $palette__gray__light;
-      border-right: 1px solid $palette__gray__dark;
-    }
-    &__result {
-      flex: 4;
-    }
+.form {
+  &__header {
+    font-family: $font__title;
+    font-weight: $font__title__weight;
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
   }
-
-  .component__textfield {
-    .textfield__field {
+  &__login {
+    .component__button {
       width: 100%;
-      padding: 4px;
-      line-height: 2rem;
-      font-size: 1.6rem;
+      margin: 0;
+    }
+    button.button {
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
     }
   }
+  &__help {
+    font-style: italic;
+  }
+}
 
-  .form {
-    &__header {
-      font-family: $font__title;
-      font-weight: $font__title__weight;
-      font-size: 2.2rem;
-      margin-bottom: 1.5rem;
-    }
-    &__login {
-      .component__button {
-        width: 100%;
-        margin: 0;
-      }
-      button.button {
-        width: 100%;
-        margin-left: 0;
-        margin-right: 0;
-      }
-    }
-    &__help {
-      font-style: italic;
-    }
+.component__button button.button {
+  padding: 10px;
+  &:hover {
+    background: $palette__gray__medium;
+    // color: $white;
+  }
+}
+
+.profile {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding: 1.5rem 2rem;
+  width: 100%;
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+  border-top: 0.1rem solid $palette__gray__dark;
+  transition: 0.5s ease top;
+
+  &__open {
+    top: calc(100% - 4.3rem);
   }
 
-  .component__button button.button {
-    padding: 10px;
-    &:hover {
-      background: $palette__gray__medium;
-      // color: $white;
-    }
-  }
-
-  .profile {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    padding: 1.5rem 2rem;
-    width: 100%;
-    font-size: 1.2rem;
-    line-height: 1.2rem;
-    border-top: 0.1rem solid $palette__gray__dark;
-    transition: 0.5s ease top;
-
-    &__open {
-      top: calc(100% - 4.3rem);
-    }
-
-    .logout {
-      float:right;
-    }
+  .logout {
+    float:right;
   }
 }

@@ -17,7 +17,6 @@ var helmet = require('helmet');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.set('trust proxy', true);
 
 app.use(helmet());
 

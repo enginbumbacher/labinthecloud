@@ -19,13 +19,9 @@
           enableDirectComparison: true
         },
         experiment: {
-          server: "dev",
-          experimentForm: 'narrative', // 'table', 'narrative'
           maxDuration: 60,
-          // bpuId: "eug16", //["eug5","eug7"], //"eug1","eug4","eug5","eug6","eug7","eug8","eug15","eug16"
-          euglenaServerMode:"historical", // 'simulate', 'demo', 'historical'
-          formOptions: 'complete', // 'complete' with alldirections and diagonal; 'partial': without alldirections and diagonal
-          experimentHistory: [14]
+          bpuId: "eug3",
+          experimentHistory: [9]
         },
         model: {
           tabs: [{
@@ -106,11 +102,8 @@
             }
           }],
           euglenaCount: {
-            options: {1: 1, 2: 2, 20: 20}
-          },
-          euglenaInit: {
-            options: {"1": 'random', "2": 'all point to right'},
-            initialValue: "1"
+            range: [10, 50],
+            initialValue: 30
           },
           simulationFps: 12
         },
@@ -157,7 +150,6 @@
         }
       };
     </script>
-    <!-- <script data-main="/cslib/init" src="/cslib/thirdparty/require/require.js"></script> -->
-    <script src="/cslib/litc-main.js"></script>
+    <script data-main="/cslib/init" src="/cslib/thirdparty/require/require.js"></script>
   </body>
 </html>

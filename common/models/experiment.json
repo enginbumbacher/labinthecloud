@@ -39,10 +39,6 @@
       "type": "number",
       "required": false,
       "default": 0
-    },
-    "name": {
-      "type": "string",
-      "required": false
     }
   },
   "validations": [],

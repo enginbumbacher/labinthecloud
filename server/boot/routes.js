@@ -4,12 +4,6 @@ const AWS = require('aws-sdk'),
   fs = require('fs');
 
 module.exports = (app) => {
-  app.get('/', (req, res) => {
-    let ctx = req.getCurrentContext();
-    let user = ctx.get('currentUser');
-    res.render('pages/public/index')
-  });
-  
   app.get('/api/v1/cron', (req, res) => {
     const clearFaultyExps = app.models.Experiment.find({
       where: {

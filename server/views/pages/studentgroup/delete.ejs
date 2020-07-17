@@ -1,9 +1,0 @@
-<% include ../../partials/head %>
-<h1>Are you sure you want to remove <%= studentGroup.name %>?</h1>
-<div class="container">
-  <form method="post" action="/admin/studentgroup/<%= studentGroup.id %>/delete">
-    <button type="submit" name="deleteConfirmation" value="delete" class="btn btn-danger">Yes</button>
-    <a href="/admin/studentgroup/<%= studentGroup.id %>" class="btn btn-outline-dark">No</a>
-  </form>
-</div>
-<% include ../../partials/foot %>

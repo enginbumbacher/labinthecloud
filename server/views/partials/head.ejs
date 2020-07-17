@@ -3,18 +3,8 @@
     <title>Lab in the Cloud - Admin</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="/cslib/admin/admin.css" />
-<%
-if (styles) { 
-  styles.forEach((style) => { 
-%>
-    <link rel="stylesheet" href="<%= style %>" />
-<%
-  })
-} 
-%>
   </head>
   <body class="litc-admin">
-    <div class="admin-container">
     <nav class="navbar navbar-expand-lg navbar-dark litc-navbar" role="navigation">
       <div class="container">
         <a class="navbar-brand" href="/admin">
@@ -23,7 +13,6 @@ if (styles) {
 <% if (context.get('currentUser')) { %>
         <ul class="nav navbar-nav">
           <li class="nav-item"><a class="nav-link" href="/admin">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="/admin/studentgroups">Projects</a></li>
           <li class="nav-item"><a class="nav-link" href="/admin/labs">Labs</a></li>
   <% if (context.get('currentUserRoles').includes('admin')) { %>
           <li class="nav-item"><a class="nav-link" href="/admin/users">Users</a></li>
@@ -53,27 +42,3 @@ if (styles) {
         <div class="alert alert-<%= msg.type %>"><%= msg.text %></div>
 <%  })
 } %>
-<%
-if (breadcrumb) {
-%>
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-<%  
-  breadcrumb.forEach((crumb, ind) => {
-    var isLast = ind == breadcrumb.length - 1;
-    if (isLast) {
-%>
-            <li class="breadcrumb-item active"><%= crumb.label %></li>
-<%
-    } else {
-%>
-            <li class="breadcrumb-item"><a href="<%= crumb.url %>"><%= crumb.label %></a></li>
-<%      
-    }
-  })
-%>
-          </ol>
-        </nav>
-<%
-}
-%>

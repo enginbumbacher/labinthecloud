@@ -355,6 +355,7 @@ module.exports = {
     if (turnModality === 'localAxis') {
       tmp_euglena.rotateX(current_delta_yaw);
     } else {
+      console.log('here')
       tmp_euglena.rotateOnAxis(new THREE.Vector3(0,1,0), -current_delta_yaw);
     }
 

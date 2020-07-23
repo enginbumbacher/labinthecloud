@@ -127,6 +127,7 @@ module.exports = {
     */
     const dT = 1 / config.result.fps;
 
+    var reaction_strength = null;
     var fw_speed = 0;
     var roll_speed = 0;
     var delta_yaw = 0;
@@ -160,7 +161,9 @@ module.exports = {
     // NEXT STEPS:
     // 1. Create the block that calculates by how much the Euglena will yaw.
     // 2. Create the block for doing random variations.
-    tmp_euglena.rotateX(delta_yaw);
+    //tmp_euglena.rotateX(delta_yaw);
+
+    tmp_euglena.rotateOnAxis(new THREE.Vector3(0,1,0), delta_yaw);
 
 /*
     var flipRotationDir = 1;

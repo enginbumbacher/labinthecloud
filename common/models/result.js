@@ -381,7 +381,7 @@ const _createModelResults = (app, result, model) => {
     var resetAngleMax = 15;
     var randomnessFactor = model.modelType.match('blockly|mech') ? basicParameters.randomnessFactor : model.configuration.randomness;
     var resetRandomAngle = EuglenaUtils.setRandomAngleMatrix(model.configuration.count, basicParameters.randomSmoothWindow, resetAngleMax, resetAngleMin, randomnessFactor);
-
+    
     for (let frame = 1; frame <= duration * result.fps; frame++) {
       for (let euglenaId = 0; euglenaId < model.configuration.count; euglenaId++) {
         // Calculate the a randomized delta_t for each Euglena after each update.

@@ -435,8 +435,8 @@ Blockly.JavaScript['turn_change'] = function (block) {
       addsubstract = -1;
       break;
   }
-  var code = 'if (reaction_strength>0) { delta_yaw +=' + '(lightDiff > 0 ? lightDiff : 0.2) * dT *' + addsubstract + ' * ' + speed.split('_')[1] + '/ 100 * EugBody.reaction_strength; }';
-  code += 'else { reaction_strength = (1 + ' + addsubstract + '*' + speed.split('_')[1] + '/ 100 ) * EugBody.reaction_strength; }';
+  var code = 'if (reaction_strength>0) { delta_yaw +=' + '(lightDiff > 0 ? lightDiff : 0.2) * dT *' + addsubstract + ' * ' + speed.split('_')[1] + '/ 100 * EugBody.reactionStrength; }';
+  code += 'else { reaction_strength = (1 + ' + addsubstract + '*' + speed.split('_')[1] + '/ 100 ) * EugBody.reactionStrength; }';
   return code;
 };
 
@@ -488,7 +488,7 @@ window.Blockly.JavaScript['turn_lr'] = function (block) {
 
   var code = '';
   var TURN_MAX = 2;
-  code += 'if (!(reaction_strength)) { reaction_strength = EugBody.reaction_strength; }';
+  code += 'if (!(reaction_strength)) { reaction_strength = EugBody.reactionStrength; }';
   code += 'lightDiff =' + 'calcIntensity' + '* reaction_strength;'; // RIGHT NOW THIS IS WRITTEN FOR 1 EYE. REWRITE TO ADAPT.
   code += 'if (lightDiff == 0) { lightDiff = 0.2 * reaction_strength }';
   code += 'delta_yaw += ' + flipRotationDir + '* Math.abs(lightDiff) * dT;';
@@ -527,7 +527,7 @@ window.Blockly.JavaScript['turn_at_1sensor'] = function (block) {
       } }';
 
   var TURN_MAX = 2;
-  code += 'if (!(reaction_strength)) { reaction_strength = EugBody.reaction_strength; }';
+  code += 'if (!(reaction_strength)) { reaction_strength = EugBody.reactionStrength;}';
   code += 'lightDiff = calcIntensity * reaction_strength;';
   code += 'if (lightDiff == 0) { lightDiff = 0.2 * reaction_strength }';
   code += 'delta_yaw += rotationDir *' + flipRotationDir + '* Math.abs(lightDiff) * dT;';
@@ -575,7 +575,7 @@ window.Blockly.JavaScript['turn_at_1sensor_eyespot'] = function (block) {
   }
 
   var TURN_MAX = 2;
-  code += 'if (!(reaction_strength)) { reaction_strength = EugBody.reaction_strength; }';
+  code += 'if (!(reaction_strength)) { reaction_strength = EugBody.reactionStrength; }';
   code += 'lightDiff =' + 'calcIntensity' + '* reaction_strength;';
   code += 'if (lightDiff == 0) { lightDiff = 0.2 * reaction_strength }';
   code += 'delta_yaw += rotationDir *' + flipRotationDir + '* Math.abs(lightDiff) * dT;';
@@ -601,7 +601,7 @@ window.Blockly.JavaScript['turn_at_2sensors'] = function (block) {
   code += 'rotationDir = (sensorIntensities[1] - sensorIntensities[0]) < 0 ? EugBody.lightSensors[1].position.y : EugBody.lightSensors[0].position.y;';
 
   var TURN_MAX = 2;
-  code += 'if (!(reaction_strength)) { reaction_strength = EugBody.reaction_strength; }';
+  code += 'if (!(reaction_strength)) { reaction_strength = EugBody.reactionStrength; }';
   code += 'lightDiff =' + 'calcIntensity' + '* reaction_strength;';
   code += 'if (lightDiff == 0) { lightDiff = 0.2 * reaction_strength }';
   code += 'delta_yaw += rotationDir *' + flipRotationDir + '* Math.abs(lightDiff) * dT;';
@@ -613,7 +613,7 @@ window.Blockly.JavaScript['turn_at_2sensors'] = function (block) {
 
 window.Blockly.JavaScript['master_block'] = function (block) {
   var defaultCode = "var calcIntensity = (EugBody.lightSensors.length>1) ? lightInfo.diffBtwSensors : lightInfo.currentLevel[0];"; // HERE WRITE THE CORE LIGHT - 1 EYE OR 2 EYES. THIS CAN THEN BE MODIFIED WITH THE DROP-DOWN! - WRITE ALL OTHER CODE SUCH THAT IT TAKES THIS LIGHT MEASURE.
-  defaultCode += 'var reaction_strength = null;';
+  //defaultCode += 'var reaction_strength = null;';
   defaultCode += 'var lightDiff = 0;';
   var all_code = Blockly.JavaScript.statementToCode(block, 'CODE');
   // TODO: Assemble JavaScript into code variable.
